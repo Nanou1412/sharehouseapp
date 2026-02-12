@@ -346,7 +346,7 @@ export async function reconcilePayment(paymentId: string) {
     .single();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function bulkReconcilePayments(paymentIds: string[]) {
@@ -358,7 +358,7 @@ export async function bulkReconcilePayments(paymentIds: string[]) {
     .in('id', paymentIds);
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 // =====================================================

@@ -399,7 +399,7 @@ export async function markAllocationPaid(allocationId: string): Promise<BillAllo
       .eq('id', data.bill_id);
   }
 
-  return data;
+  return data as any;
 }
 
 // =====================================================

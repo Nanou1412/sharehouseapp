@@ -247,7 +247,7 @@ export async function updateChargeStatus(chargeId: string): Promise<RentCharge> 
       .single();
 
     if (error) throw error;
-    return data;
+    return data as any;
   }
 
   return charge;
@@ -560,7 +560,7 @@ export async function waiveCharge(chargeId: string, reason: string): Promise<Ren
     await updateArrearsStatus(data.lease_id);
   }
 
-  return data;
+  return data as any;
 }
 
 // =====================================================

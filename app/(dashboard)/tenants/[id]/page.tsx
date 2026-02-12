@@ -90,7 +90,7 @@ export default async function TenantDetailPage({ params }: PageProps) {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              ${payments?.reduce((sum, p) => sum + p.amount, 0).toFixed(2) || '0.00'}
+              ${payments?.reduce((sum: number, p: any) => sum + p.amount, 0).toFixed(2) || '0.00'}
             </div>
           </CardContent>
         </Card>

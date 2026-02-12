@@ -20,7 +20,7 @@ export async function getHouses(activeOnly: boolean = true) {
 
   const { data, error } = await query;
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function getHouseById(id: string) {
@@ -33,7 +33,7 @@ export async function getHouseById(id: string) {
     .single();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function getHouseWithDetails(id: string) {
@@ -201,7 +201,7 @@ export async function getBedsByRoom(roomId: string, activeOnly: boolean = true) 
 
   const { data, error } = await query;
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function getBedById(id: string) {
@@ -368,7 +368,7 @@ export async function getCurrentOccupancy(houseId?: string) {
 
   const { data, error } = await query;
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 // Convenience aliases

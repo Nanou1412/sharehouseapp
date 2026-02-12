@@ -175,7 +175,7 @@ export async function assignKey(keyId: string, tenantId: string) {
     .single();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function unassignKey(keyId: string) {
@@ -194,7 +194,7 @@ export async function unassignKey(keyId: string) {
     .single();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function reportKeyLost(keyId: string, notes?: string) {
@@ -211,7 +211,7 @@ export async function reportKeyLost(keyId: string, notes?: string) {
     .single();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function returnAllTenantKeys(tenantId: string) {
@@ -229,7 +229,7 @@ export async function returnAllTenantKeys(tenantId: string) {
     .select();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 // =====================================================
@@ -358,7 +358,7 @@ export async function createKeySet(
     .select();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function assignKeySetToTenant(

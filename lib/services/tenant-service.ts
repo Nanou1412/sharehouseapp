@@ -34,7 +34,7 @@ export async function getTenants(filters?: {
 
   const { data, error } = await query;
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function getTenantById(id: string) {
@@ -47,7 +47,7 @@ export async function getTenantById(id: string) {
     .single();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function getTenantWithDetails(id: string) {
@@ -245,7 +245,7 @@ export async function getTenantDocuments(tenantId: string) {
     .order('created_at', { ascending: false });
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function uploadTenantDocument(

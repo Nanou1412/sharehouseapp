@@ -192,7 +192,7 @@ export async function markAllocationPaid(id: string, paidAt?: string) {
     .single();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 // =====================================================

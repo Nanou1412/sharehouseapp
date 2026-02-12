@@ -36,9 +36,9 @@ export default async function LeasesPage() {
     getReservations(),
   ]);
 
-  const activeLeases = leases?.filter(l => l.status === 'active').length || 0;
-  const pendingReservations = reservations?.filter(r => r.status === 'pending').length || 0;
-  const endingSoon = leases?.filter(l => {
+  const activeLeases = leases?.filter((l: any) => l.status === 'active').length || 0;
+  const pendingReservations = reservations?.filter((r: any) => r.status === 'pending').length || 0;
+  const endingSoon = leases?.filter((l: any) => {
     if (!l.end_date || l.status !== 'active') return false;
     const endDate = new Date(l.end_date);
     const now = new Date();

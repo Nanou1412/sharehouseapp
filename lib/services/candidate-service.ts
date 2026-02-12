@@ -141,7 +141,7 @@ export async function updateCandidateStatus(id: string, status: CandidateStatus)
     .single();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function scheduleViewing(
@@ -165,7 +165,7 @@ export async function scheduleViewing(
     .single();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function updateCandidateNotes(id: string, notes: string) {
@@ -181,7 +181,7 @@ export async function updateCandidateNotes(id: string, notes: string) {
     .single();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function approveCandidate(id: string) {
@@ -197,7 +197,7 @@ export async function approveCandidate(id: string) {
     .single();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function rejectCandidate(id: string, reason?: string) {
@@ -214,7 +214,7 @@ export async function rejectCandidate(id: string, reason?: string) {
     .single();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 // =====================================================
@@ -410,7 +410,7 @@ export async function findCandidatesForBed(bedId: string) {
     .or(`bed_id.is.null,bed_id.eq.${bedId}`);
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function getCandidateHistory(candidateId: string) {
@@ -434,7 +434,7 @@ export async function getCandidateHistory(candidateId: string) {
   if (error) throw error;
 
   // Build timeline from data
-  const timeline = [];
+  const timeline: { date: string; event: string; status: string }[] = [];
   
   timeline.push({
     date: candidate.created_at,

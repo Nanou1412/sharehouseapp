@@ -19,7 +19,7 @@ export default async function CleaningPage() {
 
   // Calculate stats
   const totalTasks = roster?.length || 0;
-  const completedTasks = roster?.filter(r => r.is_completed).length || 0;
+  const completedTasks = roster?.filter((r: any) => r.is_completed).length || 0;
   const pendingTasks = totalTasks - completedTasks;
   const completionRate = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
 

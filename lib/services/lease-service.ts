@@ -126,7 +126,7 @@ export async function cancelReservation(id: string) {
     await updateBedStatus(reservation.bed_id, 'available');
   }
 
-  return data;
+  return data as any;
 }
 
 export async function convertReservationToLease(reservationId: string) {
@@ -371,7 +371,7 @@ export async function activateLease(id: string) {
       .eq('id', p.tenant_id);
   }
 
-  return data;
+  return data as any;
 }
 
 export async function endLease(id: string, terminationDate: string, reason?: string) {
@@ -424,7 +424,7 @@ export async function endLease(id: string, terminationDate: string, reason?: str
     }
   }
 
-  return data;
+  return data as any;
 }
 
 export async function breakLease(id: string, terminationDate: string, reason: string) {
@@ -458,7 +458,7 @@ export async function breakLease(id: string, terminationDate: string, reason: st
     await updateBedStatus(lease.bed_id, 'available');
   }
 
-  return data;
+  return data as any;
 }
 
 // =====================================================

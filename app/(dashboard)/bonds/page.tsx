@@ -25,10 +25,10 @@ export default async function BondsPage() {
 
   // Calculate stats
   const totalBonds = bonds?.length || 0;
-  const receivedBonds = bonds?.filter(b => b.status === 'received').length || 0;
-  const pendingBonds = bonds?.filter(b => b.status === 'pending').length || 0;
-  const totalExpected = bonds?.reduce((sum, b) => sum + (b.expected_amount || 0), 0) || 0;
-  const totalReceived = bonds?.reduce((sum, b) => sum + (b.received_amount || 0), 0) || 0;
+  const receivedBonds = bonds?.filter((b: any) => b.status === 'received').length || 0;
+  const pendingBonds = bonds?.filter((b: any) => b.status === 'pending').length || 0;
+  const totalExpected = bonds?.reduce((sum: number, b: any) => sum + (b.expected_amount || 0), 0) || 0;
+  const totalReceived = bonds?.reduce((sum: number, b: any) => sum + (b.received_amount || 0), 0) || 0;
 
   const getStatusBadge = (status: string) => {
     switch (status) {

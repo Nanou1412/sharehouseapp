@@ -20,7 +20,7 @@ export default async function RoomDetailPage({ params }: PageProps) {
 
   const beds = await getBedsByRoomId(params.roomId);
 
-  const occupiedBeds = beds?.filter(b => b.is_occupied).length || 0;
+  const occupiedBeds = beds?.filter((b: any) => b.is_occupied).length || 0;
   const totalBeds = beds?.length || 0;
 
   return (

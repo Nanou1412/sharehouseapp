@@ -47,9 +47,9 @@ export default async function BillsPage() {
 
   // Calculate stats
   const totalBills = bills?.length || 0;
-  const pendingBills = bills?.filter(b => b.status === 'pending').length || 0;
-  const totalAmount = bills?.reduce((sum, b) => sum + b.total_amount, 0) || 0;
-  const unpaidAmount = bills?.filter(b => b.status === 'pending').reduce((sum, b) => sum + b.total_amount, 0) || 0;
+  const pendingBills = bills?.filter((b: any) => b.status === 'pending').length || 0;
+  const totalAmount = bills?.reduce((sum: number, b: any) => sum + b.total_amount, 0) || 0;
+  const unpaidAmount = bills?.filter((b: any) => b.status === 'pending').reduce((sum: number, b: any) => sum + b.total_amount, 0) || 0;
 
   return (
     <div className="space-y-6">

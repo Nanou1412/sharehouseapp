@@ -135,7 +135,7 @@ export async function updateCleaningStatus(id: string, isCompleted: boolean, com
     .single();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function deleteCleaningRosterEntry(id: string) {
@@ -234,7 +234,7 @@ export async function generateRosterForAllHouses(weekStart?: string) {
 
   if (housesError) throw housesError;
 
-  const results = [];
+  const results: { house: string; roster: any }[] = [];
   for (const house of houses || []) {
     // Check if roster already exists for this week
     const { data: existing } = await supabase

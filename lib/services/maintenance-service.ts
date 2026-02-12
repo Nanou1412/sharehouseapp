@@ -122,7 +122,7 @@ export async function updateTicketStatus(id: string, status: TicketStatus) {
     .single();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function assignTicket(id: string, userId: string) {
@@ -139,7 +139,7 @@ export async function assignTicket(id: string, userId: string) {
     .single();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function deleteMaintenanceTicket(id: string) {

@@ -45,7 +45,7 @@ export async function getAlerts(filters?: {
 
   const { data, error } = await query;
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function getUnreadAlertsCount(userId?: string): Promise<number> {
@@ -105,7 +105,7 @@ export async function markAlertAsRead(id: string) {
     .single();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function markAllAlertsAsRead(userId?: string) {

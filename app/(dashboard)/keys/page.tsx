@@ -19,9 +19,9 @@ export default async function KeysPage() {
 
   // Calculate stats
   const totalKeys = keys?.length || 0;
-  const availableKeys = keys?.filter(k => k.status === 'available').length || 0;
-  const issuedKeys = keys?.filter(k => k.status === 'issued').length || 0;
-  const lostKeys = keys?.filter(k => k.status === 'lost').length || 0;
+  const availableKeys = keys?.filter((k: any) => k.status === 'available').length || 0;
+  const issuedKeys = keys?.filter((k: any) => k.status === 'issued').length || 0;
+  const lostKeys = keys?.filter((k: any) => k.status === 'lost').length || 0;
 
   const getStatusBadge = (status: string) => {
     switch (status) {

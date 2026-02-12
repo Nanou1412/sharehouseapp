@@ -90,7 +90,7 @@ export async function getBondByTenant(tenantId: string) {
     .maybeSingle();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function createBond(data: BondFormData) {
