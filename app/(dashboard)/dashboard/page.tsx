@@ -123,7 +123,7 @@ async function getRecentActivity() {
     .limit(5);
 
   return {
-    recentPayments: recentPayments as RecentPayment[] | null,
+    recentPayments: (recentPayments || []) as unknown as RecentPayment[],
     recentAlerts: recentAlerts as RecentAlert[] | null,
   };
 }

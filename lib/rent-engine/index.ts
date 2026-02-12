@@ -507,7 +507,7 @@ export async function getRentCharges(filters: {
 
   const { data, error } = await query;
   if (error) throw error;
-  return data;
+  return data as any[];
 }
 
 export async function getArrearsDetails(leaseId?: string) {
@@ -533,7 +533,7 @@ export async function getArrearsDetails(leaseId?: string) {
 
   const { data, error } = await query;
   if (error) throw error;
-  return data;
+  return data as any[];
 }
 
 // =====================================================

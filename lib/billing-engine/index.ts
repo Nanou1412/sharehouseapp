@@ -63,7 +63,7 @@ export async function getBills(filters?: {
 
   const { data, error } = await query;
   if (error) throw error;
-  return data;
+  return data as any[];
 }
 
 export async function getBillById(id: string) {
@@ -88,7 +88,7 @@ export async function getBillById(id: string) {
     .single();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function createBill(data: BillFormData) {

@@ -18,11 +18,11 @@ export default async function HousesPage() {
         .select('id, house_id, beds(id, status)')
         .in('house_id', houseIds)
         .eq('is_active', true)
-    : { data: [] };
+    : { data: [] as any[] };
   
   // Create a map of house_id -> rooms
-  const roomsByHouse = new Map<string, typeof allRooms>();
-  for (const room of allRooms || []) {
+  const roomsByHouse = new Map<string, any[]>();
+  for (const room of (allRooms as any[]) || []) {
     const existing = roomsByHouse.get(room.house_id) || [];
     existing.push(room);
     roomsByHouse.set(room.house_id, existing);
