@@ -30,7 +30,7 @@ export default async function AnalyticsPage() {
     .select('id')
     .eq('is_active', true);
 
-  const houseIds = houses?.map(h => h.id) || [];
+  const houseIds = (houses as { id: string }[] | null)?.map(h => h.id) || [];
   
   // Get portfolio KPIs
   const portfolioKPIs = houseIds.length > 0 
