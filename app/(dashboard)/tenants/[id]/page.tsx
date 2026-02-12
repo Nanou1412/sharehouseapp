@@ -1,0 +1,336 @@
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import { ArrowLeft, Mail, Phone, Calendar, FileText, Home, DollarSign, AlertCircle } from 'lucide-react';
+import { format } from 'date-fns';
+
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { getTenantById, getTenantDocuments } from '@/lib/services/tenant-service';
+import { getLeasesByTenantId } from '@/lib/services/lease-service';
+import { getPaymentsByTenantId } from '@/lib/services/payment-service';
+
+interface PageProps {
+  params: { id: string };
+}
+
+export default async function TenantDetailPage({ params }: PageProps) {
+  const tenant = await getTenantById(params.id);
+
+  if (!tenant) {
+    notFound();
+  }
+
+  const [leases, payments, documents] = await Promise.all([
+    getLeasesByTenantId(params.id),
+    getPaymentsByTenantId(params.id),
+    getTenantDocuments(params.id),
+  ]);
+
+  const activeLease = leases?.find(l => l.status === 'active');
+
+  return (
+    <div className="space-y-6">
+      {/* Page Header */}
+      <div className="flex items-center gap-4">
+        <Button variant="ghost" size="icon" asChild>
+          <Link href="/tenants">
+            <ArrowLeft className="h-4 w-4" />
+          </Link>
+        </Button>
+        <div className="flex-1">
+          <div className="flex items-center gap-2">
+            <h1 className="text-3xl font-bold">
+              {tenant.first_name} {tenant.last_name}
+            </h1>
+            <Badge variant={tenant.status === 'active' ? 'default' : 'secondary'}>
+              {tenant.status}
+            </Badge>
+          </div>
+          <p className="text-muted-foreground">
+            Tenant profile and history
+          </p>
+        </div>
+        <Button asChild>
+          <Link href={`/tenants/${params.id}/edit`}>
+            Edit Tenant
+          </Link>
+        </Button>
+      </div>
+
+      {/* Quick Info */}
+      <div className="grid gap-4 md:grid-cols-4">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Status</CardTitle>
+            <Home className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold capitalize">{tenant.status}</div>
+            {activeLease && (
+              <p className="text-xs text-muted-foreground">
+                Since {format(new Date(activeLease.start_date), 'dd MMM yyyy')}
+              </p>
+            )}
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Paid</CardTitle>
+            <DollarSign className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              ${payments?.reduce((sum, p) => sum + p.amount, 0).toFixed(2) || '0.00'}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Leases</CardTitle>
+            <FileText className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{leases?.length || 0}</div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Balance</CardTitle>
+            <AlertCircle className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-green-600">$0.00</div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Main Content */}
+      <div className="grid gap-6 md:grid-cols-3">
+        {/* Contact Info */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Contact Information</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex items-center gap-3">
+              <Mail className="h-4 w-4 text-muted-foreground" />
+              <a href={`mailto:${tenant.email}`} className="text-primary hover:underline">
+                {tenant.email}
+              </a>
+            </div>
+            <div className="flex items-center gap-3">
+              <Phone className="h-4 w-4 text-muted-foreground" />
+              <a href={`tel:${tenant.phone}`} className="text-primary hover:underline">
+                {tenant.phone}
+              </a>
+            </div>
+            {tenant.date_of_birth && (
+              <div className="flex items-center gap-3">
+                <Calendar className="h-4 w-4 text-muted-foreground" />
+                <span>{format(new Date(tenant.date_of_birth), 'dd MMM yyyy')}</span>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Personal Details */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Personal Details</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div>
+              <p className="text-sm text-muted-foreground">Nationality</p>
+              <p className="font-medium">{tenant.nationality || 'Not specified'}</p>
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Visa Type</p>
+              <p className="font-medium capitalize">{tenant.visa_type || 'Not specified'}</p>
+            </div>
+            {tenant.visa_expiry && (
+              <div>
+                <p className="text-sm text-muted-foreground">Visa Expiry</p>
+                <p className="font-medium">{format(new Date(tenant.visa_expiry), 'dd MMM yyyy')}</p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Emergency Contact */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Emergency Contact</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            {tenant.emergency_contact_name ? (
+              <>
+                <div>
+                  <p className="text-sm text-muted-foreground">Name</p>
+                  <p className="font-medium">{tenant.emergency_contact_name}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Relationship</p>
+                  <p className="font-medium">{tenant.emergency_contact_relation || 'N/A'}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Phone</p>
+                  <p className="font-medium">{tenant.emergency_contact_phone || 'N/A'}</p>
+                </div>
+              </>
+            ) : (
+              <p className="text-muted-foreground">No emergency contact provided</p>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Active Lease */}
+      {activeLease && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Current Lease</CardTitle>
+            <CardDescription>
+              Active tenancy agreement
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-4 md:grid-cols-4">
+              <div>
+                <p className="text-sm text-muted-foreground">Property</p>
+                <p className="font-medium">
+                  {(activeLease.bed as any)?.room?.house?.address || 'N/A'}
+                </p>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Weekly Rent</p>
+                <p className="font-medium">${activeLease.weekly_rent}</p>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Start Date</p>
+                <p className="font-medium">
+                  {format(new Date(activeLease.start_date), 'dd MMM yyyy')}
+                </p>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">End Date</p>
+                <p className="font-medium">
+                  {activeLease.end_date 
+                    ? format(new Date(activeLease.end_date), 'dd MMM yyyy')
+                    : 'Ongoing'
+                  }
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Payment History */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle>Payment History</CardTitle>
+              <CardDescription>
+                Recent payments made by this tenant
+              </CardDescription>
+            </div>
+            <Button variant="outline" asChild>
+              <Link href={`/payments?tenant=${params.id}`}>
+                View All
+              </Link>
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent>
+          {payments && payments.length > 0 ? (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Date</TableHead>
+                  <TableHead>Amount</TableHead>
+                  <TableHead>Method</TableHead>
+                  <TableHead>Reference</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {payments.slice(0, 5).map((payment) => (
+                  <TableRow key={payment.id}>
+                    <TableCell>
+                      {format(new Date(payment.payment_date), 'dd MMM yyyy')}
+                    </TableCell>
+                    <TableCell className="font-medium">
+                      ${payment.amount.toFixed(2)}
+                    </TableCell>
+                    <TableCell className="capitalize">
+                      {payment.payment_method}
+                    </TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {payment.reference || '-'}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          ) : (
+            <p className="text-center text-muted-foreground py-8">
+              No payments recorded yet
+            </p>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Documents */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle>Documents</CardTitle>
+              <CardDescription>
+                ID, contracts, and other documents
+              </CardDescription>
+            </div>
+            <Button variant="outline">
+              Upload Document
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent>
+          {documents && documents.length > 0 ? (
+            <div className="grid gap-4 md:grid-cols-3">
+              {documents.map((doc) => (
+                <Card key={doc.id}>
+                  <CardContent className="flex items-center gap-3 p-4">
+                    <FileText className="h-8 w-8 text-muted-foreground" />
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium truncate">{doc.file_name}</p>
+                      <p className="text-sm text-muted-foreground capitalize">
+                        {doc.document_type}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <p className="text-center text-muted-foreground py-8">
+              No documents uploaded yet
+            </p>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
