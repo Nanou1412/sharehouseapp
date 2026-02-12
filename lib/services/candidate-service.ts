@@ -49,12 +49,12 @@ export async function getCandidates(filters?: {
   // Filter by house if needed (post-processing due to nested relation)
   type CandidateWithBed = { bed?: { room?: { house?: { id?: string } } } };
   if (filters?.houseId) {
-    return data?.filter((c: CandidateWithBed) => 
+    return (data as any[])?.filter((c: CandidateWithBed) => 
       c.bed?.room?.house?.id === filters.houseId
     ) || [];
   }
 
-  return data;
+  return data as any[];
 }
 
 export async function getCandidateById(id: string) {
@@ -76,7 +76,7 @@ export async function getCandidateById(id: string) {
     .single();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function createCandidate(data: CandidateFormData) {

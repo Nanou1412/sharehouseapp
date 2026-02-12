@@ -54,7 +54,7 @@ export async function getPayments(filters?: {
   const { data, error } = await query;
 
   if (error) throw error;
-  return data;
+  return data as any[];
 }
 
 export async function getPaymentById(id: string) {
@@ -72,7 +72,7 @@ export async function getPaymentById(id: string) {
     .single();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function createPayment(data: PaymentFormData) {
@@ -418,7 +418,7 @@ export async function getRecentPayments(days: number = 7, limit: number = 20) {
     .limit(limit);
 
   if (error) throw error;
-  return data;
+  return data as any[];
 }
 
 // =====================================================

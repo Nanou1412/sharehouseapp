@@ -39,7 +39,7 @@ export async function getReservations(filters?: {
 
   const { data, error } = await query;
   if (error) throw error;
-  return data;
+  return data as any[];
 }
 
 export async function getReservationById(id: string) {
@@ -58,7 +58,7 @@ export async function getReservationById(id: string) {
     .single();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function createReservation(data: ReservationFormData) {
@@ -251,7 +251,7 @@ export async function getLeases(filters?: {
 
   const { data, error } = await query;
   if (error) throw error;
-  return data;
+  return data as any[];
 }
 
 export async function getLeaseById(id: string) {
@@ -276,7 +276,7 @@ export async function getLeaseById(id: string) {
     .single();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function createLease(data: LeaseFormData, tenantId: string, rentSharePercent: number = 100) {
@@ -574,7 +574,7 @@ export async function getExpiringLeases(daysAhead: number = 30) {
     .order('end_date');
 
   if (error) throw error;
-  return data;
+  return data as any[];
 }
 
 // Convenience wrapper for getting leases by tenant

@@ -140,7 +140,7 @@ export async function getRoomById(id: string) {
     .single();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function createRoom(data: RoomFormData) {
@@ -220,7 +220,7 @@ export async function getBedById(id: string) {
     .single();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function createBed(data: BedFormData) {
@@ -293,7 +293,7 @@ export async function getAvailableBeds(houseId?: string) {
 
   const { data, error } = await query;
   if (error) throw error;
-  return data;
+  return data as any[];
 }
 
 export async function getOccupancyStats(houseId: string) {

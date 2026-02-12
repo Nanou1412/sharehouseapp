@@ -46,7 +46,7 @@ export async function getKeys(filters?: {
 
   const { data, error } = await query;
   if (error) throw error;
-  return data;
+  return data as any[];
 }
 
 export async function getKeyById(id: string) {
@@ -64,7 +64,7 @@ export async function getKeyById(id: string) {
     .single();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function getKeysByTenant(tenantId: string) {
@@ -81,7 +81,7 @@ export async function getKeysByTenant(tenantId: string) {
     .eq('status', 'issued');
 
   if (error) throw error;
-  return data;
+  return data as any[];
 }
 
 export async function createKey(data: KeyFormData) {
@@ -287,7 +287,7 @@ export async function getAvailableKeysForHouse(houseId: string, keyType?: KeyTyp
 
   const { data, error } = await query;
   if (error) throw error;
-  return data;
+  return data as any[];
 }
 
 // =====================================================
@@ -309,7 +309,7 @@ export async function getLostKeysReport() {
     .order('updated_at', { ascending: false });
 
   if (error) throw error;
-  return data;
+  return data as any[];
 }
 
 export async function getKeyAssignmentHistory(keyId: string) {
@@ -327,7 +327,7 @@ export async function getKeyAssignmentHistory(keyId: string) {
     .single();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 // =====================================================

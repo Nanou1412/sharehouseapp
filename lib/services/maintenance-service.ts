@@ -50,7 +50,7 @@ export async function getMaintenanceTickets(filters?: {
 
   const { data, error } = await query;
   if (error) throw error;
-  return data;
+  return data as any[];
 }
 
 export async function getMaintenanceTicketById(id: string) {
@@ -70,7 +70,7 @@ export async function getMaintenanceTicketById(id: string) {
     .single();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function createMaintenanceTicket(data: MaintenanceTicketFormData) {

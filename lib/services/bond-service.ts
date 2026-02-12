@@ -59,7 +59,7 @@ export async function getBonds(filters?: {
 
   const { data, error } = await query;
   if (error) throw error;
-  return data;
+  return data as any[];
 }
 
 export async function getBondById(id: string) {
@@ -75,7 +75,7 @@ export async function getBondById(id: string) {
     .single();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function getBondByTenant(tenantId: string) {
@@ -323,5 +323,5 @@ export async function getExpiringBonds(daysAhead: number = 14) {
     .eq('status', 'received');
 
   if (error) throw error;
-  return data || [];
+  return (data || []) as any[];
 }

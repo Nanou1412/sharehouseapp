@@ -26,7 +26,7 @@ export async function getBills(houseId?: string) {
 
   const { data, error } = await query;
   if (error) throw error;
-  return data;
+  return data as any[];
 }
 
 export async function getBillById(id: string) {
@@ -54,7 +54,7 @@ export async function getBillById(id: string) {
     .single();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function createBill(data: {
@@ -130,7 +130,7 @@ export async function getBillAllocations(billId: string) {
     .eq('bill_id', billId);
 
   if (error) throw error;
-  return data;
+  return data as any[];
 }
 
 export async function createBillAllocation(data: {

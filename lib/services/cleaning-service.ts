@@ -45,7 +45,7 @@ export async function getCleaningRoster(filters?: {
 
   const { data, error } = await query;
   if (error) throw error;
-  return data;
+  return data as any[];
 }
 
 export async function getCleaningRosterById(id: string) {
@@ -62,7 +62,7 @@ export async function getCleaningRosterById(id: string) {
     .single();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function getCurrentWeekRoster(houseId: string) {
@@ -81,7 +81,7 @@ export async function getCurrentWeekRoster(houseId: string) {
     .maybeSingle();
 
   if (error) throw error;
-  return data;
+  return data as any;
 }
 
 export async function createCleaningRosterEntry(data: CleaningRosterFormData) {
@@ -275,7 +275,7 @@ export async function getTenantCleaningHistory(tenantId: string, limit: number =
     .limit(limit);
 
   if (error) throw error;
-  return data;
+  return data as any[];
 }
 
 export async function getHouseCleaningStats(houseId: string) {
@@ -333,7 +333,7 @@ export async function getUpcomingRoster(houseId: string, weeks: number = 4) {
     .order('week_start', { ascending: true });
 
   if (error) throw error;
-  return data;
+  return data as any[];
 }
 
 // =====================================================
