@@ -37,15 +37,15 @@ export default async function PaymentsPage() {
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Payments</h1>
+          <h1 className="text-3xl font-bold">Paiements</h1>
           <p className="text-muted-foreground">
-            Track and manage all rent payments
+            Suivre et gérer tous les paiements de loyer
           </p>
         </div>
         <Button asChild>
           <Link href="/payments/new">
             <Plus className="mr-2 h-4 w-4" />
-            Record Payment
+            Enregistrer un paiement
           </Link>
         </Button>
       </div>
@@ -57,7 +57,7 @@ export default async function PaymentsPage() {
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search payments..."
+                placeholder="Rechercher des paiements..."
                 className="pl-10"
               />
             </div>
@@ -76,10 +76,10 @@ export default async function PaymentsPage() {
               <TableHeader>
                 <TableRow>
                   <TableHead>Date</TableHead>
-                  <TableHead>Tenant</TableHead>
-                  <TableHead>Method</TableHead>
-                  <TableHead>Reference</TableHead>
-                  <TableHead className="text-right">Amount</TableHead>
+                  <TableHead>Locataire</TableHead>
+                  <TableHead>Méthode</TableHead>
+                  <TableHead>Référence</TableHead>
+                  <TableHead className="text-right">Montant</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -112,14 +112,14 @@ export default async function PaymentsPage() {
           ) : (
             <div className="flex flex-col items-center justify-center py-12">
               <DollarSign className="h-12 w-12 text-muted-foreground mb-4" />
-              <h3 className="text-lg font-semibold mb-2">No payments yet</h3>
+              <h3 className="text-lg font-semibold mb-2">Aucun paiement</h3>
               <p className="text-muted-foreground text-center mb-4">
-                Record your first payment to get started
+                Enregistrez votre premier paiement pour commencer
               </p>
               <Button asChild>
                 <Link href="/payments/new">
                   <Plus className="mr-2 h-4 w-4" />
-                  Record Payment
+                  Enregistrer un paiement
                 </Link>
               </Button>
             </div>

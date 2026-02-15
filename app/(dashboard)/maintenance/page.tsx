@@ -24,13 +24,13 @@ export default async function MaintenancePage() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'open':
-        return <Badge variant="destructive">Open</Badge>;
+        return <Badge variant="destructive">Ouvert</Badge>;
       case 'in_progress':
-        return <Badge variant="warning">In Progress</Badge>;
+        return <Badge variant="warning">En cours</Badge>;
       case 'completed':
-        return <Badge variant="success">Completed</Badge>;
+        return <Badge variant="success">Terminé</Badge>;
       case 'cancelled':
-        return <Badge variant="secondary">Cancelled</Badge>;
+        return <Badge variant="secondary">Annulé</Badge>;
       default:
         return <Badge>{status}</Badge>;
     }
@@ -41,11 +41,11 @@ export default async function MaintenancePage() {
       case 'urgent':
         return <Badge variant="destructive">Urgent</Badge>;
       case 'high':
-        return <Badge className="bg-orange-500">High</Badge>;
+        return <Badge className="bg-orange-500">Élevée</Badge>;
       case 'medium':
-        return <Badge variant="warning">Medium</Badge>;
+        return <Badge variant="warning">Moyenne</Badge>;
       case 'low':
-        return <Badge variant="secondary">Low</Badge>;
+        return <Badge variant="secondary">Basse</Badge>;
       default:
         return <Badge>{priority}</Badge>;
     }
@@ -58,13 +58,13 @@ export default async function MaintenancePage() {
         <div>
           <h1 className="text-3xl font-bold">Maintenance</h1>
           <p className="text-muted-foreground">
-            Track and manage maintenance requests
+            Suivre et gérer les demandes de maintenance
           </p>
         </div>
         <Button asChild>
           <Link href="/maintenance/new">
             <Plus className="mr-2 h-4 w-4" />
-            New Ticket
+            Nouveau ticket
           </Link>
         </Button>
       </div>
@@ -73,7 +73,7 @@ export default async function MaintenancePage() {
       <div className="grid gap-4 md:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Open</CardTitle>
+            <CardTitle className="text-sm font-medium">Ouverts</CardTitle>
             <AlertTriangle className="h-4 w-4 text-destructive" />
           </CardHeader>
           <CardContent>
@@ -82,7 +82,7 @@ export default async function MaintenancePage() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">In Progress</CardTitle>
+            <CardTitle className="text-sm font-medium">En cours</CardTitle>
             <Clock className="h-4 w-4 text-yellow-500" />
           </CardHeader>
           <CardContent>
@@ -91,7 +91,7 @@ export default async function MaintenancePage() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Completed</CardTitle>
+            <CardTitle className="text-sm font-medium">Terminés</CardTitle>
             <CheckCircle className="h-4 w-4 text-green-500" />
           </CardHeader>
           <CardContent>
@@ -100,7 +100,7 @@ export default async function MaintenancePage() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Cost</CardTitle>
+            <CardTitle className="text-sm font-medium">Coût total</CardTitle>
             <Wrench className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -116,7 +116,7 @@ export default async function MaintenancePage() {
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search tickets..."
+                placeholder="Rechercher des tickets..."
                 className="pl-10"
               />
             </div>
@@ -134,12 +134,12 @@ export default async function MaintenancePage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Title</TableHead>
-                  <TableHead>House</TableHead>
-                  <TableHead>Priority</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Created</TableHead>
-                  <TableHead className="text-right">Cost</TableHead>
+                  <TableHead>Titre</TableHead>
+                  <TableHead>Maison</TableHead>
+                  <TableHead>Priorité</TableHead>
+                  <TableHead>Statut</TableHead>
+                  <TableHead>Créé le</TableHead>
+                  <TableHead className="text-right">Coût</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -162,7 +162,7 @@ export default async function MaintenancePage() {
                       {ticket.house?.name || '-'}
                       {ticket.room && (
                         <p className="text-xs text-muted-foreground">
-                          Room: {ticket.room.name}
+                          Chambre : {ticket.room.name}
                         </p>
                       )}
                     </TableCell>
@@ -188,14 +188,14 @@ export default async function MaintenancePage() {
           ) : (
             <div className="flex flex-col items-center justify-center py-12">
               <Wrench className="h-12 w-12 text-muted-foreground mb-4" />
-              <h3 className="text-lg font-semibold mb-2">No tickets yet</h3>
+              <h3 className="text-lg font-semibold mb-2">Aucun ticket</h3>
               <p className="text-muted-foreground text-center mb-4">
-                Create a maintenance ticket when issues arise
+                Créez un ticket de maintenance lorsqu&apos;un problème survient
               </p>
               <Button asChild>
                 <Link href="/maintenance/new">
                   <Plus className="mr-2 h-4 w-4" />
-                  New Ticket
+                  Nouveau ticket
                 </Link>
               </Button>
             </div>

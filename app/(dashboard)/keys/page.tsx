@@ -26,13 +26,13 @@ export default async function KeysPage() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'available':
-        return <Badge variant="success">Available</Badge>;
+        return <Badge variant="success">Disponible</Badge>;
       case 'issued':
-        return <Badge variant="default">Issued</Badge>;
+        return <Badge variant="default">Remise</Badge>;
       case 'lost':
-        return <Badge variant="destructive">Lost</Badge>;
+        return <Badge variant="destructive">Perdue</Badge>;
       case 'replaced':
-        return <Badge variant="secondary">Replaced</Badge>;
+        return <Badge variant="secondary">Remplacée</Badge>;
       default:
         return <Badge>{status}</Badge>;
     }
@@ -43,15 +43,15 @@ export default async function KeysPage() {
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Keys</h1>
+          <h1 className="text-3xl font-bold">Clés</h1>
           <p className="text-muted-foreground">
-            Track and manage key inventory
+            Suivre et gérer l&apos;inventaire des clés
           </p>
         </div>
         <Button asChild>
           <Link href="/keys/new">
             <Plus className="mr-2 h-4 w-4" />
-            Add Key
+            Ajouter une clé
           </Link>
         </Button>
       </div>
@@ -60,7 +60,7 @@ export default async function KeysPage() {
       <div className="grid gap-4 md:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Keys</CardTitle>
+            <CardTitle className="text-sm font-medium">Total clés</CardTitle>
             <KeyRound className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -69,7 +69,7 @@ export default async function KeysPage() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Available</CardTitle>
+            <CardTitle className="text-sm font-medium">Disponibles</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-green-600">{availableKeys}</div>
@@ -77,7 +77,7 @@ export default async function KeysPage() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Issued</CardTitle>
+            <CardTitle className="text-sm font-medium">Remises</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{issuedKeys}</div>
@@ -85,7 +85,7 @@ export default async function KeysPage() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Lost</CardTitle>
+            <CardTitle className="text-sm font-medium">Perdues</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-destructive">{lostKeys}</div>
@@ -99,7 +99,7 @@ export default async function KeysPage() {
           <div className="flex flex-col gap-4 md:flex-row md:items-center">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input placeholder="Search keys..." className="pl-10" />
+              <Input placeholder="Rechercher des clés..." className="pl-10" />
             </div>
             <Button variant="outline" size="icon">
               <Filter className="h-4 w-4" />
@@ -115,13 +115,13 @@ export default async function KeysPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Key Number</TableHead>
+                  <TableHead>Numéro de clé</TableHead>
                   <TableHead>Type</TableHead>
-                  <TableHead>House</TableHead>
-                  <TableHead>Room</TableHead>
-                  <TableHead>Issued To</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="text-right">Replacement Cost</TableHead>
+                  <TableHead>Maison</TableHead>
+                  <TableHead>Chambre</TableHead>
+                  <TableHead>Remise à</TableHead>
+                  <TableHead>Statut</TableHead>
+                  <TableHead className="text-right">Coût de remplacement</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -157,14 +157,14 @@ export default async function KeysPage() {
           ) : (
             <div className="flex flex-col items-center justify-center py-12">
               <KeyRound className="h-12 w-12 text-muted-foreground mb-4" />
-              <h3 className="text-lg font-semibold mb-2">No keys yet</h3>
+              <h3 className="text-lg font-semibold mb-2">Aucune clé</h3>
               <p className="text-muted-foreground text-center mb-4">
-                Add keys to track your key inventory
+                Ajoutez des clés pour suivre votre inventaire
               </p>
               <Button asChild>
                 <Link href="/keys/new">
                   <Plus className="mr-2 h-4 w-4" />
-                  Add Key
+                  Ajouter une clé
                 </Link>
               </Button>
             </div>

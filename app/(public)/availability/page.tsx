@@ -22,13 +22,13 @@ export default async function AvailabilityPortalPage() {
           </div>
           <nav className="flex items-center gap-4">
             <Link href="#available" className="text-sm font-medium hover:text-primary">
-              Available Rooms
+              Chambres disponibles
             </Link>
             <Link href="#contact" className="text-sm font-medium hover:text-primary">
               Contact
             </Link>
             <Button asChild size="sm">
-              <Link href="/login">Staff Login</Link>
+              <Link href="/login">Connexion staff</Link>
             </Button>
           </nav>
         </div>
@@ -37,21 +37,21 @@ export default async function AvailabilityPortalPage() {
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-16 text-center">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">
-          Find Your New Home in Perth
+          Trouvez votre nouveau logement à Perth
         </h1>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-          Affordable, comfortable sharehouse accommodation in great locations across Perth, WA.
-          All-inclusive weekly rent with utilities included.
+          Hébergement en colocation abordable et confortable dans les meilleurs quartiers de Perth, WA.
+          Loyer hebdomadaire tout inclus avec les charges comprises.
         </p>
         <div className="flex justify-center gap-4">
           <Button asChild size="lg">
             <a href="#available">
-              View Available Rooms
+              Voir les chambres disponibles
               <ArrowRight className="ml-2 h-4 w-4" />
             </a>
           </Button>
           <Button variant="outline" size="lg" asChild>
-            <a href="#contact">Contact Us</a>
+            <a href="#contact">Nous contacter</a>
           </Button>
         </div>
       </section>
@@ -62,33 +62,33 @@ export default async function AvailabilityPortalPage() {
           <Card>
             <CardHeader>
               <DollarSign className="h-10 w-10 text-primary mb-2" />
-              <CardTitle>Simple Pricing</CardTitle>
+              <CardTitle>Tarifs simples</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground">
-                Weekly rent with no hidden fees. Many properties include utilities in the rent.
+                Loyer hebdomadaire sans frais cachés. De nombreuses propriétés incluent les charges dans le loyer.
               </p>
             </CardContent>
           </Card>
           <Card>
             <CardHeader>
               <Users className="h-10 w-10 text-primary mb-2" />
-              <CardTitle>Great Community</CardTitle>
+              <CardTitle>Belle communauté</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground">
-                Share with friendly housemates from around the world. Perfect for students and working holiday makers.
+                Partagez avec des colocataires sympathiques du monde entier. Idéal pour les étudiants et les voyageurs.
               </p>
             </CardContent>
           </Card>
           <Card>
             <CardHeader>
               <MapPin className="h-10 w-10 text-primary mb-2" />
-              <CardTitle>Prime Locations</CardTitle>
+              <CardTitle>Emplacements de choix</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground">
-                Properties in popular suburbs close to public transport, shops, and city amenities.
+                Propriétés dans des quartiers populaires, proches des transports en commun, commerces et commodités.
               </p>
             </CardContent>
           </Card>
@@ -98,9 +98,9 @@ export default async function AvailabilityPortalPage() {
       {/* Available Rooms */}
       <section id="available" className="container mx-auto px-4 py-12">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Available Rooms</h2>
+          <h2 className="text-3xl font-bold mb-4">Chambres disponibles</h2>
           <p className="text-muted-foreground">
-            {availableBeds?.length || 0} beds currently available
+            {availableBeds?.length || 0} lits actuellement disponibles
           </p>
         </div>
 
@@ -130,15 +130,15 @@ export default async function AvailabilityPortalPage() {
                 <CardContent>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Room</span>
+                      <span className="text-muted-foreground">Chambre</span>
                       <span>{(bed as any).room?.name}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Room Type</span>
+                      <span className="text-muted-foreground">Type de chambre</span>
                       <span className="capitalize">{(bed as any).room?.room_type}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Bed</span>
+                      <span className="text-muted-foreground">Lit</span>
                       <span>{bed.label}</span>
                     </div>
                   </div>
@@ -146,11 +146,11 @@ export default async function AvailabilityPortalPage() {
                 <CardFooter className="flex items-center justify-between border-t pt-4">
                   <div>
                     <span className="text-2xl font-bold">${bed.weekly_rent}</span>
-                    <span className="text-muted-foreground">/week</span>
+                    <span className="text-muted-foreground">/sem</span>
                   </div>
                   <Button asChild>
                     <a href={`mailto:hello@perthsharehouses.com?subject=Inquiry: ${(bed as any).room?.house?.address} - ${bed.label}`}>
-                      Enquire Now
+                      Nous contacter
                     </a>
                   </Button>
                 </CardFooter>
@@ -161,12 +161,12 @@ export default async function AvailabilityPortalPage() {
           <Card className="max-w-md mx-auto text-center py-12">
             <CardContent>
               <Bed className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-lg font-semibold mb-2">No Rooms Available</h3>
+              <h3 className="text-lg font-semibold mb-2">Aucune chambre disponible</h3>
               <p className="text-muted-foreground mb-4">
-                All our rooms are currently occupied. Please check back soon or contact us to be added to our waiting list.
+                Toutes nos chambres sont actuellement occupées. Revenez bientôt ou contactez-nous pour être ajouté à notre liste d'attente.
               </p>
               <Button asChild>
-                <a href="#contact">Join Waiting List</a>
+                <a href="#contact">Rejoindre la liste d'attente</a>
               </Button>
             </CardContent>
           </Card>
@@ -177,9 +177,9 @@ export default async function AvailabilityPortalPage() {
       <section id="contact" className="container mx-auto px-4 py-12">
         <Card className="max-w-2xl mx-auto">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl">Contact Us</CardTitle>
+            <CardTitle className="text-2xl">Nous contacter</CardTitle>
             <CardDescription>
-              Get in touch for enquiries or to schedule a viewing
+              Contactez-nous pour toute demande ou pour planifier une visite
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -190,7 +190,7 @@ export default async function AvailabilityPortalPage() {
               >
                 <Mail className="h-8 w-8 text-primary" />
                 <div>
-                  <p className="font-medium">Email</p>
+                  <p className="font-medium">E-mail</p>
                   <p className="text-sm text-muted-foreground">hello@perthsharehouses.com</p>
                 </div>
               </a>
@@ -200,14 +200,14 @@ export default async function AvailabilityPortalPage() {
               >
                 <Phone className="h-8 w-8 text-primary" />
                 <div>
-                  <p className="font-medium">Phone</p>
+                  <p className="font-medium">Téléphone</p>
                   <p className="text-sm text-muted-foreground">0412 345 678</p>
                 </div>
               </a>
             </div>
             <div className="text-center text-sm text-muted-foreground">
-              <p>Office Hours: Monday - Friday, 9am - 5pm (AWST)</p>
-              <p>Viewings available by appointment, including weekends</p>
+              <p>Horaires : Lundi - Vendredi, 9h - 17h (AWST)</p>
+              <p>Visites possibles sur rendez-vous, week-ends inclus</p>
             </div>
           </CardContent>
         </Card>
@@ -222,14 +222,14 @@ export default async function AvailabilityPortalPage() {
               <span className="font-semibold">Perth Sharehouses</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Perth Sharehouses. All rights reserved.
+              © {new Date().getFullYear()} Perth Sharehouses. Tous droits réservés.
             </p>
             <div className="flex gap-4 text-sm">
               <Link href="/privacy" className="text-muted-foreground hover:text-primary">
-                Privacy Policy
+                Politique de confidentialité
               </Link>
               <Link href="/terms" className="text-muted-foreground hover:text-primary">
-                Terms of Service
+                Conditions d'utilisation
               </Link>
             </div>
           </div>

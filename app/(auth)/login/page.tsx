@@ -28,7 +28,7 @@ export default function LoginPage() {
         toast.error(result.error);
       }
     } catch (error) {
-      toast.error('An error occurred during sign in');
+      toast.error('Une erreur est survenue lors de la connexion');
     } finally {
       setIsLoading(false);
     }
@@ -44,7 +44,7 @@ export default function LoginPage() {
           </div>
           <div className="text-left">
             <h1 className="font-bold text-xl tracking-tight">ShareHouse Manager</h1>
-            <p className="text-xs text-muted-foreground font-medium">Perth, Western Australia</p>
+            <p className="text-xs text-muted-foreground font-medium">Perth, Australie-Occidentale</p>
           </div>
         </div>
       </div>
@@ -54,15 +54,15 @@ export default function LoginPage() {
         <div className="h-1 bg-gradient-to-r from-primary via-primary/80 to-primary/40" />
 
         <CardHeader className="space-y-1 text-center pt-8 pb-2">
-          <CardTitle className="text-xl font-bold">Welcome back</CardTitle>
+          <CardTitle className="text-xl font-bold">Bon retour</CardTitle>
           <CardDescription>
-            Enter your credentials to access your account
+            Entrez vos identifiants pour accéder à votre compte
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-4 pt-4">
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Email</Label>
+              <Label htmlFor="email" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">E-mail</Label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/50" />
                 <Input
@@ -79,12 +79,12 @@ export default function LoginPage() {
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label htmlFor="password" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Password</Label>
+                <Label htmlFor="password" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Mot de passe</Label>
                 <Link
                   href="/forgot-password"
                   className="text-xs text-primary hover:underline font-medium"
                 >
-                  Forgot password?
+                  Mot de passe oublié ?
                 </Link>
               </div>
               <div className="relative">
@@ -92,7 +92,7 @@ export default function LoginPage() {
                 <Input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
-                  placeholder="Enter your password"
+                  placeholder="Entrez votre mot de passe"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -120,15 +120,15 @@ export default function LoginPage() {
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
                 <>
-                  Sign In
+                  Se connecter
                   <ArrowRight className="h-4 w-4" />
                 </>
               )}
             </Button>
             <p className="text-sm text-muted-foreground text-center">
-              Don&apos;t have an account?{' '}
+              Vous n&apos;avez pas de compte ?{' '}
               <Link href="/register" className="text-primary hover:underline font-medium">
-                Contact admin
+                Contacter l&apos;admin
               </Link>
             </p>
           </CardFooter>

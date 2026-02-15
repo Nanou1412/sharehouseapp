@@ -20,11 +20,11 @@ export default async function TenantsPage() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'active':
-        return <Badge variant="success">Active</Badge>;
+        return <Badge variant="success">Actif</Badge>;
       case 'inactive':
-        return <Badge variant="secondary">Inactive</Badge>;
+        return <Badge variant="secondary">Inactif</Badge>;
       case 'blacklisted':
-        return <Badge variant="destructive">Blacklisted</Badge>;
+        return <Badge variant="destructive">Liste noire</Badge>;
       default:
         return <Badge>{status}</Badge>;
     }
@@ -35,15 +35,15 @@ export default async function TenantsPage() {
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Tenants</h1>
+          <h1 className="text-3xl font-bold">Locataires</h1>
           <p className="text-muted-foreground">
-            Manage your tenants and their information
+            Gérer vos locataires et leurs informations
           </p>
         </div>
         <Button asChild>
           <Link href="/tenants/new">
             <Plus className="mr-2 h-4 w-4" />
-            Add Tenant
+            Ajouter un locataire
           </Link>
         </Button>
       </div>
@@ -55,7 +55,7 @@ export default async function TenantsPage() {
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search tenants..."
+                placeholder="Rechercher des locataires..."
                 className="pl-10"
               />
             </div>
@@ -73,9 +73,9 @@ export default async function TenantsPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Name</TableHead>
+                  <TableHead>Nom</TableHead>
                   <TableHead>Contact</TableHead>
-                  <TableHead>Status</TableHead>
+                  <TableHead>Statut</TableHead>
                   <TableHead>Visa</TableHead>
                 </TableRow>
               </TableHeader>
@@ -109,14 +109,14 @@ export default async function TenantsPage() {
           ) : (
             <div className="flex flex-col items-center justify-center py-12">
               <Users className="h-12 w-12 text-muted-foreground mb-4" />
-              <h3 className="text-lg font-semibold mb-2">No tenants yet</h3>
+              <h3 className="text-lg font-semibold mb-2">Aucun locataire</h3>
               <p className="text-muted-foreground text-center mb-4">
-                Get started by adding your first tenant
+                Commencez par ajouter votre premier locataire
               </p>
               <Button asChild>
                 <Link href="/tenants/new">
                   <Plus className="mr-2 h-4 w-4" />
-                  Add Tenant
+                  Ajouter un locataire
                 </Link>
               </Button>
             </div>

@@ -56,12 +56,12 @@ export default async function TenantDetailPage({ params }: PageProps) {
             </Badge>
           </div>
           <p className="text-muted-foreground">
-            Tenant profile and history
+            Profil et historique du locataire
           </p>
         </div>
         <Button asChild>
           <Link href={`/tenants/${params.id}/edit`}>
-            Edit Tenant
+            Modifier le locataire
           </Link>
         </Button>
       </div>
@@ -70,14 +70,14 @@ export default async function TenantDetailPage({ params }: PageProps) {
       <div className="grid gap-4 md:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Status</CardTitle>
+            <CardTitle className="text-sm font-medium">Statut</CardTitle>
             <Home className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold capitalize">{tenant.status}</div>
             {activeLease && (
               <p className="text-xs text-muted-foreground">
-                Since {format(new Date(activeLease.start_date), 'dd MMM yyyy')}
+                Depuis {format(new Date(activeLease.start_date), 'dd MMM yyyy')}
               </p>
             )}
           </CardContent>
@@ -85,7 +85,7 @@ export default async function TenantDetailPage({ params }: PageProps) {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Paid</CardTitle>
+            <CardTitle className="text-sm font-medium">Total payé</CardTitle>
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -97,7 +97,7 @@ export default async function TenantDetailPage({ params }: PageProps) {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Leases</CardTitle>
+            <CardTitle className="text-sm font-medium">Baux</CardTitle>
             <FileText className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -107,7 +107,7 @@ export default async function TenantDetailPage({ params }: PageProps) {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Balance</CardTitle>
+            <CardTitle className="text-sm font-medium">Solde</CardTitle>
             <AlertCircle className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -121,7 +121,7 @@ export default async function TenantDetailPage({ params }: PageProps) {
         {/* Contact Info */}
         <Card>
           <CardHeader>
-            <CardTitle>Contact Information</CardTitle>
+            <CardTitle>Coordonnées</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center gap-3">
@@ -148,20 +148,20 @@ export default async function TenantDetailPage({ params }: PageProps) {
         {/* Personal Details */}
         <Card>
           <CardHeader>
-            <CardTitle>Personal Details</CardTitle>
+            <CardTitle>Détails personnels</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             <div>
-              <p className="text-sm text-muted-foreground">Nationality</p>
-              <p className="font-medium">{tenant.nationality || 'Not specified'}</p>
+              <p className="text-sm text-muted-foreground">Nationalité</p>
+              <p className="font-medium">{tenant.nationality || 'Non spécifié'}</p>
             </div>
             <div>
-              <p className="text-sm text-muted-foreground">Visa Type</p>
-              <p className="font-medium capitalize">{tenant.visa_type || 'Not specified'}</p>
+              <p className="text-sm text-muted-foreground">Type de visa</p>
+              <p className="font-medium capitalize">{tenant.visa_type || 'Non spécifié'}</p>
             </div>
             {tenant.visa_expiry && (
               <div>
-                <p className="text-sm text-muted-foreground">Visa Expiry</p>
+                <p className="text-sm text-muted-foreground">Expiration du visa</p>
                 <p className="font-medium">{format(new Date(tenant.visa_expiry), 'dd MMM yyyy')}</p>
               </div>
             )}
@@ -171,26 +171,26 @@ export default async function TenantDetailPage({ params }: PageProps) {
         {/* Emergency Contact */}
         <Card>
           <CardHeader>
-            <CardTitle>Emergency Contact</CardTitle>
+            <CardTitle>Contact d&apos;urgence</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             {tenant.emergency_contact_name ? (
               <>
                 <div>
-                  <p className="text-sm text-muted-foreground">Name</p>
+                  <p className="text-sm text-muted-foreground">Nom</p>
                   <p className="font-medium">{tenant.emergency_contact_name}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">Relationship</p>
+                  <p className="text-sm text-muted-foreground">Relation</p>
                   <p className="font-medium">{tenant.emergency_contact_relation || 'N/A'}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">Phone</p>
+                  <p className="text-sm text-muted-foreground">Téléphone</p>
                   <p className="font-medium">{tenant.emergency_contact_phone || 'N/A'}</p>
                 </div>
               </>
             ) : (
-              <p className="text-muted-foreground">No emergency contact provided</p>
+              <p className="text-muted-foreground">Aucun contact d&apos;urgence fourni</p>
             )}
           </CardContent>
         </Card>
@@ -200,35 +200,35 @@ export default async function TenantDetailPage({ params }: PageProps) {
       {activeLease && (
         <Card>
           <CardHeader>
-            <CardTitle>Current Lease</CardTitle>
+            <CardTitle>Bail actuel</CardTitle>
             <CardDescription>
-              Active tenancy agreement
+              Contrat de location actif
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid gap-4 md:grid-cols-4">
               <div>
-                <p className="text-sm text-muted-foreground">Property</p>
+                <p className="text-sm text-muted-foreground">Propriété</p>
                 <p className="font-medium">
                   {(activeLease.bed as any)?.room?.house?.address || 'N/A'}
                 </p>
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Weekly Rent</p>
+                <p className="text-sm text-muted-foreground">Loyer hebdomadaire</p>
                 <p className="font-medium">${activeLease.weekly_rent}</p>
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Start Date</p>
+                <p className="text-sm text-muted-foreground">Date de début</p>
                 <p className="font-medium">
                   {format(new Date(activeLease.start_date), 'dd MMM yyyy')}
                 </p>
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">End Date</p>
+                <p className="text-sm text-muted-foreground">Date de fin</p>
                 <p className="font-medium">
                   {activeLease.end_date 
                     ? format(new Date(activeLease.end_date), 'dd MMM yyyy')
-                    : 'Ongoing'
+                    : 'En cours'
                   }
                 </p>
               </div>
@@ -242,14 +242,14 @@ export default async function TenantDetailPage({ params }: PageProps) {
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle>Payment History</CardTitle>
+              <CardTitle>Historique des paiements</CardTitle>
               <CardDescription>
-                Recent payments made by this tenant
+                Paiements récents de ce locataire
               </CardDescription>
             </div>
             <Button variant="outline" asChild>
               <Link href={`/payments?tenant=${params.id}`}>
-                View All
+                Voir tout
               </Link>
             </Button>
           </div>
@@ -260,9 +260,9 @@ export default async function TenantDetailPage({ params }: PageProps) {
               <TableHeader>
                 <TableRow>
                   <TableHead>Date</TableHead>
-                  <TableHead>Amount</TableHead>
-                  <TableHead>Method</TableHead>
-                  <TableHead>Reference</TableHead>
+                  <TableHead>Montant</TableHead>
+                  <TableHead>Méthode</TableHead>
+                  <TableHead>Référence</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -286,7 +286,7 @@ export default async function TenantDetailPage({ params }: PageProps) {
             </Table>
           ) : (
             <p className="text-center text-muted-foreground py-8">
-              No payments recorded yet
+              Aucun paiement enregistré
             </p>
           )}
         </CardContent>
@@ -299,11 +299,11 @@ export default async function TenantDetailPage({ params }: PageProps) {
             <div>
               <CardTitle>Documents</CardTitle>
               <CardDescription>
-                ID, contracts, and other documents
+                Pièces d&apos;identité, contrats et autres documents
               </CardDescription>
             </div>
             <Button variant="outline">
-              Upload Document
+              Télécharger un document
             </Button>
           </div>
         </CardHeader>
@@ -326,7 +326,7 @@ export default async function TenantDetailPage({ params }: PageProps) {
             </div>
           ) : (
             <p className="text-center text-muted-foreground py-8">
-              No documents uploaded yet
+              Aucun document téléchargé
             </p>
           )}
         </CardContent>

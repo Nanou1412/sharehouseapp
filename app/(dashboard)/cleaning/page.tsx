@@ -28,9 +28,9 @@ export default async function CleaningPage() {
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Cleaning Roster</h1>
+          <h1 className="text-3xl font-bold">Planning de ménage</h1>
           <p className="text-muted-foreground">
-            Manage cleaning schedules and track completion
+            Gérer les plannings de nettoyage et suivre la réalisation
           </p>
         </div>
       </div>
@@ -39,7 +39,7 @@ export default async function CleaningPage() {
       <div className="grid gap-4 md:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Tasks</CardTitle>
+            <CardTitle className="text-sm font-medium">Total tâches</CardTitle>
             <CalendarDays className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -48,7 +48,7 @@ export default async function CleaningPage() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Completed</CardTitle>
+            <CardTitle className="text-sm font-medium">Terminées</CardTitle>
             <CheckCircle className="h-4 w-4 text-green-600" />
           </CardHeader>
           <CardContent>
@@ -57,7 +57,7 @@ export default async function CleaningPage() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Pending</CardTitle>
+            <CardTitle className="text-sm font-medium">En attente</CardTitle>
             <XCircle className="h-4 w-4 text-orange-500" />
           </CardHeader>
           <CardContent>
@@ -66,7 +66,7 @@ export default async function CleaningPage() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Completion Rate</CardTitle>
+            <CardTitle className="text-sm font-medium">Taux de réalisation</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{completionRate}%</div>
@@ -80,7 +80,7 @@ export default async function CleaningPage() {
           <div className="flex flex-col gap-4 md:flex-row md:items-center">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input placeholder="Search cleaning tasks..." className="pl-10" />
+              <Input placeholder="Rechercher des tâches de ménage..." className="pl-10" />
             </div>
             <Button variant="outline" size="icon">
               <Filter className="h-4 w-4" />
@@ -96,13 +96,13 @@ export default async function CleaningPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Week</TableHead>
-                  <TableHead>Tenant</TableHead>
-                  <TableHead>House</TableHead>
-                  <TableHead>Areas</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Rating</TableHead>
-                  <TableHead>Notes</TableHead>
+                  <TableHead>Semaine</TableHead>
+                  <TableHead>Locataire</TableHead>
+                  <TableHead>Maison</TableHead>
+                  <TableHead>Zones</TableHead>
+                  <TableHead>Statut</TableHead>
+                  <TableHead>Note</TableHead>
+                  <TableHead>Commentaires</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -135,11 +135,11 @@ export default async function CleaningPage() {
                       {entry.is_completed ? (
                         <Badge variant="success">
                           <CheckCircle className="mr-1 h-3 w-3" />
-                          Completed
+                          Terminé
                         </Badge>
                       ) : (
                         <Badge variant="secondary">
-                          Pending
+                          En attente
                         </Badge>
                       )}
                     </TableCell>
@@ -160,9 +160,9 @@ export default async function CleaningPage() {
           ) : (
             <div className="flex flex-col items-center justify-center py-12">
               <CalendarDays className="h-12 w-12 text-muted-foreground mb-4" />
-              <h3 className="text-lg font-semibold mb-2">No cleaning tasks</h3>
+              <h3 className="text-lg font-semibold mb-2">Aucune tâche de ménage</h3>
               <p className="text-muted-foreground text-center mb-4">
-                Cleaning roster entries will appear here once assigned
+                Les tâches de ménage apparaîtront ici une fois attribuées
               </p>
             </div>
           )}

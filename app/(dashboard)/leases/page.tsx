@@ -51,22 +51,22 @@ export default async function LeasesPage() {
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Leases</h1>
+          <h1 className="text-3xl font-bold">Baux</h1>
           <p className="text-muted-foreground">
-            Manage tenancy agreements and reservations
+            Gérer les contrats de location et les réservations
           </p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" asChild>
             <Link href="/leases/reservations">
               <Calendar className="mr-2 h-4 w-4" />
-              Reservations
+              Réservations
             </Link>
           </Button>
           <Button asChild>
             <Link href="/leases/new">
               <Plus className="mr-2 h-4 w-4" />
-              New Lease
+              Nouveau bail
             </Link>
           </Button>
         </div>
@@ -76,7 +76,7 @@ export default async function LeasesPage() {
       <div className="grid gap-4 md:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Leases</CardTitle>
+            <CardTitle className="text-sm font-medium">Baux actifs</CardTitle>
             <CheckCircle className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -86,7 +86,7 @@ export default async function LeasesPage() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Pending Reservations</CardTitle>
+            <CardTitle className="text-sm font-medium">Réservations en attente</CardTitle>
             <Clock className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -96,18 +96,18 @@ export default async function LeasesPage() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Ending Soon</CardTitle>
+            <CardTitle className="text-sm font-medium">Fin proche</CardTitle>
             <Calendar className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-amber-600">{endingSoon}</div>
-            <p className="text-xs text-muted-foreground">Within 30 days</p>
+            <p className="text-xs text-muted-foreground">Dans les 30 jours</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Leases</CardTitle>
+            <CardTitle className="text-sm font-medium">Total baux</CardTitle>
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -124,7 +124,7 @@ export default async function LeasesPage() {
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
-                  placeholder="Search by tenant name..."
+                  placeholder="Rechercher par nom de locataire..."
                   className="pl-10"
                 />
               </div>
@@ -134,10 +134,10 @@ export default async function LeasesPage() {
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
-                <SelectItem value="active">Active</SelectItem>
-                <SelectItem value="pending">Pending</SelectItem>
-                <SelectItem value="ended">Ended</SelectItem>
+                <SelectItem value="all">Tous les statuts</SelectItem>
+                <SelectItem value="active">Actif</SelectItem>
+                <SelectItem value="pending">En attente</SelectItem>
+                <SelectItem value="ended">Terminé</SelectItem>
               </SelectContent>
             </Select>
             <Select defaultValue="all">
@@ -145,7 +145,7 @@ export default async function LeasesPage() {
                 <SelectValue placeholder="Property" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Properties</SelectItem>
+                <SelectItem value="all">Toutes les propriétés</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -155,9 +155,9 @@ export default async function LeasesPage() {
       {/* Leases Table */}
       <Card>
         <CardHeader>
-          <CardTitle>All Leases</CardTitle>
+          <CardTitle>Tous les baux</CardTitle>
           <CardDescription>
-            Click on a lease to view details
+            Cliquez sur un bail pour voir les détails
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -165,13 +165,13 @@ export default async function LeasesPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Tenant</TableHead>
-                  <TableHead>Property</TableHead>
-                  <TableHead>Room / Bed</TableHead>
-                  <TableHead>Weekly Rent</TableHead>
-                  <TableHead>Start Date</TableHead>
-                  <TableHead>End Date</TableHead>
-                  <TableHead>Status</TableHead>
+                  <TableHead>Locataire</TableHead>
+                  <TableHead>Propriété</TableHead>
+                  <TableHead>Chambre / Lit</TableHead>
+                  <TableHead>Loyer hebdo</TableHead>
+                  <TableHead>Date début</TableHead>
+                  <TableHead>Date fin</TableHead>
+                  <TableHead>Statut</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -205,7 +205,7 @@ export default async function LeasesPage() {
                       <TableCell>
                         {lease.end_date 
                           ? format(new Date(lease.end_date), 'dd MMM yyyy')
-                          : 'Ongoing'
+                          : 'En cours'
                         }
                       </TableCell>
                       <TableCell>
@@ -221,14 +221,14 @@ export default async function LeasesPage() {
           ) : (
             <div className="flex flex-col items-center justify-center py-12 text-center">
               <Users className="h-12 w-12 text-muted-foreground" />
-              <h3 className="mt-4 text-lg font-semibold">No leases yet</h3>
+              <h3 className="mt-4 text-lg font-semibold">Aucun bail</h3>
               <p className="text-muted-foreground">
-                Create a lease when a tenant moves in
+                Créez un bail lorsqu&apos;un locataire emménage
               </p>
               <Button asChild className="mt-4">
                 <Link href="/leases/new">
                   <Plus className="mr-2 h-4 w-4" />
-                  New Lease
+                  Nouveau bail
                 </Link>
               </Button>
             </div>
@@ -242,13 +242,13 @@ export default async function LeasesPage() {
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
-                <CardTitle>Upcoming Reservations</CardTitle>
+                <CardTitle>Réservations à venir</CardTitle>
                 <CardDescription>
-                  Pending and confirmed reservations
+                  Réservations en attente et confirmées
                 </CardDescription>
               </div>
               <Button variant="outline" asChild>
-                <Link href="/leases/reservations">View All</Link>
+                <Link href="/leases/reservations">Voir tout</Link>
               </Button>
             </div>
           </CardHeader>
@@ -256,10 +256,10 @@ export default async function LeasesPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Tenant</TableHead>
-                  <TableHead>Property</TableHead>
-                  <TableHead>Move-in Date</TableHead>
-                  <TableHead>Status</TableHead>
+                  <TableHead>Locataire</TableHead>
+                  <TableHead>Propriété</TableHead>
+                  <TableHead>Date d&apos;emménagement</TableHead>
+                  <TableHead>Statut</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

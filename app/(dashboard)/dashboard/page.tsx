@@ -137,22 +137,22 @@ export default async function DashboardPage() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Tableau de bord</h1>
           <p className="text-muted-foreground mt-1">
-            Overview of your sharehouse portfolio
+            Vue d&apos;ensemble de votre portefeuille de colocations
           </p>
         </div>
         <div className="flex gap-2">
           <Button asChild size="sm" variant="outline">
             <Link href="/houses/new">
               <Building2 className="mr-2 h-4 w-4" />
-              Add House
+              Ajouter une maison
             </Link>
           </Button>
           <Button asChild size="sm">
             <Link href="/tenants/new">
               <Users className="mr-2 h-4 w-4" />
-              Add Tenant
+              Ajouter un locataire
             </Link>
           </Button>
         </div>
@@ -162,7 +162,7 @@ export default async function DashboardPage() {
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Card className="relative overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Properties</CardTitle>
+            <CardTitle className="text-sm font-medium">Propriétés</CardTitle>
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
               <Building2 className="h-4 w-4 text-primary" />
             </div>
@@ -170,14 +170,14 @@ export default async function DashboardPage() {
           <CardContent>
             <div className="text-2xl font-bold">{stats.houseCount}</div>
             <p className="text-xs text-muted-foreground mt-1">
-              Active houses
+              Maisons actives
             </p>
           </CardContent>
         </Card>
 
         <Card className="relative overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Occupancy</CardTitle>
+            <CardTitle className="text-sm font-medium">Occupation</CardTitle>
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-500/10">
               <Users className="h-4 w-4 text-blue-500" />
             </div>
@@ -200,7 +200,7 @@ export default async function DashboardPage() {
 
         <Card className="relative overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Arrears</CardTitle>
+            <CardTitle className="text-sm font-medium">Arriérés</CardTitle>
             <div className={`flex h-8 w-8 items-center justify-center rounded-lg ${
               stats.totalArrears > 0 ? 'bg-destructive/10' : 'bg-green-500/10'
             }`}>
@@ -216,7 +216,7 @@ export default async function DashboardPage() {
               {formatCurrency(stats.totalArrears)}
             </div>
             <p className="text-xs text-muted-foreground mt-1">
-              {stats.tenantsInArrears} tenant{stats.tenantsInArrears !== 1 ? 's' : ''} in arrears
+              {stats.tenantsInArrears} locataire{stats.tenantsInArrears !== 1 ? 's' : ''} en arriéré
             </p>
           </CardContent>
         </Card>
@@ -235,7 +235,7 @@ export default async function DashboardPage() {
           <CardContent>
             <div className="text-2xl font-bold">{stats.openTickets}</div>
             <p className="text-xs text-muted-foreground mt-1">
-              Open ticket{stats.openTickets !== 1 ? 's' : ''}
+              Ticket{stats.openTickets !== 1 ? 's' : ''} ouvert{stats.openTickets !== 1 ? 's' : ''}
             </p>
           </CardContent>
         </Card>
@@ -246,20 +246,20 @@ export default async function DashboardPage() {
         {/* Quick Actions */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">Quick Actions</CardTitle>
-            <CardDescription>Common tasks at a glance</CardDescription>
+            <CardTitle className="text-base">Actions rapides</CardTitle>
+            <CardDescription>Tâches courantes en un coup d&apos;œil</CardDescription>
           </CardHeader>
           <CardContent className="grid grid-cols-2 gap-2">
             <Button asChild variant="outline" className="h-auto py-3 flex-col gap-1.5 justify-center hover:border-primary/50 hover:bg-primary/5 transition-all duration-200">
               <Link href="/tenants/new">
                 <Users className="h-5 w-5 text-primary" />
-                <span className="text-xs font-medium">New Tenant</span>
+                <span className="text-xs font-medium">Nouveau locataire</span>
               </Link>
             </Button>
             <Button asChild variant="outline" className="h-auto py-3 flex-col gap-1.5 justify-center hover:border-green-500/50 hover:bg-green-500/5 transition-all duration-200">
               <Link href="/payments/new">
                 <DollarSign className="h-5 w-5 text-green-500" />
-                <span className="text-xs font-medium">Record Payment</span>
+                <span className="text-xs font-medium">Enregistrer un paiement</span>
               </Link>
             </Button>
             <Button asChild variant="outline" className="h-auto py-3 flex-col gap-1.5 justify-center hover:border-amber-500/50 hover:bg-amber-500/5 transition-all duration-200">
@@ -271,7 +271,7 @@ export default async function DashboardPage() {
             <Button asChild variant="outline" className="h-auto py-3 flex-col gap-1.5 justify-center hover:border-violet-500/50 hover:bg-violet-500/5 transition-all duration-200">
               <Link href="/bills/new">
                 <Calendar className="h-5 w-5 text-violet-500" />
-                <span className="text-xs font-medium">Add Bill</span>
+                <span className="text-xs font-medium">Ajouter une facture</span>
               </Link>
             </Button>
           </CardContent>
@@ -281,11 +281,11 @@ export default async function DashboardPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
-              <CardTitle className="text-base">Recent Alerts</CardTitle>
-              <CardDescription>Latest notifications</CardDescription>
+              <CardTitle className="text-base">Alertes récentes</CardTitle>
+              <CardDescription>Dernières notifications</CardDescription>
             </div>
             {stats.unreadAlerts > 0 && (
-              <Badge variant="destructive" className="animate-pulse">{stats.unreadAlerts} unread</Badge>
+              <Badge variant="destructive" className="animate-pulse">{stats.unreadAlerts} non lue{stats.unreadAlerts !== 1 ? 's' : ''}</Badge>
             )}
           </CardHeader>
           <CardContent>
@@ -324,11 +324,11 @@ export default async function DashboardPage() {
             ) : (
               <div className="text-center py-8">
                 <Bell className="h-8 w-8 text-muted-foreground/40 mx-auto mb-2" />
-                <p className="text-sm text-muted-foreground">No recent alerts</p>
+                <p className="text-sm text-muted-foreground">Aucune alerte récente</p>
               </div>
             )}
             <Button asChild variant="ghost" size="sm" className="w-full mt-3">
-              <Link href="/alerts">View all alerts</Link>
+              <Link href="/alerts">Voir toutes les alertes</Link>
             </Button>
           </CardContent>
         </Card>
@@ -338,11 +338,11 @@ export default async function DashboardPage() {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
-            <CardTitle className="text-base">Recent Payments</CardTitle>
-            <CardDescription>Latest rent payments received</CardDescription>
+              <CardTitle className="text-base">Paiements récents</CardTitle>
+              <CardDescription>Derniers loyers reçus</CardDescription>
           </div>
           <Button asChild variant="outline" size="sm">
-            <Link href="/payments">View all</Link>
+            <Link href="/payments">Voir tout</Link>
           </Button>
         </CardHeader>
         <CardContent>
@@ -378,7 +378,7 @@ export default async function DashboardPage() {
           ) : (
             <div className="text-center py-8">
               <DollarSign className="h-8 w-8 text-muted-foreground/40 mx-auto mb-2" />
-              <p className="text-sm text-muted-foreground">No recent payments</p>
+              <p className="text-sm text-muted-foreground">Aucun paiement récent</p>
             </div>
           )}
         </CardContent>

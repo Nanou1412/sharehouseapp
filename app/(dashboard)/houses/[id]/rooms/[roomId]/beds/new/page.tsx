@@ -62,9 +62,9 @@ export default function NewBedPage({ params }: PageProps) {
         bed_number: 1, // Default value, can be adjusted
       });
       if (result.error) {
-        toast.error('Failed to create bed');
+        toast.error('Échec de la création du lit');
       } else {
-        toast.success('Bed created successfully');
+        toast.success('Lit créé avec succès');
         router.push(`/houses/${params.id}/rooms/${params.roomId}`);
       }
     } catch (error) {
@@ -84,9 +84,9 @@ export default function NewBedPage({ params }: PageProps) {
           </Link>
         </Button>
         <div>
-          <h1 className="text-3xl font-bold">Add New Bed</h1>
+          <h1 className="text-3xl font-bold">Ajouter un lit</h1>
           <p className="text-muted-foreground">
-            Create a new bed in this room
+            Créer un nouveau lit dans cette chambre
           </p>
         </div>
       </div>
@@ -94,18 +94,18 @@ export default function NewBedPage({ params }: PageProps) {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <Card>
           <CardHeader>
-            <CardTitle>Bed Details</CardTitle>
+            <CardTitle>Détails du lit</CardTitle>
             <CardDescription>
-              Bed specifications and pricing
+              Spécifications et tarif
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="label">Bed Label *</Label>
+                <Label htmlFor="label">Nom du lit *</Label>
                 <Input
                   id="label"
-                  placeholder="Bed A"
+                  placeholder="Lit A"
                   {...register('label')}
                 />
                 {errors.label && (
@@ -114,13 +114,13 @@ export default function NewBedPage({ params }: PageProps) {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="bed_type">Bed Type *</Label>
+                <Label htmlFor="bed_type">Type de lit *</Label>
                 <Select 
                   defaultValue="single"
                   onValueChange={(value) => setValue('bed_type', value as any)}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select bed type" />
+                    <SelectValue placeholder="Sélectionner le type" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="single">Single</SelectItem>
@@ -138,7 +138,7 @@ export default function NewBedPage({ params }: PageProps) {
 
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="weekly_rent">Weekly Rent ($) *</Label>
+                <Label htmlFor="weekly_rent">Loyer hebdomadaire ($) *</Label>
                 <Input
                   id="weekly_rent"
                   type="number"
@@ -152,7 +152,7 @@ export default function NewBedPage({ params }: PageProps) {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="bond_amount">Bond Amount ($)</Label>
+                <Label htmlFor="bond_amount">Montant de la caution ($)</Label>
                 <Input
                   id="bond_amount"
                   type="number"
@@ -161,7 +161,7 @@ export default function NewBedPage({ params }: PageProps) {
                   {...register('bond_amount', { valueAsNumber: true })}
                 />
                 <p className="text-xs text-muted-foreground">
-                  Leave empty to use default (4 weeks rent)
+                  Laisser vide pour utiliser la valeur par défaut (4 semaines de loyer)
                 </p>
               </div>
             </div>
@@ -171,10 +171,10 @@ export default function NewBedPage({ params }: PageProps) {
         <div className="flex gap-4">
           <Button type="submit" disabled={isLoading}>
             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Create Bed
+            Créer le lit
           </Button>
           <Button type="button" variant="outline" asChild>
-            <Link href={`/houses/${params.id}/rooms/${params.roomId}`}>Cancel</Link>
+            <Link href={`/houses/${params.id}/rooms/${params.roomId}`}>Annuler</Link>
           </Button>
         </div>
       </form>

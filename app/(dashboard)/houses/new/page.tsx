@@ -35,13 +35,13 @@ export default function NewHousePage() {
     try {
       const result = await createHouse(data);
       if (result.error) {
-        toast.error('Failed to create house');
+                toast.error('Échec de la création');
       } else {
-        toast.success('House created successfully');
+        toast.success('Maison créée avec succès');
         router.push('/houses');
       }
     } catch (error) {
-      toast.error('An error occurred');
+      toast.error('Une erreur est survenue');
     } finally {
       setIsLoading(false);
     }
@@ -57,25 +57,25 @@ export default function NewHousePage() {
           </Link>
         </Button>
         <div>
-          <h1 className="text-3xl font-bold">Add New House</h1>
+          <h1 className="text-3xl font-bold">Ajouter une maison</h1>
           <p className="text-muted-foreground">
-            Create a new sharehouse property
+            Créer une nouvelle propriété de colocation
           </p>
         </div>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Property Details</CardTitle>
+          <CardTitle>Détails de la propriété</CardTitle>
           <CardDescription>
-            Enter the basic information about the property
+            Entrez les informations de base sur la propriété
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="name">Property Name *</Label>
+                <Label htmlFor="name">Nom de la propriété *</Label>
                 <Input
                   id="name"
                   placeholder="e.g., Northbridge House"
@@ -100,7 +100,7 @@ export default function NewHousePage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="address">Full Address *</Label>
+              <Label htmlFor="address">Adresse complète *</Label>
               <Input
                 id="address"
                 placeholder="e.g., 123 James Street, Northbridge WA 6003"
@@ -125,7 +125,7 @@ export default function NewHousePage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="property_manager">Property Manager</Label>
+                <Label htmlFor="property_manager">Gérant</Label>
                 <Input
                   id="property_manager"
                   placeholder="Manager name"
@@ -136,7 +136,7 @@ export default function NewHousePage() {
 
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="owner_name">Owner Name</Label>
+                <Label htmlFor="owner_name">Nom du propriétaire</Label>
                 <Input
                   id="owner_name"
                   placeholder="Owner name"
@@ -145,7 +145,7 @@ export default function NewHousePage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="owner_contact">Owner Contact</Label>
+                <Label htmlFor="owner_contact">Contact du propriétaire</Label>
                 <Input
                   id="owner_contact"
                   placeholder="Phone or email"
@@ -161,16 +161,16 @@ export default function NewHousePage() {
                 {...register('is_active')}
                 className="h-4 w-4 rounded border-gray-300"
               />
-              <Label htmlFor="is_active">Property is active</Label>
+              <Label htmlFor="is_active">Propriété active</Label>
             </div>
 
             <div className="flex gap-4">
               <Button type="submit" disabled={isLoading}>
                 {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Create House
+                Créer la maison
               </Button>
               <Button type="button" variant="outline" asChild>
-                <Link href="/houses">Cancel</Link>
+                <Link href="/houses">Annuler</Link>
               </Button>
             </div>
           </form>

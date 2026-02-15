@@ -41,7 +41,7 @@ export function Header({ user }: HeaderProps) {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground transition-colors group-focus-within:text-foreground" />
           <Input
             type="search"
-            placeholder="Search tenants, houses..."
+            placeholder="Rechercher locataires, maisons..."
             className="pl-10 h-9 bg-muted/50 border-transparent focus:border-border focus:bg-background transition-all duration-200"
           />
         </div>
@@ -58,7 +58,7 @@ export function Header({ user }: HeaderProps) {
         >
           <Sun className="h-[1.1rem] w-[1.1rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
           <Moon className="absolute h-[1.1rem] w-[1.1rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          <span className="sr-only">Toggle theme</span>
+          <span className="sr-only">Changer le thème</span>
         </Button>
 
         {/* Notifications */}
@@ -80,27 +80,27 @@ export function Header({ user }: HeaderProps) {
                 {initials}
               </div>
               <span className="text-sm font-medium hidden sm:inline-block max-w-[120px] truncate">
-                {user?.profile?.full_name || user?.email || 'Account'}
+                {user?.profile?.full_name || user?.email || 'Compte'}
               </span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuLabel className="font-normal">
               <div className="flex flex-col space-y-1">
-                <p className="text-sm font-medium">{user?.profile?.full_name || 'My Account'}</p>
+                <p className="text-sm font-medium">{user?.profile?.full_name || 'Mon compte'}</p>
                 <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <Link href="/settings/profile">Profile</Link>
+              <Link href="/settings/profile">Profil</Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href="/settings">Settings</Link>
+              <Link href="/settings">Paramètres</Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild className="text-destructive focus:text-destructive">
-              <Link href="/api/auth/signout">Sign out</Link>
+              <Link href="/api/auth/signout">Déconnexion</Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

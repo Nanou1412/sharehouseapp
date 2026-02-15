@@ -33,15 +33,15 @@ export default async function HousesPage() {
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Houses</h1>
+          <h1 className="text-3xl font-bold">Maisons</h1>
           <p className="text-muted-foreground">
-            Manage your sharehouse properties
+            Gérer vos propriétés de colocation
           </p>
         </div>
         <Button asChild>
           <Link href="/houses/new">
             <Plus className="mr-2 h-4 w-4" />
-            Add House
+            Ajouter une maison
           </Link>
         </Button>
       </div>
@@ -97,20 +97,20 @@ export default async function HousesPage() {
                     <div className="grid grid-cols-3 gap-4 text-center">
                       <div>
                         <p className="text-2xl font-bold">{houseRooms.length}</p>
-                        <p className="text-xs text-muted-foreground">Rooms</p>
+                        <p className="text-xs text-muted-foreground">Chambres</p>
                       </div>
                       <div>
                         <p className="text-2xl font-bold">{totalBeds}</p>
-                        <p className="text-xs text-muted-foreground">Beds</p>
+                        <p className="text-xs text-muted-foreground">Lits</p>
                       </div>
                       <div>
                         <p className="text-2xl font-bold">{occupancyRate}%</p>
-                        <p className="text-xs text-muted-foreground">Occupied</p>
+                        <p className="text-xs text-muted-foreground">Occupé</p>
                       </div>
                     </div>
                     <div className="mt-4 pt-4 border-t">
                       <div className="flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">Address</span>
+                        <span className="text-muted-foreground">Adresse</span>
                         <span className="truncate max-w-[180px]">{house.address}</span>
                       </div>
                     </div>
@@ -124,14 +124,14 @@ export default async function HousesPage() {
         <Card>
           <CardContent className="flex flex-col items-center justify-center py-12">
             <Building2 className="h-12 w-12 text-muted-foreground mb-4" />
-            <h3 className="text-lg font-semibold mb-2">No houses yet</h3>
+            <h3 className="text-lg font-semibold mb-2">Aucune maison</h3>
             <p className="text-muted-foreground text-center mb-4">
-              Get started by adding your first sharehouse property
+              Commencez par ajouter votre première propriété
             </p>
             <Button asChild>
               <Link href="/houses/new">
                 <Plus className="mr-2 h-4 w-4" />
-                Add House
+                Ajouter une maison
               </Link>
             </Button>
           </CardContent>

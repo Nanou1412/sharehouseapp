@@ -85,13 +85,13 @@ export default function NewMaintenancePage() {
         responsibility: 'landlord',
       });
       if (result.error) {
-        toast.error('Failed to create maintenance ticket');
+        toast.error('Échec de la création du ticket');
       } else {
-        toast.success('Maintenance ticket created');
+        toast.success('Ticket de maintenance créé');
         router.push('/maintenance');
       }
     } catch (error) {
-      toast.error('An error occurred');
+      toast.error('Une erreur est survenue');
     } finally {
       setIsLoading(false);
     }
@@ -107,9 +107,9 @@ export default function NewMaintenancePage() {
           </Link>
         </Button>
         <div>
-          <h1 className="text-3xl font-bold">New Maintenance Request</h1>
+          <h1 className="text-3xl font-bold">Nouvelle demande de maintenance</h1>
           <p className="text-muted-foreground">
-            Report a maintenance issue
+            Signaler un problème de maintenance
           </p>
         </div>
       </div>
@@ -117,18 +117,18 @@ export default function NewMaintenancePage() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <Card>
           <CardHeader>
-            <CardTitle>Location</CardTitle>
+            <CardTitle>Localisation</CardTitle>
             <CardDescription>
-              Where is the issue located?
+              Où se situe le problème ?
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label>Property *</Label>
+                <Label>Propriété *</Label>
                 <Select onValueChange={handleHouseChange}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select property" />
+                    <SelectValue placeholder="Sélectionner une propriété" />
                   </SelectTrigger>
                   <SelectContent>
                     {houses.map((house) => (
@@ -144,13 +144,13 @@ export default function NewMaintenancePage() {
               </div>
 
               <div className="space-y-2">
-                <Label>Room (Optional)</Label>
+                <Label>Chambre (Optionnel)</Label>
                 <Select 
                   onValueChange={(value) => setValue('room_id', value)}
                   disabled={rooms.length === 0}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select room" />
+                    <SelectValue placeholder="Sélectionner une chambre" />
                   </SelectTrigger>
                   <SelectContent>
                     {rooms.map((room) => (
@@ -167,17 +167,17 @@ export default function NewMaintenancePage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Issue Details</CardTitle>
+            <CardTitle>Détails du problème</CardTitle>
             <CardDescription>
-              Describe the maintenance issue
+              Décrire le problème de maintenance
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="title">Title *</Label>
+              <Label htmlFor="title">Titre *</Label>
               <Input
                 id="title"
-                placeholder="e.g., Leaking tap in bathroom"
+                placeholder="ex. Fuite du robinet dans la salle de bain"
                 {...register('title')}
               />
               {errors.title && (
@@ -190,7 +190,7 @@ export default function NewMaintenancePage() {
               <textarea
                 id="description"
                 className="flex min-h-[120px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                placeholder="Provide detailed information about the issue..."
+                placeholder="Décrivez le problème en détail..."
                 {...register('description')}
               />
               {errors.description && (
@@ -200,40 +200,40 @@ export default function NewMaintenancePage() {
 
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label>Category *</Label>
+                <Label>Catégorie *</Label>
                 <Select 
                   defaultValue="other"
                   onValueChange={(value) => setValue('category', value as any)}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select category" />
+                    <SelectValue placeholder="Sélectionner une catégorie" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="plumbing">Plumbing</SelectItem>
-                    <SelectItem value="electrical">Electrical</SelectItem>
-                    <SelectItem value="appliance">Appliance</SelectItem>
-                    <SelectItem value="structural">Structural</SelectItem>
-                    <SelectItem value="pest">Pest Control</SelectItem>
-                    <SelectItem value="cleaning">Cleaning</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
+                    <SelectItem value="plumbing">Plomberie</SelectItem>
+                    <SelectItem value="electrical">Électricité</SelectItem>
+                    <SelectItem value="appliance">Électroménager</SelectItem>
+                    <SelectItem value="structural">Structure</SelectItem>
+                    <SelectItem value="pest">Nuisibles</SelectItem>
+                    <SelectItem value="cleaning">Nettoyage</SelectItem>
+                    <SelectItem value="other">Autre</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div className="space-y-2">
-                <Label>Priority *</Label>
+                <Label>Priorité *</Label>
                 <Select 
                   defaultValue="medium"
                   onValueChange={(value) => setValue('priority', value as any)}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select priority" />
+                    <SelectValue placeholder="Sélectionner la priorité" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="low">Low</SelectItem>
-                    <SelectItem value="medium">Medium</SelectItem>
-                    <SelectItem value="high">High</SelectItem>
-                    <SelectItem value="urgent">Urgent</SelectItem>
+                    <SelectItem value="low">Basse</SelectItem>
+                    <SelectItem value="medium">Moyenne</SelectItem>
+                    <SelectItem value="high">Haute</SelectItem>
+                    <SelectItem value="urgent">Urgente</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -244,10 +244,10 @@ export default function NewMaintenancePage() {
         <div className="flex gap-4">
           <Button type="submit" disabled={isLoading}>
             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Create Ticket
+            Créer le ticket
           </Button>
           <Button type="button" variant="outline" asChild>
-            <Link href="/maintenance">Cancel</Link>
+            <Link href="/maintenance">Annuler</Link>
           </Button>
         </div>
       </form>

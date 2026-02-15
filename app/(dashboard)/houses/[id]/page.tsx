@@ -54,13 +54,13 @@ export default async function HouseDetailPage({ params }: PageProps) {
           <Button variant="outline" asChild>
             <Link href={`/houses/${params.id}/edit`}>
               <Settings className="mr-2 h-4 w-4" />
-              Edit House
+              Modifier
             </Link>
           </Button>
           <Button asChild>
             <Link href={`/houses/${params.id}/rooms/new`}>
               <Plus className="mr-2 h-4 w-4" />
-              Add Room
+              Ajouter une chambre
             </Link>
           </Button>
         </div>
@@ -70,7 +70,7 @@ export default async function HouseDetailPage({ params }: PageProps) {
       <div className="grid gap-4 md:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Rooms</CardTitle>
+            <CardTitle className="text-sm font-medium">Chambres</CardTitle>
             <Home className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -80,7 +80,7 @@ export default async function HouseDetailPage({ params }: PageProps) {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Beds</CardTitle>
+            <CardTitle className="text-sm font-medium">Total lits</CardTitle>
             <BedIcon className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -90,20 +90,20 @@ export default async function HouseDetailPage({ params }: PageProps) {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Occupied</CardTitle>
+            <CardTitle className="text-sm font-medium">Occupés</CardTitle>
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{occupiedBeds}</div>
             <p className="text-xs text-muted-foreground">
-              {totalBeds - occupiedBeds} available
+              {totalBeds - occupiedBeds} disponible{totalBeds - occupiedBeds !== 1 ? 's' : ''}
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Occupancy Rate</CardTitle>
+            <CardTitle className="text-sm font-medium">Taux d&apos;occupation</CardTitle>
             <Calendar className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -116,26 +116,26 @@ export default async function HouseDetailPage({ params }: PageProps) {
       <div className="grid gap-6 md:grid-cols-3">
         <Card className="md:col-span-2">
           <CardHeader>
-            <CardTitle>Property Details</CardTitle>
+            <CardTitle>Détails de la propriété</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
               <div>
-                <p className="text-sm text-muted-foreground">Address</p>
+                <p className="text-sm text-muted-foreground">Adresse</p>
                 <p className="font-medium">{house.address}</p>
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Suburb</p>
+                <p className="text-sm text-muted-foreground">Quartier</p>
                 <p className="font-medium">{house.suburb}</p>
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Postcode</p>
+                <p className="text-sm text-muted-foreground">Code postal</p>
                 <p className="font-medium">{house.postcode}</p>
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Bill Split Mode</p>
+                <p className="text-sm text-muted-foreground">Mode de partage des factures</p>
                 <p className="font-medium">
-                  {house.default_bill_split_mode?.replace('_', ' ') || 'Equal per occupant'}
+                  {house.default_bill_split_mode?.replace('_', ' ') || 'Égal par occupant'}
                 </p>
               </div>
             </div>
@@ -144,18 +144,18 @@ export default async function HouseDetailPage({ params }: PageProps) {
 
         <Card>
           <CardHeader>
-            <CardTitle>Default Costs</CardTitle>
+            <CardTitle>Coûts par défaut</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             {house.default_bond_weeks && (
               <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">Bond</span>
-                <span className="font-medium">{house.default_bond_weeks} weeks</span>
+                <span className="text-muted-foreground">Caution</span>
+                <span className="font-medium">{house.default_bond_weeks} semaines</span>
               </div>
             )}
             {house.property_manager && (
               <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">Manager</span>
+                <span className="text-muted-foreground">Gérant</span>
                 <span className="font-medium">{house.property_manager}</span>
               </div>
             )}
@@ -168,15 +168,15 @@ export default async function HouseDetailPage({ params }: PageProps) {
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle>Rooms</CardTitle>
+              <CardTitle>Chambres</CardTitle>
               <CardDescription>
-                All rooms in this property
+                Toutes les chambres de cette propriété
               </CardDescription>
             </div>
             <Button asChild>
               <Link href={`/houses/${params.id}/rooms/new`}>
                 <Plus className="mr-2 h-4 w-4" />
-                Add Room
+                Ajouter une chambre
               </Link>
             </Button>
           </div>
@@ -204,19 +204,19 @@ export default async function HouseDetailPage({ params }: PageProps) {
                           </Badge>
                         </div>
                         <CardDescription>
-                          {room.room_type} room
+                          Chambre {room.room_type}
                         </CardDescription>
                       </CardHeader>
                       <CardContent>
                         <div className="flex items-center gap-4 text-sm text-muted-foreground">
                           <div className="flex items-center gap-1">
                             <BedIcon className="h-4 w-4" />
-                            {totalRoomBeds} beds
+                            {totalRoomBeds} lits
                           </div>
                           {room.weekly_rent && (
                             <div className="flex items-center gap-1">
                               <DollarSign className="h-4 w-4" />
-                              ${room.weekly_rent}/week
+                              ${room.weekly_rent}/sem
                             </div>
                           )}
                         </div>
@@ -229,14 +229,14 @@ export default async function HouseDetailPage({ params }: PageProps) {
           ) : (
             <div className="flex flex-col items-center justify-center py-12 text-center">
               <Home className="h-12 w-12 text-muted-foreground" />
-              <h3 className="mt-4 text-lg font-semibold">No rooms yet</h3>
+              <h3 className="mt-4 text-lg font-semibold">Aucune chambre</h3>
               <p className="text-muted-foreground">
-                Add rooms to this property to manage beds and tenants
+                Ajoutez des chambres pour gérer les lits et locataires
               </p>
               <Button asChild className="mt-4">
                 <Link href={`/houses/${params.id}/rooms/new`}>
                   <Plus className="mr-2 h-4 w-4" />
-                  Add Room
+                  Ajouter une chambre
                 </Link>
               </Button>
             </div>

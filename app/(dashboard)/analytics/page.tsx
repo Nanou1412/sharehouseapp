@@ -44,9 +44,9 @@ export default async function AnalyticsPage() {
     <div className="space-y-6">
       {/* Page Header */}
       <div>
-        <h1 className="text-3xl font-bold">Analytics</h1>
+        <h1 className="text-3xl font-bold">Statistiques</h1>
         <p className="text-muted-foreground">
-          Financial insights and performance metrics
+          Indicateurs financiers et performances
         </p>
       </div>
 
@@ -54,7 +54,7 @@ export default async function AnalyticsPage() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Expected Rent</CardTitle>
+            <CardTitle className="text-sm font-medium">Loyer attendu</CardTitle>
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -62,14 +62,14 @@ export default async function AnalyticsPage() {
               {formatCurrency(portfolioKPIs?.totalExpectedRent || 0)}
             </div>
             <p className="text-xs text-muted-foreground">
-              Weekly across all properties
+              Hebdomadaire sur toutes les propriétés
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Collected</CardTitle>
+            <CardTitle className="text-sm font-medium">Collecté</CardTitle>
             <TrendingUp className="h-4 w-4 text-green-500" />
           </CardHeader>
           <CardContent>
@@ -77,14 +77,14 @@ export default async function AnalyticsPage() {
               {formatCurrency(portfolioKPIs?.totalCollectedRent || 0)}
             </div>
             <p className="text-xs text-muted-foreground">
-              {portfolioKPIs?.collectionRate.toFixed(1)}% collection rate
+              {portfolioKPIs?.collectionRate.toFixed(1)}% taux de collecte
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Vacancy Loss</CardTitle>
+            <CardTitle className="text-sm font-medium">Perte vacance</CardTitle>
             <TrendingDown className="h-4 w-4 text-destructive" />
           </CardHeader>
           <CardContent>
@@ -92,14 +92,14 @@ export default async function AnalyticsPage() {
               {formatCurrency(portfolioKPIs?.totalVacancyLoss || 0)}
             </div>
             <p className="text-xs text-muted-foreground">
-              From unoccupied beds
+              Lits inoccupés
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Net Profit</CardTitle>
+            <CardTitle className="text-sm font-medium">Bénéfice net</CardTitle>
             <Percent className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -109,7 +109,7 @@ export default async function AnalyticsPage() {
               {formatCurrency(portfolioKPIs?.totalNetProfit || 0)}
             </div>
             <p className="text-xs text-muted-foreground">
-              After all costs
+              Après tous les coûts
             </p>
           </CardContent>
         </Card>
@@ -119,15 +119,15 @@ export default async function AnalyticsPage() {
       <div className="grid gap-6 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>Arrears Aging</CardTitle>
-            <CardDescription>Breakdown by age bucket</CardDescription>
+            <CardTitle>Ancienneté des arriérés</CardTitle>
+            <CardDescription>Répartition par tranches d&apos;âge</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                  <span className="text-sm">0-7 days</span>
+                  <span className="text-sm">0-7 jours</span>
                 </div>
                 <span className="font-medium">
                   {formatCurrency(arrearsAnalysis?.agingBuckets['0-7'] || 0)}
@@ -136,7 +136,7 @@ export default async function AnalyticsPage() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full bg-orange-500" />
-                  <span className="text-sm">8-14 days</span>
+                  <span className="text-sm">8-14 jours</span>
                 </div>
                 <span className="font-medium">
                   {formatCurrency(arrearsAnalysis?.agingBuckets['8-14'] || 0)}
@@ -145,7 +145,7 @@ export default async function AnalyticsPage() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full bg-red-500" />
-                  <span className="text-sm">15-30 days</span>
+                  <span className="text-sm">15-30 jours</span>
                 </div>
                 <span className="font-medium">
                   {formatCurrency(arrearsAnalysis?.agingBuckets['15-30'] || 0)}
@@ -154,7 +154,7 @@ export default async function AnalyticsPage() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full bg-red-800" />
-                  <span className="text-sm">30+ days</span>
+                  <span className="text-sm">30+ jours</span>
                 </div>
                 <span className="font-medium">
                   {formatCurrency(arrearsAnalysis?.agingBuckets['30+'] || 0)}
@@ -163,7 +163,7 @@ export default async function AnalyticsPage() {
             </div>
             <div className="mt-6 pt-4 border-t">
               <div className="flex items-center justify-between">
-                <span className="font-medium">Total Arrears</span>
+                <span className="font-medium">Total arriérés</span>
                 <span className="text-lg font-bold text-destructive">
                   {formatCurrency(arrearsAnalysis?.totalArrears || 0)}
                 </span>
@@ -174,16 +174,16 @@ export default async function AnalyticsPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>High Risk Tenants</CardTitle>
-            <CardDescription>Tenants with significant arrears</CardDescription>
+            <CardTitle>Locataires à risque</CardTitle>
+            <CardDescription>Locataires avec des arriérés significatifs</CardDescription>
           </CardHeader>
           <CardContent>
             {arrearsAnalysis?.highRiskTenants && arrearsAnalysis.highRiskTenants.length > 0 ? (
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Tenant</TableHead>
-                    <TableHead className="text-right">Arrears</TableHead>
+                    <TableHead>Locataire</TableHead>
+                    <TableHead className="text-right">Arriérés</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -203,7 +203,7 @@ export default async function AnalyticsPage() {
               <div className="flex flex-col items-center justify-center py-8">
                 <Users className="h-8 w-8 text-muted-foreground mb-2" />
                 <p className="text-sm text-muted-foreground">
-                  No high risk tenants
+                  Aucun locataire à risque
                 </p>
               </div>
             )}
@@ -214,29 +214,29 @@ export default async function AnalyticsPage() {
       {/* Portfolio Summary */}
       <Card>
         <CardHeader>
-          <CardTitle>Portfolio Summary</CardTitle>
-          <CardDescription>Overview of all properties</CardDescription>
+          <CardTitle>Résumé du portefeuille</CardTitle>
+          <CardDescription>Vue d&apos;ensemble de toutes les propriétés</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-6 md:grid-cols-3">
             <div className="text-center p-4 border rounded-lg">
               <Building2 className="h-8 w-8 mx-auto mb-2 text-primary" />
               <p className="text-2xl font-bold">{houseIds.length}</p>
-              <p className="text-sm text-muted-foreground">Active Properties</p>
+              <p className="text-sm text-muted-foreground">Propriétés actives</p>
             </div>
             <div className="text-center p-4 border rounded-lg">
               <DollarSign className="h-8 w-8 mx-auto mb-2 text-green-500" />
               <p className="text-2xl font-bold">
                 {formatCurrency(portfolioKPIs?.totalFixedCosts || 0)}
               </p>
-              <p className="text-sm text-muted-foreground">Weekly Fixed Costs</p>
+              <p className="text-sm text-muted-foreground">Coûts fixes hebdomadaires</p>
             </div>
             <div className="text-center p-4 border rounded-lg">
               <AlertTriangle className="h-8 w-8 mx-auto mb-2 text-yellow-500" />
               <p className="text-2xl font-bold">
                 {formatCurrency(portfolioKPIs?.totalMaintenanceCosts || 0)}
               </p>
-              <p className="text-sm text-muted-foreground">Maintenance Costs</p>
+              <p className="text-sm text-muted-foreground">Coûts de maintenance</p>
             </div>
           </div>
         </CardContent>

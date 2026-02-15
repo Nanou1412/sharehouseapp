@@ -16,9 +16,9 @@ export default function SettingsPage() {
     <div className="space-y-6">
       {/* Page Header */}
       <div>
-        <h1 className="text-3xl font-bold">Settings</h1>
+        <h1 className="text-3xl font-bold">Paramètres</h1>
         <p className="text-muted-foreground">
-          Manage your application preferences
+          Gérer les préférences de l&apos;application
         </p>
       </div>
 
@@ -28,16 +28,16 @@ export default function SettingsPage() {
           <CardHeader>
             <div className="flex items-center gap-2">
               <Building2 className="h-5 w-5 text-muted-foreground" />
-              <CardTitle>Company Information</CardTitle>
+              <CardTitle>Informations de l&apos;entreprise</CardTitle>
             </div>
             <CardDescription>
-              Your business details for invoices and communications
+              Vos coordonnées professionnelles pour les factures et communications
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="company_name">Company Name</Label>
+                <Label htmlFor="company_name">Nom de l&apos;entreprise</Label>
                 <Input
                   id="company_name"
                   placeholder="Perth Sharehouses Pty Ltd"
@@ -53,7 +53,7 @@ export default function SettingsPage() {
             </div>
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="email">Contact Email</Label>
+                <Label htmlFor="email">Email de contact</Label>
                 <Input
                   id="email"
                   type="email"
@@ -61,14 +61,14 @@ export default function SettingsPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="phone">Contact Phone</Label>
+                <Label htmlFor="phone">Téléphone de contact</Label>
                 <Input
                   id="phone"
                   placeholder="(08) 9123 4567"
                 />
               </div>
             </div>
-            <Button>Save Changes</Button>
+            <Button>Enregistrer</Button>
           </CardContent>
         </Card>
 
@@ -80,13 +80,13 @@ export default function SettingsPage() {
               <CardTitle>Notifications</CardTitle>
             </div>
             <CardDescription>
-              Configure alert thresholds and notification preferences
+              Configurer les seuils d&apos;alerte et préférences de notification
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="rent_overdue_days">Rent Overdue Alert (days)</Label>
+                <Label htmlFor="rent_overdue_days">Alerte loyer en retard (jours)</Label>
                 <Input
                   id="rent_overdue_days"
                   type="number"
@@ -94,7 +94,7 @@ export default function SettingsPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="lease_expiry_days">Lease Expiry Alert (days)</Label>
+                <Label htmlFor="lease_expiry_days">Alerte expiration bail (jours)</Label>
                 <Input
                   id="lease_expiry_days"
                   type="number"
@@ -104,7 +104,7 @@ export default function SettingsPage() {
             </div>
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="visa_expiry_days">Visa Expiry Alert (days)</Label>
+                <Label htmlFor="visa_expiry_days">Alerte expiration visa (jours)</Label>
                 <Input
                   id="visa_expiry_days"
                   type="number"
@@ -112,15 +112,15 @@ export default function SettingsPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email_notifications">Email Notifications</Label>
+                <Label htmlFor="email_notifications">Notifications par email</Label>
                 <Select defaultValue="all">
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">All Notifications</SelectItem>
-                    <SelectItem value="important">Important Only</SelectItem>
-                    <SelectItem value="none">None</SelectItem>
+                    <SelectItem value="all">Toutes les notifications</SelectItem>
+                    <SelectItem value="important">Importantes uniquement</SelectItem>
+                    <SelectItem value="none">Aucune</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -134,16 +134,16 @@ export default function SettingsPage() {
           <CardHeader>
             <div className="flex items-center gap-2">
               <CreditCard className="h-5 w-5 text-muted-foreground" />
-              <CardTitle>Payment Settings</CardTitle>
+              <CardTitle>Paramètres de paiement</CardTitle>
             </div>
             <CardDescription>
-              Configure default payment options
+              Configurer les options de paiement par défaut
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="default_bond_weeks">Default Bond (weeks)</Label>
+                <Label htmlFor="default_bond_weeks">Caution par défaut (semaines)</Label>
                 <Input
                   id="default_bond_weeks"
                   type="number"
@@ -151,31 +151,31 @@ export default function SettingsPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="payment_day">Default Payment Day</Label>
+                <Label htmlFor="payment_day">Jour de paiement par défaut</Label>
                 <Select defaultValue="monday">
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="monday">Monday</SelectItem>
-                    <SelectItem value="tuesday">Tuesday</SelectItem>
-                    <SelectItem value="wednesday">Wednesday</SelectItem>
-                    <SelectItem value="thursday">Thursday</SelectItem>
-                    <SelectItem value="friday">Friday</SelectItem>
-                    <SelectItem value="saturday">Saturday</SelectItem>
-                    <SelectItem value="sunday">Sunday</SelectItem>
+                    <SelectItem value="monday">Lundi</SelectItem>
+                    <SelectItem value="tuesday">Mardi</SelectItem>
+                    <SelectItem value="wednesday">Mercredi</SelectItem>
+                    <SelectItem value="thursday">Jeudi</SelectItem>
+                    <SelectItem value="friday">Vendredi</SelectItem>
+                    <SelectItem value="saturday">Samedi</SelectItem>
+                    <SelectItem value="sunday">Dimanche</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="bank_details">Bank Account Details</Label>
+              <Label htmlFor="bank_details">Coordonnées bancaires</Label>
               <Input
                 id="bank_details"
-                placeholder="BSB: 000-000 Account: 12345678"
+                placeholder="BSB: 000-000 Compte: 12345678"
               />
               <p className="text-xs text-muted-foreground">
-                This will be shown on invoices
+                Affiché sur les factures
               </p>
             </div>
             <Button>Save Changes</Button>
@@ -187,10 +187,10 @@ export default function SettingsPage() {
           <CardHeader>
             <div className="flex items-center gap-2">
               <Users className="h-5 w-5 text-muted-foreground" />
-              <CardTitle>Team Members</CardTitle>
+              <CardTitle>Membres de l&apos;équipe</CardTitle>
             </div>
             <CardDescription>
-              Manage staff access and roles
+              Gérer les accès et les rôles du personnel
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -207,7 +207,7 @@ export default function SettingsPage() {
                 </div>
               </div>
             </div>
-            <Button variant="outline">Invite Team Member</Button>
+            <Button variant="outline">Inviter un membre</Button>
           </CardContent>
         </Card>
 
@@ -216,25 +216,25 @@ export default function SettingsPage() {
           <CardHeader>
             <div className="flex items-center gap-2">
               <Shield className="h-5 w-5 text-muted-foreground" />
-              <CardTitle>Security</CardTitle>
+              <CardTitle>Sécurité</CardTitle>
             </div>
             <CardDescription>
-              Manage your account security
+              Gérer la sécurité de votre compte
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label>Password</Label>
+              <Label>Mot de passe</Label>
               <div className="flex gap-2">
                 <Input type="password" value="••••••••" disabled className="flex-1" />
-                <Button variant="outline">Change Password</Button>
+                <Button variant="outline">Changer le mot de passe</Button>
               </div>
             </div>
             <div className="space-y-2">
-              <Label>Two-Factor Authentication</Label>
+              <Label>Authentification à deux facteurs</Label>
               <div className="flex items-center gap-4">
-                <span className="text-sm text-muted-foreground">Not enabled</span>
-                <Button variant="outline" size="sm">Enable 2FA</Button>
+                <span className="text-sm text-muted-foreground">Non activée</span>
+                <Button variant="outline" size="sm">Activer 2FA</Button>
               </div>
             </div>
           </CardContent>
@@ -245,28 +245,28 @@ export default function SettingsPage() {
           <CardHeader>
             <div className="flex items-center gap-2">
               <Palette className="h-5 w-5 text-muted-foreground" />
-              <CardTitle>Appearance</CardTitle>
+              <CardTitle>Apparence</CardTitle>
             </div>
             <CardDescription>
-              Customize the look and feel
+              Personnaliser l&apos;apparence
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label>Theme</Label>
+              <Label>Thème</Label>
               <Select defaultValue="system">
                 <SelectTrigger className="w-[200px]">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="light">Light</SelectItem>
-                  <SelectItem value="dark">Dark</SelectItem>
-                  <SelectItem value="system">System</SelectItem>
+                  <SelectItem value="light">Clair</SelectItem>
+                  <SelectItem value="dark">Sombre</SelectItem>
+                  <SelectItem value="system">Système</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div className="space-y-2">
-              <Label>Timezone</Label>
+              <Label>Fuseau horaire</Label>
               <Select defaultValue="australia_perth">
                 <SelectTrigger className="w-[300px]">
                   <SelectValue />

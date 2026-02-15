@@ -40,13 +40,13 @@ export default function NewTenantPage() {
     try {
       const result = await createTenant(data);
       if (result.error) {
-        toast.error('Failed to create tenant');
+        toast.error('Échec de la création');
       } else {
-        toast.success('Tenant created successfully');
+        toast.success('Locataire créé avec succès');
         router.push('/tenants');
       }
     } catch (error) {
-      toast.error('An error occurred');
+      toast.error('Une erreur est survenue');
     } finally {
       setIsLoading(false);
     }
@@ -62,9 +62,9 @@ export default function NewTenantPage() {
           </Link>
         </Button>
         <div>
-          <h1 className="text-3xl font-bold">Add New Tenant</h1>
+          <h1 className="text-3xl font-bold">Ajouter un locataire</h1>
           <p className="text-muted-foreground">
-            Create a new tenant profile
+            Créer un nouveau profil locataire
           </p>
         </div>
       </div>
@@ -72,15 +72,15 @@ export default function NewTenantPage() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <Card>
           <CardHeader>
-            <CardTitle>Personal Information</CardTitle>
+            <CardTitle>Informations personnelles</CardTitle>
             <CardDescription>
-              Basic tenant details
+              Détails de base du locataire
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="first_name">First Name *</Label>
+                <Label htmlFor="first_name">Prénom *</Label>
                 <Input
                   id="first_name"
                   placeholder="John"
@@ -92,7 +92,7 @@ export default function NewTenantPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="last_name">Last Name *</Label>
+                <Label htmlFor="last_name">Nom *</Label>
                 <Input
                   id="last_name"
                   placeholder="Smith"
@@ -119,7 +119,7 @@ export default function NewTenantPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="phone">Phone *</Label>
+                <Label htmlFor="phone">Téléphone *</Label>
                 <Input
                   id="phone"
                   placeholder="0412 345 678"
@@ -133,7 +133,7 @@ export default function NewTenantPage() {
 
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="date_of_birth">Date of Birth</Label>
+                <Label htmlFor="date_of_birth">Date de naissance</Label>
                 <Input
                   id="date_of_birth"
                   type="date"
@@ -142,7 +142,7 @@ export default function NewTenantPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="nationality">Nationality</Label>
+                <Label htmlFor="nationality">Nationalité</Label>
                 <Input
                   id="nationality"
                   placeholder="Australian"
@@ -152,7 +152,7 @@ export default function NewTenantPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="visa_type">Visa Type</Label>
+              <Label htmlFor="visa_type">Type de visa</Label>
               <Select onValueChange={(value) => setValue('visa_type', value)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select visa type" />
@@ -172,15 +172,15 @@ export default function NewTenantPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Emergency Contact</CardTitle>
+            <CardTitle>Contact d&apos;urgence</CardTitle>
             <CardDescription>
-              Contact person in case of emergency
+              Personne à contacter en cas d&apos;urgence
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="emergency_name">Name</Label>
+                <Label htmlFor="emergency_name">Nom</Label>
                 <Input
                   id="emergency_name"
                   placeholder="Jane Smith"
@@ -189,7 +189,7 @@ export default function NewTenantPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="emergency_relationship">Relationship</Label>
+                <Label htmlFor="emergency_relationship">Relation</Label>
                 <Input
                   id="emergency_relationship"
                   placeholder="Parent"
@@ -200,7 +200,7 @@ export default function NewTenantPage() {
 
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="emergency_phone">Phone</Label>
+                <Label htmlFor="emergency_phone">Téléphone</Label>
                 <Input
                   id="emergency_phone"
                   placeholder="0412 345 678"
@@ -216,10 +216,10 @@ export default function NewTenantPage() {
         <div className="flex gap-4">
           <Button type="submit" disabled={isLoading}>
             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Create Tenant
+            Créer le locataire
           </Button>
           <Button type="button" variant="outline" asChild>
-            <Link href="/tenants">Cancel</Link>
+            <Link href="/tenants">Annuler</Link>
           </Button>
         </div>
       </form>

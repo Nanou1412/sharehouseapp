@@ -46,12 +46,12 @@ export default function SetupPage() {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      toast.error('Passwords do not match');
+      toast.error('Les mots de passe ne correspondent pas');
       return;
     }
 
     if (password.length < 8) {
-      toast.error('Password must be at least 8 characters');
+      toast.error('Le mot de passe doit contenir au moins 8 caractères');
       return;
     }
 
@@ -67,18 +67,18 @@ export default function SetupPage() {
       const data = await res.json();
 
       if (!res.ok) {
-        toast.error(data.error || 'Setup failed');
+        toast.error(data.error || 'Échec de la configuration');
         return;
       }
 
       setIsComplete(true);
-      toast.success('Admin account created!');
+      toast.success('Compte administrateur créé !');
 
       setTimeout(() => {
         router.push('/login');
       }, 2500);
     } catch (error) {
-      toast.error('An error occurred during setup');
+      toast.error('Une erreur est survenue lors de la configuration');
     } finally {
       setIsLoading(false);
     }
@@ -106,10 +106,10 @@ export default function SetupPage() {
             <Sparkles className="h-4 w-4 text-amber-500" />
           </div>
         </div>
-        <h2 className="text-2xl font-bold tracking-tight mb-2">You&apos;re all set!</h2>
+        <h2 className="text-2xl font-bold tracking-tight mb-2">Tout est prêt !</h2>
         <p className="text-muted-foreground mb-8">
-          Your admin account has been created successfully.<br />
-          Redirecting you to login...
+          Votre compte administrateur a été créé avec succès.<br />
+          Redirection vers la connexion...
         </p>
         <div className="flex justify-center gap-1 mb-6">
           <div className="h-1.5 w-8 rounded-full bg-green-500 animate-pulse" />
@@ -117,7 +117,7 @@ export default function SetupPage() {
           <div className="h-1.5 w-8 rounded-full bg-green-300 animate-pulse" style={{ animationDelay: '200ms' }} />
         </div>
         <Button onClick={() => router.push('/login')} size="lg" className="gap-2">
-          Go to Login
+          Aller à la connexion
           <ArrowRight className="h-4 w-4" />
         </Button>
       </div>
@@ -134,7 +134,7 @@ export default function SetupPage() {
           </div>
           <div className="text-left">
             <h1 className="font-bold text-xl tracking-tight">ShareHouse Manager</h1>
-            <p className="text-xs text-muted-foreground font-medium">Perth, Western Australia</p>
+            <p className="text-xs text-muted-foreground font-medium">Perth, Australie-Occidentale</p>
           </div>
         </div>
       </div>
@@ -149,9 +149,9 @@ export default function SetupPage() {
                 <Shield className="h-4 w-4 text-amber-600 dark:text-amber-400" />
               </div>
             </div>
-            <CardTitle className="text-xl font-bold">Initial Setup</CardTitle>
+            <CardTitle className="text-xl font-bold">Configuration initiale</CardTitle>
             <CardDescription className="text-balance">
-              Create your administrator account to get started managing your properties.
+              Créez votre compte administrateur pour commencer à gérer vos propriétés.
             </CardDescription>
           </CardHeader>
 
@@ -160,7 +160,7 @@ export default function SetupPage() {
               {/* Full Name */}
               <div className="space-y-2">
                 <Label htmlFor="fullName" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  Full Name
+                  Nom complet
                 </Label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/50" />
@@ -181,7 +181,7 @@ export default function SetupPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="email" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    Email
+                    E-mail
                   </Label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/50" />
@@ -199,7 +199,7 @@ export default function SetupPage() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="phone" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    Phone <span className="normal-case font-normal">(optional)</span>
+                    Téléphone <span className="normal-case font-normal">(optionnel)</span>
                   </Label>
                   <div className="relative">
                     <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/50" />
@@ -220,21 +220,21 @@ export default function SetupPage() {
               <div className="relative">
                 <div className="absolute inset-0 flex items-center"><div className="w-full border-t" /></div>
                 <div className="relative flex justify-center">
-                  <span className="bg-card px-3 text-xs text-muted-foreground">Security</span>
+                  <span className="bg-card px-3 text-xs text-muted-foreground">Sécurité</span>
                 </div>
               </div>
 
               {/* Password */}
               <div className="space-y-2">
                 <Label htmlFor="password" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  Password
+                  Mot de passe
                 </Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/50" />
                   <Input
                     id="password"
                     type={showPassword ? 'text' : 'password'}
-                    placeholder="Minimum 8 characters"
+                    placeholder="Minimum 8 caractères"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
@@ -269,7 +269,7 @@ export default function SetupPage() {
                     <span className={`text-[10px] font-medium ${
                       passwordStrength === 1 ? 'text-red-500' : passwordStrength === 2 ? 'text-amber-500' : 'text-green-500'
                     }`}>
-                      {passwordStrength === 1 ? 'Weak' : passwordStrength === 2 ? 'Good' : 'Strong'}
+                      {passwordStrength === 1 ? 'Faible' : passwordStrength === 2 ? 'Bon' : 'Fort'}
                     </span>
                   </div>
                 )}
@@ -278,14 +278,14 @@ export default function SetupPage() {
               {/* Confirm Password */}
               <div className="space-y-2">
                 <Label htmlFor="confirmPassword" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  Confirm Password
+                  Confirmer le mot de passe
                 </Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/50" />
                   <Input
                     id="confirmPassword"
                     type={showConfirm ? 'text' : 'password'}
-                    placeholder="Confirm your password"
+                    placeholder="Confirmez votre mot de passe"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     required
@@ -309,7 +309,7 @@ export default function SetupPage() {
                   </button>
                 </div>
                 {confirmPassword.length > 0 && !passwordsMatch && (
-                  <p className="text-[11px] text-red-500">Passwords do not match</p>
+                  <p className="text-[11px] text-red-500">Les mots de passe ne correspondent pas</p>
                 )}
               </div>
 
@@ -317,20 +317,20 @@ export default function SetupPage() {
               <div className="rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50/50 dark:from-blue-950/30 dark:to-indigo-950/20 border border-blue-100 dark:border-blue-800/30 p-4">
                 <p className="font-semibold text-sm text-blue-900 dark:text-blue-100 mb-2 flex items-center gap-2">
                   <Sparkles className="h-4 w-4 text-blue-500" />
-                  What happens next?
+                  Que se passe-t-il ensuite ?
                 </p>
                 <ul className="text-blue-700 dark:text-blue-300 space-y-1.5 text-xs">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-3.5 w-3.5 mt-0.5 shrink-0 text-green-500" />
-                    <span>Your admin account will be created instantly — no email confirmation needed</span>
+                    <span>Votre compte admin sera créé instantanément — pas de confirmation par e-mail</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-3.5 w-3.5 mt-0.5 shrink-0 text-green-500" />
-                    <span>Log in and start adding houses, rooms, and tenants right away</span>
+                    <span>Connectez-vous et commencez à ajouter des maisons, chambres et locataires</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-3.5 w-3.5 mt-0.5 shrink-0 text-green-500" />
-                    <span>Invite other managers and staff from the Settings page</span>
+                    <span>Invitez d&apos;autres gérants depuis la page Paramètres</span>
                   </li>
                 </ul>
               </div>
@@ -347,13 +347,13 @@ export default function SetupPage() {
                   <Loader2 className="h-5 w-5 animate-spin" />
                 ) : (
                   <>
-                    Create Admin Account
+                    Créer le compte admin
                     <ArrowRight className="h-4 w-4" />
                   </>
                 )}
               </Button>
               <p className="text-[11px] text-center text-muted-foreground">
-                This setup page is only available once — when no users exist in the system.
+                Cette page de configuration n&apos;est disponible qu&apos;une seule fois — quand aucun utilisateur n&apos;existe.
               </p>
             </CardFooter>
           </form>

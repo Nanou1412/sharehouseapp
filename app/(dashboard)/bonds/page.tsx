@@ -33,15 +33,15 @@ export default async function BondsPage() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'pending':
-        return <Badge variant="secondary">Pending</Badge>;
+        return <Badge variant="secondary">En attente</Badge>;
       case 'received':
-        return <Badge variant="success">Received</Badge>;
+        return <Badge variant="success">Reçue</Badge>;
       case 'partial':
-        return <Badge variant="warning">Partial</Badge>;
+        return <Badge variant="warning">Partielle</Badge>;
       case 'refunded':
-        return <Badge variant="default">Refunded</Badge>;
+        return <Badge variant="default">Remboursée</Badge>;
       case 'forfeited':
-        return <Badge variant="destructive">Forfeited</Badge>;
+        return <Badge variant="destructive">Confisquée</Badge>;
       default:
         return <Badge>{status}</Badge>;
     }
@@ -52,9 +52,9 @@ export default async function BondsPage() {
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Bonds</h1>
+          <h1 className="text-3xl font-bold">Cautions</h1>
           <p className="text-muted-foreground">
-            Manage tenant bond deposits
+            Gérer les dépôts de garantie des locataires
           </p>
         </div>
       </div>
@@ -63,19 +63,19 @@ export default async function BondsPage() {
       <div className="grid gap-4 md:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Bonds</CardTitle>
+            <CardTitle className="text-sm font-medium">Total cautions</CardTitle>
             <ShieldCheck className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{totalBonds}</div>
             <p className="text-xs text-muted-foreground">
-              {receivedBonds} received · {pendingBonds} pending
+              {receivedBonds} reçues · {pendingBonds} en attente
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Expected Total</CardTitle>
+            <CardTitle className="text-sm font-medium">Total attendu</CardTitle>
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -84,7 +84,7 @@ export default async function BondsPage() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Received Total</CardTitle>
+            <CardTitle className="text-sm font-medium">Total reçu</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-green-600">{formatCurrency(totalReceived)}</div>
@@ -92,7 +92,7 @@ export default async function BondsPage() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Outstanding</CardTitle>
+            <CardTitle className="text-sm font-medium">Restant</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-orange-500">
@@ -108,7 +108,7 @@ export default async function BondsPage() {
           <div className="flex flex-col gap-4 md:flex-row md:items-center">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input placeholder="Search bonds..." className="pl-10" />
+              <Input placeholder="Rechercher des cautions..." className="pl-10" />
             </div>
             <Button variant="outline" size="icon">
               <Filter className="h-4 w-4" />
@@ -124,13 +124,13 @@ export default async function BondsPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Tenant</TableHead>
-                  <TableHead>Lodgement Ref</TableHead>
-                  <TableHead>Expected</TableHead>
-                  <TableHead>Received</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Received Date</TableHead>
-                  <TableHead>Refund Date</TableHead>
+                  <TableHead>Locataire</TableHead>
+                  <TableHead>Réf. dépôt</TableHead>
+                  <TableHead>Attendu</TableHead>
+                  <TableHead>Reçu</TableHead>
+                  <TableHead>Statut</TableHead>
+                  <TableHead>Date réception</TableHead>
+                  <TableHead>Date remboursement</TableHead>
                   <TableHead>Notes</TableHead>
                 </TableRow>
               </TableHeader>
@@ -174,9 +174,9 @@ export default async function BondsPage() {
           ) : (
             <div className="flex flex-col items-center justify-center py-12">
               <ShieldCheck className="h-12 w-12 text-muted-foreground mb-4" />
-              <h3 className="text-lg font-semibold mb-2">No bonds yet</h3>
+              <h3 className="text-lg font-semibold mb-2">Aucune caution</h3>
               <p className="text-muted-foreground text-center mb-4">
-                Bond records will appear here once tenants are added
+                Les cautions apparaîtront ici une fois les locataires ajoutés
               </p>
             </div>
           )}

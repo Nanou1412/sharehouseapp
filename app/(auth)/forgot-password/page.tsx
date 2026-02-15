@@ -25,10 +25,10 @@ export default function ForgotPasswordPage() {
         toast.error(result.error);
       } else {
         setIsSent(true);
-        toast.success('Password reset link sent!');
+        toast.success('Lien de réinitialisation envoyé !');
       }
     } catch (error) {
-      toast.error('An error occurred');
+      toast.error('Une erreur est survenue');
     } finally {
       setIsLoading(false);
     }
@@ -44,7 +44,7 @@ export default function ForgotPasswordPage() {
           </div>
           <div className="text-left">
             <h1 className="font-bold text-xl tracking-tight">ShareHouse Manager</h1>
-            <p className="text-xs text-muted-foreground font-medium">Perth, Western Australia</p>
+            <p className="text-xs text-muted-foreground font-medium">Perth, Australie-Occidentale</p>
           </div>
         </div>
       </div>
@@ -61,16 +61,16 @@ export default function ForgotPasswordPage() {
                   <CheckCircle2 className="h-6 w-6 text-green-500" />
                 </div>
               </div>
-              <CardTitle className="text-xl font-bold">Check your email</CardTitle>
+              <CardTitle className="text-xl font-bold">Vérifiez votre e-mail</CardTitle>
               <CardDescription>
-                We sent a password reset link to <strong className="text-foreground">{email}</strong>
+                Nous avons envoyé un lien de réinitialisation à <strong className="text-foreground">{email}</strong>
               </CardDescription>
             </>
           ) : (
             <>
-              <CardTitle className="text-xl font-bold">Reset Password</CardTitle>
+              <CardTitle className="text-xl font-bold">Réinitialiser le mot de passe</CardTitle>
               <CardDescription>
-                Enter your email to receive a reset link
+                Entrez votre e-mail pour recevoir un lien de réinitialisation
               </CardDescription>
             </>
           )}
@@ -80,7 +80,7 @@ export default function ForgotPasswordPage() {
           <form onSubmit={handleSubmit}>
             <CardContent className="space-y-4 pt-4">
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Email</Label>
+                <Label htmlFor="email" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">E-mail</Label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/50" />
                   <Input
@@ -107,7 +107,7 @@ export default function ForgotPasswordPage() {
                 ) : (
                   <>
                     <Send className="h-4 w-4" />
-                    Send Reset Link
+                    Envoyer le lien
                   </>
                 )}
               </Button>
@@ -116,28 +116,28 @@ export default function ForgotPasswordPage() {
                 className="text-sm text-muted-foreground hover:text-primary flex items-center justify-center gap-1 font-medium transition-colors"
               >
                 <ArrowLeft className="h-4 w-4" />
-                Back to login
+                Retour à la connexion
               </Link>
             </CardFooter>
           </form>
         ) : (
           <CardFooter className="flex flex-col gap-4 pb-8 pt-4">
             <p className="text-sm text-center text-muted-foreground">
-              Please check your inbox and spam folder.
+              Veuillez vérifier votre boîte de réception et vos spams.
             </p>
             <Button
               variant="outline"
               className="w-full h-11"
               onClick={() => setIsSent(false)}
             >
-              Try another email
+              Essayer un autre e-mail
             </Button>
             <Link
               href="/login"
               className="text-sm text-muted-foreground hover:text-primary flex items-center justify-center gap-1 font-medium transition-colors"
             >
               <ArrowLeft className="h-4 w-4" />
-              Back to login
+              Retour à la connexion
             </Link>
           </CardFooter>
         )}

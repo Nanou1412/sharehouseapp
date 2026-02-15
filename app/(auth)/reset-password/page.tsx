@@ -25,12 +25,12 @@ export default function ResetPasswordPage() {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      toast.error('Passwords do not match');
+      toast.error('Les mots de passe ne correspondent pas');
       return;
     }
 
     if (password.length < 8) {
-      toast.error('Password must be at least 8 characters');
+      toast.error('Le mot de passe doit contenir au moins 8 caractères');
       return;
     }
 
@@ -41,11 +41,11 @@ export default function ResetPasswordPage() {
       if (result?.error) {
         toast.error(result.error);
       } else {
-        toast.success('Password updated successfully!');
+        toast.success('Mot de passe mis à jour avec succès !');
         router.push('/dashboard');
       }
     } catch (error) {
-      toast.error('An error occurred');
+      toast.error('Une erreur est survenue');
     } finally {
       setIsLoading(false);
     }
@@ -61,7 +61,7 @@ export default function ResetPasswordPage() {
           </div>
           <div className="text-left">
             <h1 className="font-bold text-xl tracking-tight">ShareHouse Manager</h1>
-            <p className="text-xs text-muted-foreground font-medium">Perth, Western Australia</p>
+            <p className="text-xs text-muted-foreground font-medium">Perth, Australie-Occidentale</p>
           </div>
         </div>
       </div>
@@ -76,21 +76,21 @@ export default function ResetPasswordPage() {
               <ShieldCheck className="h-4 w-4 text-blue-600 dark:text-blue-400" />
             </div>
           </div>
-          <CardTitle className="text-xl font-bold">New Password</CardTitle>
+          <CardTitle className="text-xl font-bold">Nouveau mot de passe</CardTitle>
           <CardDescription>
-            Choose a strong password for your account
+            Choisissez un mot de passe solide pour votre compte
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-4 pt-4">
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">New Password</Label>
+              <Label htmlFor="password" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Nouveau mot de passe</Label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/50" />
                 <Input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
-                  placeholder="Minimum 8 characters"
+                  placeholder="Minimum 8 caractères"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -125,19 +125,19 @@ export default function ResetPasswordPage() {
                   <span className={`text-[10px] font-medium ${
                     passwordStrength === 1 ? 'text-red-500' : passwordStrength === 2 ? 'text-amber-500' : 'text-green-500'
                   }`}>
-                    {passwordStrength === 1 ? 'Weak' : passwordStrength === 2 ? 'Good' : 'Strong'}
+                    {passwordStrength === 1 ? 'Faible' : passwordStrength === 2 ? 'Bon' : 'Fort'}
                   </span>
                 </div>
               )}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Confirm New Password</Label>
+              <Label htmlFor="confirmPassword" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Confirmer le mot de passe</Label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/50" />
                 <Input
                   id="confirmPassword"
                   type={showConfirm ? 'text' : 'password'}
-                  placeholder="Confirm your password"
+                  placeholder="Confirmez votre mot de passe"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
@@ -161,7 +161,7 @@ export default function ResetPasswordPage() {
                 </button>
               </div>
               {confirmPassword.length > 0 && !passwordsMatch && (
-                <p className="text-[11px] text-red-500">Passwords do not match</p>
+                <p className="text-[11px] text-red-500">Les mots de passe ne correspondent pas</p>
               )}
             </div>
           </CardContent>
@@ -175,7 +175,7 @@ export default function ResetPasswordPage() {
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
                 <>
-                  Update Password
+                  Mettre à jour
                   <ArrowRight className="h-4 w-4" />
                 </>
               )}

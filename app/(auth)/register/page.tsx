@@ -27,12 +27,12 @@ export default function RegisterPage() {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      toast.error('Passwords do not match');
+      toast.error('Les mots de passe ne correspondent pas');
       return;
     }
 
     if (password.length < 8) {
-      toast.error('Password must be at least 8 characters');
+      toast.error('Le mot de passe doit contenir au moins 8 caractères');
       return;
     }
 
@@ -47,7 +47,7 @@ export default function RegisterPage() {
         router.push('/login');
       }
     } catch (error) {
-      toast.error('An error occurred during registration');
+      toast.error('Une erreur est survenue lors de l\'inscription');
     } finally {
       setIsLoading(false);
     }
@@ -63,7 +63,7 @@ export default function RegisterPage() {
           </div>
           <div className="text-left">
             <h1 className="font-bold text-xl tracking-tight">ShareHouse Manager</h1>
-            <p className="text-xs text-muted-foreground font-medium">Perth, Western Australia</p>
+            <p className="text-xs text-muted-foreground font-medium">Perth, Australie-Occidentale</p>
           </div>
         </div>
       </div>
@@ -73,15 +73,15 @@ export default function RegisterPage() {
         <div className="h-1 bg-gradient-to-r from-primary via-primary/80 to-primary/40" />
 
         <CardHeader className="space-y-1 text-center pt-8 pb-2">
-          <CardTitle className="text-xl font-bold">Create an account</CardTitle>
+          <CardTitle className="text-xl font-bold">Créer un compte</CardTitle>
           <CardDescription>
-            Enter your details to get started
+            Entrez vos informations pour commencer
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-4 pt-4">
             <div className="space-y-2">
-              <Label htmlFor="fullName" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Full Name</Label>
+              <Label htmlFor="fullName" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Nom complet</Label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/50" />
                 <Input
@@ -97,7 +97,7 @@ export default function RegisterPage() {
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Email</Label>
+              <Label htmlFor="email" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">E-mail</Label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/50" />
                 <Input
@@ -117,18 +117,18 @@ export default function RegisterPage() {
             <div className="relative">
               <div className="absolute inset-0 flex items-center"><div className="w-full border-t" /></div>
               <div className="relative flex justify-center">
-                <span className="bg-card px-3 text-xs text-muted-foreground">Security</span>
+                <span className="bg-card px-3 text-xs text-muted-foreground">Sécurité</span>
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Password</Label>
+              <Label htmlFor="password" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Mot de passe</Label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/50" />
                 <Input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
-                  placeholder="Minimum 8 characters"
+                  placeholder="Minimum 8 caractères"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -147,13 +147,13 @@ export default function RegisterPage() {
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Confirm Password</Label>
+              <Label htmlFor="confirmPassword" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Confirmer le mot de passe</Label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/50" />
                 <Input
                   id="confirmPassword"
                   type={showConfirm ? 'text' : 'password'}
-                  placeholder="Confirm your password"
+                  placeholder="Confirmez votre mot de passe"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
@@ -177,7 +177,7 @@ export default function RegisterPage() {
                 </button>
               </div>
               {confirmPassword.length > 0 && !passwordsMatch && (
-                <p className="text-[11px] text-red-500">Passwords do not match</p>
+                <p className="text-[11px] text-red-500">Les mots de passe ne correspondent pas</p>
               )}
             </div>
           </CardContent>
@@ -191,15 +191,15 @@ export default function RegisterPage() {
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
                 <>
-                  Create Account
+                  Créer un compte
                   <ArrowRight className="h-4 w-4" />
                 </>
               )}
             </Button>
             <p className="text-sm text-muted-foreground text-center">
-              Already have an account?{' '}
+              Déjà un compte ?{' '}
               <Link href="/login" className="text-primary hover:underline font-medium">
-                Sign in
+                Se connecter
               </Link>
             </p>
           </CardFooter>

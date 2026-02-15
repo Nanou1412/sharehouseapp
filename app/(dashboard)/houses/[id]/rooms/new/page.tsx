@@ -70,13 +70,13 @@ export default function NewRoomPage({ params }: PageProps) {
         room_type: data.room_type === 'shared' ? 'shared' : 'private',
       });
       if (result.error) {
-        toast.error('Failed to create room');
+        toast.error('Échec de la création');
       } else {
-        toast.success('Room created successfully');
+        toast.success('Chambre créée avec succès');
         router.push(`/houses/${params.id}`);
       }
     } catch (error) {
-      toast.error('An error occurred');
+      toast.error('Une erreur est survenue');
     } finally {
       setIsLoading(false);
     }
@@ -92,9 +92,9 @@ export default function NewRoomPage({ params }: PageProps) {
           </Link>
         </Button>
         <div>
-          <h1 className="text-3xl font-bold">Add New Room</h1>
+          <h1 className="text-3xl font-bold">Ajouter une chambre</h1>
           <p className="text-muted-foreground">
-            Create a new room in this property
+            Créer une nouvelle chambre dans cette propriété
           </p>
         </div>
       </div>
@@ -102,15 +102,15 @@ export default function NewRoomPage({ params }: PageProps) {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <Card>
           <CardHeader>
-            <CardTitle>Room Details</CardTitle>
+            <CardTitle>Détails de la chambre</CardTitle>
             <CardDescription>
-              Basic room information
+              Informations de base
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="name">Room Name *</Label>
+                <Label htmlFor="name">Nom de la chambre *</Label>
                 <Input
                   id="name"
                   placeholder="Room 1"
@@ -122,13 +122,13 @@ export default function NewRoomPage({ params }: PageProps) {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="room_type">Room Type *</Label>
+                <Label htmlFor="room_type">Type de chambre *</Label>
                 <Select 
                   defaultValue="single"
                   onValueChange={(value) => setValue('room_type', value as any)}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select room type" />
+                    <SelectValue placeholder="Sélectionner le type" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="single">Single</SelectItem>
@@ -145,7 +145,7 @@ export default function NewRoomPage({ params }: PageProps) {
 
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="floor_level">Floor Level</Label>
+                <Label htmlFor="floor_level">Étage</Label>
                 <Input
                   id="floor_level"
                   type="number"
@@ -155,7 +155,7 @@ export default function NewRoomPage({ params }: PageProps) {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="weekly_rent">Weekly Rent ($)</Label>
+                <Label htmlFor="weekly_rent">Loyer hebdomadaire ($)</Label>
                 <Input
                   id="weekly_rent"
                   type="number"
@@ -173,7 +173,7 @@ export default function NewRoomPage({ params }: PageProps) {
               <Label htmlFor="description">Description</Label>
               <Input
                 id="description"
-                placeholder="Large room with built-in wardrobe"
+                placeholder="Grande chambre avec penderie intégrée"
                 {...register('description')}
               />
             </div>
@@ -183,10 +183,10 @@ export default function NewRoomPage({ params }: PageProps) {
         <div className="flex gap-4">
           <Button type="submit" disabled={isLoading}>
             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Create Room
+            Créer la chambre
           </Button>
           <Button type="button" variant="outline" asChild>
-            <Link href={`/houses/${params.id}`}>Cancel</Link>
+            <Link href={`/houses/${params.id}`}>Annuler</Link>
           </Button>
         </div>
       </form>

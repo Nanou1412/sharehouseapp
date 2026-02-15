@@ -25,21 +25,21 @@ import { getBills } from '@/lib/services/billing-service';
 import type { Bill } from '@/types/database';
 
 const billCategoryLabels: Record<string, string> = {
-  electricity: 'Electricity',
-  gas: 'Gas',
-  water: 'Water',
+  electricity: 'Électricité',
+  gas: 'Gaz',
+  water: 'Eau',
   internet: 'Internet',
-  council_rates: 'Council Rates',
-  insurance: 'Insurance',
-  other: 'Other',
+  council_rates: 'Taxes foncières',
+  insurance: 'Assurance',
+  other: 'Autre',
 };
 
 const splitModeLabels: Record<string, string> = {
-  equal: 'Equal Split',
-  by_bed: 'By Bed Count',
-  by_rent: 'By Rent Proportion',
-  custom: 'Custom Split',
-  usage: 'By Usage',
+  equal: 'Partage égal',
+  by_bed: 'Par nombre de lits',
+  by_rent: 'Au prorata du loyer',
+  custom: 'Partage personnalisé',
+  usage: 'Par consommation',
 };
 
 export default async function BillsPage() {
@@ -56,15 +56,15 @@ export default async function BillsPage() {
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Bills</h1>
+          <h1 className="text-3xl font-bold">Factures</h1>
           <p className="text-muted-foreground">
-            Manage utilities and shared expenses
+            Gérer les charges et dépenses partagées
           </p>
         </div>
         <Button asChild>
           <Link href="/bills/new">
             <Plus className="mr-2 h-4 w-4" />
-            Add Bill
+            Ajouter une facture
           </Link>
         </Button>
       </div>
@@ -73,7 +73,7 @@ export default async function BillsPage() {
       <div className="grid gap-4 md:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Bills</CardTitle>
+            <CardTitle className="text-sm font-medium">Total factures</CardTitle>
             <Receipt className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -83,7 +83,7 @@ export default async function BillsPage() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Pending</CardTitle>
+            <CardTitle className="text-sm font-medium">En attente</CardTitle>
             <Calendar className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -93,7 +93,7 @@ export default async function BillsPage() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Amount</CardTitle>
+            <CardTitle className="text-sm font-medium">Montant total</CardTitle>
             <Receipt className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -103,7 +103,7 @@ export default async function BillsPage() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Unpaid</CardTitle>
+            <CardTitle className="text-sm font-medium">Impayé</CardTitle>
             <Receipt className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -120,7 +120,7 @@ export default async function BillsPage() {
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
-                  placeholder="Search bills..."
+                  placeholder="Rechercher des factures..."
                   className="pl-10"
                 />
               </div>
@@ -130,10 +130,10 @@ export default async function BillsPage() {
                 <SelectValue placeholder="Category" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Categories</SelectItem>
-                <SelectItem value="electricity">Electricity</SelectItem>
-                <SelectItem value="gas">Gas</SelectItem>
-                <SelectItem value="water">Water</SelectItem>
+                <SelectItem value="all">Toutes les catégories</SelectItem>
+                <SelectItem value="electricity">Électricité</SelectItem>
+                <SelectItem value="gas">Gaz</SelectItem>
+                <SelectItem value="water">Eau</SelectItem>
                 <SelectItem value="internet">Internet</SelectItem>
               </SelectContent>
             </Select>
@@ -142,15 +142,15 @@ export default async function BillsPage() {
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
-                <SelectItem value="pending">Pending</SelectItem>
-                <SelectItem value="partial">Partial</SelectItem>
-                <SelectItem value="paid">Paid</SelectItem>
+                <SelectItem value="all">Tous les statuts</SelectItem>
+                <SelectItem value="pending">En attente</SelectItem>
+                <SelectItem value="partial">Partiel</SelectItem>
+                <SelectItem value="paid">Payé</SelectItem>
               </SelectContent>
             </Select>
             <Button variant="outline">
               <Download className="mr-2 h-4 w-4" />
-              Export
+              Exporter
             </Button>
           </div>
         </CardContent>
@@ -159,9 +159,9 @@ export default async function BillsPage() {
       {/* Bills Table */}
       <Card>
         <CardHeader>
-          <CardTitle>All Bills</CardTitle>
+          <CardTitle>Toutes les factures</CardTitle>
           <CardDescription>
-            Click on a bill to view allocations and payments
+            Cliquez sur une facture pour voir les répartitions et paiements
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -169,13 +169,13 @@ export default async function BillsPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Category</TableHead>
-                  <TableHead>Property</TableHead>
-                  <TableHead>Period</TableHead>
-                  <TableHead>Amount</TableHead>
-                  <TableHead>Split Mode</TableHead>
-                  <TableHead>Due Date</TableHead>
-                  <TableHead>Status</TableHead>
+                  <TableHead>Catégorie</TableHead>
+                  <TableHead>Propriété</TableHead>
+                  <TableHead>Période</TableHead>
+                  <TableHead>Montant</TableHead>
+                  <TableHead>Mode de partage</TableHead>
+                  <TableHead>Échéance</TableHead>
+                  <TableHead>Statut</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -226,14 +226,14 @@ export default async function BillsPage() {
           ) : (
             <div className="flex flex-col items-center justify-center py-12 text-center">
               <Receipt className="h-12 w-12 text-muted-foreground" />
-              <h3 className="mt-4 text-lg font-semibold">No bills yet</h3>
+              <h3 className="mt-4 text-lg font-semibold">Aucune facture</h3>
               <p className="text-muted-foreground">
-                Start by adding your first utility bill
+                Commencez par ajouter votre première facture
               </p>
               <Button asChild className="mt-4">
                 <Link href="/bills/new">
                   <Plus className="mr-2 h-4 w-4" />
-                  Add Bill
+                  Ajouter une facture
                 </Link>
               </Button>
             </div>

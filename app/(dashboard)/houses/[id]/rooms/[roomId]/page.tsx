@@ -42,13 +42,13 @@ export default async function RoomDetailPage({ params }: PageProps) {
           <Button variant="outline" asChild>
             <Link href={`/houses/${params.id}/rooms/${params.roomId}/edit`}>
               <Settings className="mr-2 h-4 w-4" />
-              Edit Room
+              Modifier la chambre
             </Link>
           </Button>
           <Button asChild>
             <Link href={`/houses/${params.id}/rooms/${params.roomId}/beds/new`}>
               <Plus className="mr-2 h-4 w-4" />
-              Add Bed
+              Ajouter un lit
             </Link>
           </Button>
         </div>
@@ -58,7 +58,7 @@ export default async function RoomDetailPage({ params }: PageProps) {
       <div className="grid gap-4 md:grid-cols-3">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Beds</CardTitle>
+            <CardTitle className="text-sm font-medium">Total lits</CardTitle>
             <Bed className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -68,20 +68,20 @@ export default async function RoomDetailPage({ params }: PageProps) {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Occupied</CardTitle>
+            <CardTitle className="text-sm font-medium">Occupés</CardTitle>
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{occupiedBeds}</div>
             <p className="text-xs text-muted-foreground">
-              {totalBeds - occupiedBeds} available
+              {totalBeds - occupiedBeds} disponible{totalBeds - occupiedBeds !== 1 ? 's' : ''}
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Weekly Rent</CardTitle>
+            <CardTitle className="text-sm font-medium">Loyer hebdomadaire</CardTitle>
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -95,21 +95,21 @@ export default async function RoomDetailPage({ params }: PageProps) {
       {/* Room Details */}
       <Card>
         <CardHeader>
-          <CardTitle>Room Details</CardTitle>
+          <CardTitle>Détails de la chambre</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid gap-4 md:grid-cols-3">
             <div>
-              <p className="text-sm text-muted-foreground">Room Type</p>
+              <p className="text-sm text-muted-foreground">Type de chambre</p>
               <p className="font-medium capitalize">{room.room_type}</p>
             </div>
             <div>
-              <p className="text-sm text-muted-foreground">Floor Level</p>
-              <p className="font-medium">{room.floor_level ?? 'Ground'}</p>
+              <p className="text-sm text-muted-foreground">Étage</p>
+              <p className="font-medium">{room.floor_level ?? 'Rez-de-chaussée'}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Description</p>
-              <p className="font-medium">{room.description || 'No description'}</p>
+              <p className="font-medium">{room.description || 'Aucune description'}</p>
             </div>
           </div>
         </CardContent>
@@ -120,15 +120,15 @@ export default async function RoomDetailPage({ params }: PageProps) {
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle>Beds</CardTitle>
+              <CardTitle>Lits</CardTitle>
               <CardDescription>
-                All beds in this room
+                Tous les lits de cette chambre
               </CardDescription>
             </div>
             <Button asChild>
               <Link href={`/houses/${params.id}/rooms/${params.roomId}/beds/new`}>
                 <Plus className="mr-2 h-4 w-4" />
-                Add Bed
+                Ajouter un lit
               </Link>
             </Button>
           </div>
@@ -142,7 +142,7 @@ export default async function RoomDetailPage({ params }: PageProps) {
                     <div className="flex items-start justify-between">
                       <CardTitle className="text-lg">{bed.label || `Bed ${bed.id.slice(0, 6)}`}</CardTitle>
                       <Badge variant={bed.is_occupied ? 'default' : 'secondary'}>
-                        {bed.is_occupied ? 'Occupied' : 'Available'}
+                        {bed.is_occupied ? 'Occupé' : 'Disponible'}
                       </Badge>
                     </div>
                     <CardDescription className="capitalize">
@@ -152,12 +152,12 @@ export default async function RoomDetailPage({ params }: PageProps) {
                   <CardContent>
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
-                        <span className="text-muted-foreground">Weekly Rent</span>
+                        <span className="text-muted-foreground">Loyer hebdo</span>
                         <span className="font-medium">${bed.weekly_rent}</span>
                       </div>
                       {bed.bond_amount && (
                         <div className="flex justify-between">
-                          <span className="text-muted-foreground">Bond</span>
+                          <span className="text-muted-foreground">Caution</span>
                           <span className="font-medium">${bed.bond_amount}</span>
                         </div>
                       )}
@@ -179,14 +179,14 @@ export default async function RoomDetailPage({ params }: PageProps) {
           ) : (
             <div className="flex flex-col items-center justify-center py-12 text-center">
               <Bed className="h-12 w-12 text-muted-foreground" />
-              <h3 className="mt-4 text-lg font-semibold">No beds yet</h3>
+              <h3 className="mt-4 text-lg font-semibold">Aucun lit</h3>
               <p className="text-muted-foreground">
-                Add beds to this room to assign tenants
+                Ajoutez des lits à cette chambre pour y affecter des locataires
               </p>
               <Button asChild className="mt-4">
                 <Link href={`/houses/${params.id}/rooms/${params.roomId}/beds/new`}>
                   <Plus className="mr-2 h-4 w-4" />
-                  Add Bed
+                  Ajouter un lit
                 </Link>
               </Button>
             </div>

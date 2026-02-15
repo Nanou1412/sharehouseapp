@@ -12,7 +12,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: 'ShareHouse Manager - Perth WA',
-  description: 'Complete sharehouse management system for Perth, Western Australia',
+  description: 'Système complet de gestion de colocation pour Perth, Australie-Occidentale',
 };
 
 export default function RootLayout({
@@ -21,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={inter.variable}>
+    <html lang="fr" suppressHydrationWarning className={inter.variable}>
       <body className={`${inter.className} min-h-screen`}>
         <ThemeProvider
           attribute="class"

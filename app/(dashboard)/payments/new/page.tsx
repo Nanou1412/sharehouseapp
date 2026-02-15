@@ -72,13 +72,13 @@ export default function NewPaymentPage() {
     try {
       const result = await recordPayment(data);
       if (result.error) {
-        toast.error('Failed to record payment');
+        toast.error('Échec de l\'enregistrement du paiement');
       } else {
-        toast.success('Payment recorded successfully');
+        toast.success('Paiement enregistré avec succès');
         router.push('/payments');
       }
     } catch (error) {
-      toast.error('An error occurred');
+      toast.error('Une erreur est survenue');
     } finally {
       setIsLoading(false);
     }
@@ -94,9 +94,9 @@ export default function NewPaymentPage() {
           </Link>
         </Button>
         <div>
-          <h1 className="text-3xl font-bold">Record Payment</h1>
+          <h1 className="text-3xl font-bold">Enregistrer un paiement</h1>
           <p className="text-muted-foreground">
-            Add a new payment from a tenant
+            Ajouter un nouveau paiement d'un locataire
           </p>
         </div>
       </div>
@@ -104,18 +104,18 @@ export default function NewPaymentPage() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <Card>
           <CardHeader>
-            <CardTitle>Payment Details</CardTitle>
+            <CardTitle>Détails du paiement</CardTitle>
             <CardDescription>
-              Enter the payment information
+              Saisir les informations du paiement
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="tenant_id">Tenant *</Label>
+                <Label htmlFor="tenant_id">Locataire *</Label>
                 <Select onValueChange={(value) => setValue('tenant_id', value)}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select tenant" />
+                    <SelectValue placeholder="Sélectionner un locataire" />
                   </SelectTrigger>
                   <SelectContent>
                     {tenants.map((tenant) => (
@@ -131,7 +131,7 @@ export default function NewPaymentPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="amount">Amount ($) *</Label>
+                <Label htmlFor="amount">Montant ($) *</Label>
                 <Input
                   id="amount"
                   type="number"
@@ -147,7 +147,7 @@ export default function NewPaymentPage() {
 
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="payment_date">Payment Date *</Label>
+                <Label htmlFor="payment_date">Date du paiement *</Label>
                 <Input
                   id="payment_date"
                   type="date"
@@ -159,29 +159,29 @@ export default function NewPaymentPage() {
               </div>
 
               <div className="space-y-2">
-                <Label>Payment Method *</Label>
+                <Label>Méthode de paiement *</Label>
                 <Select 
                   defaultValue="bank_transfer"
                   onValueChange={(value) => setValue('payment_method', value as any)}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select method" />
+                    <SelectValue placeholder="Sélectionner une méthode" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="bank_transfer">Bank Transfer</SelectItem>
-                    <SelectItem value="cash">Cash</SelectItem>
-                    <SelectItem value="card">Card</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
+                    <SelectItem value="bank_transfer">Virement bancaire</SelectItem>
+                    <SelectItem value="cash">Espèces</SelectItem>
+                    <SelectItem value="card">Carte</SelectItem>
+                    <SelectItem value="other">Autre</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="reference">Reference Number</Label>
+              <Label htmlFor="reference">Numéro de référence</Label>
               <Input
                 id="reference"
-                placeholder="Transaction ID or reference"
+                placeholder="ID de transaction ou référence"
                 {...register('reference')}
               />
             </div>
@@ -190,7 +190,7 @@ export default function NewPaymentPage() {
               <Label htmlFor="notes">Notes</Label>
               <Input
                 id="notes"
-                placeholder="Additional notes about this payment"
+                placeholder="Notes supplémentaires sur ce paiement"
                 {...register('notes')}
               />
             </div>
@@ -200,10 +200,10 @@ export default function NewPaymentPage() {
         <div className="flex gap-4">
           <Button type="submit" disabled={isLoading}>
             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Record Payment
+            Enregistrer le paiement
           </Button>
           <Button type="button" variant="outline" asChild>
-            <Link href="/payments">Cancel</Link>
+            <Link href="/payments">Annuler</Link>
           </Button>
         </div>
       </form>

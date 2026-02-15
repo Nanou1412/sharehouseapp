@@ -26,23 +26,23 @@ import { Button } from '@/components/ui/button';
 import { signOut } from '@/app/actions/auth-actions';
 
 const navigation = [
-  { name: 'Dashboard', href: '/dashboard', icon: Home },
-  { name: 'Houses', href: '/houses', icon: Building2 },
-  { name: 'Tenants', href: '/tenants', icon: Users },
-  { name: 'Leases', href: '/leases', icon: FileText },
-  { name: 'Payments', href: '/payments', icon: DollarSign },
-  { name: 'Bills', href: '/bills', icon: Receipt },
+  { name: 'Tableau de bord', href: '/dashboard', icon: Home },
+  { name: 'Maisons', href: '/houses', icon: Building2 },
+  { name: 'Locataires', href: '/tenants', icon: Users },
+  { name: 'Baux', href: '/leases', icon: FileText },
+  { name: 'Paiements', href: '/payments', icon: DollarSign },
+  { name: 'Factures', href: '/bills', icon: Receipt },
   { name: 'Maintenance', href: '/maintenance', icon: Wrench },
-  { name: 'Cleaning', href: '/cleaning', icon: ClipboardList },
-  { name: 'Keys', href: '/keys', icon: Key },
-  { name: 'Candidates', href: '/candidates', icon: UserPlus },
-  { name: 'Bonds', href: '/bonds', icon: ShieldCheck },
-  { name: 'Analytics', href: '/analytics', icon: BarChart3 },
+  { name: 'Ménage', href: '/cleaning', icon: ClipboardList },
+  { name: 'Clés', href: '/keys', icon: Key },
+  { name: 'Candidats', href: '/candidates', icon: UserPlus },
+  { name: 'Cautions', href: '/bonds', icon: ShieldCheck },
+  { name: 'Statistiques', href: '/analytics', icon: BarChart3 },
 ];
 
 const bottomNavigation = [
-  { name: 'Alerts', href: '/alerts', icon: Bell },
-  { name: 'Settings', href: '/settings', icon: Settings },
+  { name: 'Alertes', href: '/alerts', icon: Bell },
+  { name: 'Paramètres', href: '/settings', icon: Settings },
 ];
 
 export function Sidebar() {
@@ -68,7 +68,7 @@ export function Sidebar() {
       {/* Navigation */}
       <nav className="flex-1 space-y-0.5 px-3 py-4 overflow-y-auto">
         <p className="px-3 mb-2 text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
-          Menu
+          Menu principal
         </p>
         {navigation.map((item) => {
           const isActive = pathname.startsWith(item.href);
@@ -122,7 +122,7 @@ export function Sidebar() {
           onClick={handleSignOut}
         >
           <LogOut className="h-4 w-4" />
-          Sign Out
+          Déconnexion
         </Button>
       </div>
     </div>

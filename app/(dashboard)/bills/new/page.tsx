@@ -75,13 +75,13 @@ export default function NewBillPage() {
         status: 'pending',
       });
       if (result.error) {
-        toast.error('Failed to create bill');
+        toast.error('Échec de la création de la facture');
       } else {
-        toast.success('Bill created successfully');
+        toast.success('Facture créée avec succès');
         router.push('/bills');
       }
     } catch (error) {
-      toast.error('An error occurred');
+      toast.error('Une erreur est survenue');
     } finally {
       setIsLoading(false);
     }
@@ -97,9 +97,9 @@ export default function NewBillPage() {
           </Link>
         </Button>
         <div>
-          <h1 className="text-3xl font-bold">Add New Bill</h1>
+          <h1 className="text-3xl font-bold">Ajouter une facture</h1>
           <p className="text-muted-foreground">
-            Record a utility or shared expense
+            Enregistrer une charge ou dépense partagée
           </p>
         </div>
       </div>
@@ -107,18 +107,18 @@ export default function NewBillPage() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <Card>
           <CardHeader>
-            <CardTitle>Bill Details</CardTitle>
+            <CardTitle>Détails de la facture</CardTitle>
             <CardDescription>
-              Basic bill information
+              Informations de base
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="house_id">Property *</Label>
+                <Label htmlFor="house_id">Propriété *</Label>
                 <Select onValueChange={(value) => setValue('house_id', value)}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select property" />
+                    <SelectValue placeholder="Sélectionner une propriété" />
                   </SelectTrigger>
                   <SelectContent>
                     {houses.map((house) => (
@@ -134,22 +134,22 @@ export default function NewBillPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="bill_type">Category *</Label>
+                <Label htmlFor="bill_type">Catégorie *</Label>
                 <Select 
                   defaultValue="electricity"
                   onValueChange={(value) => setValue('bill_type', value as any)}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select category" />
+                    <SelectValue placeholder="Sélectionner une catégorie" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="electricity">Electricity</SelectItem>
-                    <SelectItem value="gas">Gas</SelectItem>
-                    <SelectItem value="water">Water</SelectItem>
+                    <SelectItem value="electricity">Électricité</SelectItem>
+                    <SelectItem value="gas">Gaz</SelectItem>
+                    <SelectItem value="water">Eau</SelectItem>
                     <SelectItem value="internet">Internet</SelectItem>
-                    <SelectItem value="council_rates">Council Rates</SelectItem>
-                    <SelectItem value="insurance">Insurance</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
+                    <SelectItem value="council_rates">Taxes foncières</SelectItem>
+                    <SelectItem value="insurance">Assurance</SelectItem>
+                    <SelectItem value="other">Autre</SelectItem>
                   </SelectContent>
                 </Select>
                 {errors.bill_type && (
@@ -160,7 +160,7 @@ export default function NewBillPage() {
 
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="total_amount">Total Amount ($) *</Label>
+                <Label htmlFor="total_amount">Montant total ($) *</Label>
                 <Input
                   id="total_amount"
                   type="number"
@@ -174,20 +174,20 @@ export default function NewBillPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="split_mode">Split Mode *</Label>
+                <Label htmlFor="split_mode">Mode de répartition *</Label>
                 <Select 
                   defaultValue="equal"
                   onValueChange={(value) => setValue('split_mode', value as any)}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select split mode" />
+                    <SelectValue placeholder="Sélectionner un mode" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="equal">Equal Split</SelectItem>
-                    <SelectItem value="by_bed">By Bed Count</SelectItem>
-                    <SelectItem value="by_rent">By Rent Proportion</SelectItem>
-                    <SelectItem value="custom">Custom Split</SelectItem>
-                    <SelectItem value="usage">By Usage</SelectItem>
+                    <SelectItem value="equal">Répartition égale</SelectItem>
+                    <SelectItem value="by_bed">Par nombre de lits</SelectItem>
+                    <SelectItem value="by_rent">Au prorata du loyer</SelectItem>
+                    <SelectItem value="custom">Répartition personnalisée</SelectItem>
+                    <SelectItem value="usage">Par consommation</SelectItem>
                   </SelectContent>
                 </Select>
                 {errors.split_mode && (
@@ -200,15 +200,15 @@ export default function NewBillPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Billing Period</CardTitle>
+            <CardTitle>Période de facturation</CardTitle>
             <CardDescription>
-              The period this bill covers
+              La période couverte par cette facture
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-4 md:grid-cols-3">
               <div className="space-y-2">
-                <Label htmlFor="period_start">Period Start *</Label>
+                <Label htmlFor="period_start">Début de période *</Label>
                 <Input
                   id="period_start"
                   type="date"
@@ -220,7 +220,7 @@ export default function NewBillPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="period_end">Period End *</Label>
+                <Label htmlFor="period_end">Fin de période *</Label>
                 <Input
                   id="period_end"
                   type="date"
@@ -232,7 +232,7 @@ export default function NewBillPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="due_date">Due Date *</Label>
+                <Label htmlFor="due_date">Date d'échéance *</Label>
                 <Input
                   id="due_date"
                   type="date"
@@ -248,15 +248,15 @@ export default function NewBillPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Provider Information</CardTitle>
+            <CardTitle>Informations du fournisseur</CardTitle>
             <CardDescription>
-              Optional provider details
+              Détails optionnels du fournisseur
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="provider">Provider Name</Label>
+                <Label htmlFor="provider">Nom du fournisseur</Label>
                 <Input
                   id="provider"
                   placeholder="Synergy"
@@ -265,7 +265,7 @@ export default function NewBillPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="account_number">Account Number</Label>
+                <Label htmlFor="account_number">Numéro de compte</Label>
                 <Input
                   id="account_number"
                   placeholder="1234567890"
@@ -279,10 +279,10 @@ export default function NewBillPage() {
         <div className="flex gap-4">
           <Button type="submit" disabled={isLoading}>
             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Create Bill
+            Créer la facture
           </Button>
           <Button type="button" variant="outline" asChild>
-            <Link href="/bills">Cancel</Link>
+            <Link href="/bills">Annuler</Link>
           </Button>
         </div>
       </form>

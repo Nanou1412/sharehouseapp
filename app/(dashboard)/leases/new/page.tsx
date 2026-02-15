@@ -101,13 +101,13 @@ export default function NewLeasePage() {
         tenant_id,
       });
       if (result.error) {
-        toast.error('Failed to create lease');
+        toast.error('Échec de la création du bail');
       } else {
-        toast.success('Lease created successfully');
+        toast.success('Bail créé avec succès');
         router.push('/leases');
       }
     } catch (error) {
-      toast.error('An error occurred');
+      toast.error('Une erreur est survenue');
     } finally {
       setIsLoading(false);
     }
@@ -123,9 +123,9 @@ export default function NewLeasePage() {
           </Link>
         </Button>
         <div>
-          <h1 className="text-3xl font-bold">Create New Lease</h1>
+          <h1 className="text-3xl font-bold">Créer un nouveau bail</h1>
           <p className="text-muted-foreground">
-            Set up a new tenancy agreement
+            Configurer un nouveau contrat de location
           </p>
         </div>
       </div>
@@ -133,17 +133,17 @@ export default function NewLeasePage() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <Card>
           <CardHeader>
-            <CardTitle>Tenant Selection</CardTitle>
+            <CardTitle>Sélection du locataire</CardTitle>
             <CardDescription>
-              Select the tenant for this lease
+              Choisir le locataire pour ce bail
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="tenant_id">Tenant *</Label>
+              <Label htmlFor="tenant_id">Locataire *</Label>
               <Select onValueChange={(value) => setValue('tenant_id', value)}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select a tenant" />
+                  <SelectValue placeholder="Sélectionner un locataire" />
                 </SelectTrigger>
                 <SelectContent>
                   {tenants.filter(t => t.status !== 'blacklisted').map((tenant) => (
@@ -162,18 +162,18 @@ export default function NewLeasePage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Property & Bed</CardTitle>
+            <CardTitle>Propriété & Lit</CardTitle>
             <CardDescription>
-              Select where the tenant will stay
+              Sélectionner où le locataire séjournera
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-4 md:grid-cols-3">
               <div className="space-y-2">
-                <Label>Property *</Label>
+                <Label>Propriété *</Label>
                 <Select onValueChange={handleHouseChange}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select property" />
+                    <SelectValue placeholder="Sélectionner une propriété" />
                   </SelectTrigger>
                   <SelectContent>
                     {houses.map((house) => (
@@ -186,13 +186,13 @@ export default function NewLeasePage() {
               </div>
 
               <div className="space-y-2">
-                <Label>Room *</Label>
+                <Label>Chambre *</Label>
                 <Select 
                   onValueChange={handleRoomChange}
                   disabled={!selectedHouse}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select room" />
+                    <SelectValue placeholder="Sélectionner une chambre" />
                   </SelectTrigger>
                   <SelectContent>
                     {rooms.map((room) => (
@@ -205,18 +205,18 @@ export default function NewLeasePage() {
               </div>
 
               <div className="space-y-2">
-                <Label>Bed *</Label>
+                <Label>Lit *</Label>
                 <Select 
                   onValueChange={(value) => setValue('bed_id', value)}
                   disabled={!selectedRoom}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select bed" />
+                    <SelectValue placeholder="Sélectionner un lit" />
                   </SelectTrigger>
                   <SelectContent>
                     {beds.map((bed) => (
                       <SelectItem key={bed.id} value={bed.id}>
-                        Bed {bed.bed_number} - ${bed.weekly_rent}/week
+                        Lit {bed.bed_number} - ${bed.weekly_rent}/sem
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -231,15 +231,15 @@ export default function NewLeasePage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Lease Terms</CardTitle>
+            <CardTitle>Conditions du bail</CardTitle>
             <CardDescription>
-              Define the lease period and payment terms
+              Définir la durée et les conditions de paiement
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="start_date">Start Date *</Label>
+                <Label htmlFor="start_date">Date de début *</Label>
                 <Input
                   id="start_date"
                   type="date"
@@ -251,21 +251,21 @@ export default function NewLeasePage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="end_date">End Date</Label>
+                <Label htmlFor="end_date">Date de fin</Label>
                 <Input
                   id="end_date"
                   type="date"
                   {...register('end_date')}
                 />
                 <p className="text-xs text-muted-foreground">
-                  Leave empty for ongoing lease
+                  Laisser vide pour un bail en cours
                 </p>
               </div>
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="weekly_rent">Weekly Rent ($) *</Label>
+                <Label htmlFor="weekly_rent">Loyer hebdomadaire ($) *</Label>
                 <Input
                   id="weekly_rent"
                   type="number"
@@ -279,7 +279,7 @@ export default function NewLeasePage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="bond_amount">Bond Amount ($)</Label>
+                <Label htmlFor="bond_amount">Montant de la caution ($)</Label>
                 <Input
                   id="bond_amount"
                   type="number"
@@ -297,10 +297,10 @@ export default function NewLeasePage() {
         <div className="flex gap-4">
           <Button type="submit" disabled={isLoading}>
             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Create Lease
+            Créer le bail
           </Button>
           <Button type="button" variant="outline" asChild>
-            <Link href="/leases">Cancel</Link>
+            <Link href="/leases">Annuler</Link>
           </Button>
         </div>
       </form>
