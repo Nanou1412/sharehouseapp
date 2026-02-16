@@ -109,6 +109,18 @@ export async function getHouses() {
   }
 }
 
+export async function getHouseById(id: string) {
+  await requireAuth();
+  
+  try {
+    const house = await propertyService.getHouseById(id);
+    return house;
+  } catch (error) {
+    console.error('Error getting house:', error);
+    return null;
+  }
+}
+
 // =====================================================
 // ROOM ACTIONS
 // =====================================================
