@@ -19,7 +19,7 @@ interface HeaderProps {
     email?: string;
     profile?: {
       full_name?: string;
-    };
+    } | null;
   } | null;
 }
 
