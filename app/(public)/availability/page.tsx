@@ -20,33 +20,33 @@ export default async function AvailabilityPortalPage() {
             <Home className="h-6 w-6 text-primary" />
             <span className="text-xl font-bold">Perth Sharehouses</span>
           </div>
-          <nav className="flex items-center gap-4">
-            <Link href="#available" className="text-sm font-medium hover:text-primary">
+          <nav className="flex items-center gap-2 sm:gap-4">
+            <Link href="#available" className="text-sm font-medium hover:text-primary hidden sm:block">
               Chambres disponibles
             </Link>
-            <Link href="#contact" className="text-sm font-medium hover:text-primary">
+            <Link href="#contact" className="text-sm font-medium hover:text-primary hidden sm:block">
               Contact
             </Link>
             <Button asChild size="sm">
-              <Link href="/login">Connexion staff</Link>
+              <Link href="/login">Connexion</Link>
             </Button>
           </nav>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-16 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">
+      <section className="container mx-auto px-4 py-10 sm:py-16 text-center">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
           Trouvez votre nouveau logement à Perth
         </h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
+        <p className="text-base sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
           Hébergement en colocation abordable et confortable dans les meilleurs quartiers de Perth, WA.
           Loyer hebdomadaire tout inclus avec les charges comprises.
         </p>
-        <div className="flex justify-center gap-4">
+        <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
           <Button asChild size="lg">
             <a href="#available">
-              Voir les chambres disponibles
+              Voir les chambres
               <ArrowRight className="ml-2 h-4 w-4" />
             </a>
           </Button>
@@ -98,7 +98,7 @@ export default async function AvailabilityPortalPage() {
       {/* Available Rooms */}
       <section id="available" className="container mx-auto px-4 py-12">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Chambres disponibles</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4">Chambres disponibles</h2>
           <p className="text-muted-foreground">
             {availableBeds?.length || 0} lits actuellement disponibles
           </p>

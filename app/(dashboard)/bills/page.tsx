@@ -54,23 +54,24 @@ export default async function BillsPage() {
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Factures</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-2xl sm:text-3xl font-bold">Factures</h1>
+          <p className="text-muted-foreground text-sm">
             Gérer les charges et dépenses partagées
           </p>
         </div>
-        <Button asChild>
+        <Button size="sm" asChild>
           <Link href="/bills/new">
             <Plus className="mr-2 h-4 w-4" />
-            Ajouter une facture
+            <span className="hidden sm:inline">Ajouter une facture</span>
+            <span className="sm:hidden">Nouveau</span>
           </Link>
         </Button>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid gap-4 md:grid-cols-4">
+      <div className="grid gap-4 grid-cols-2 md:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total factures</CardTitle>

@@ -35,17 +35,18 @@ export default async function PaymentsPage() {
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Paiements</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-2xl sm:text-3xl font-bold">Paiements</h1>
+          <p className="text-muted-foreground text-sm">
             Suivre et gérer tous les paiements de loyer
           </p>
         </div>
-        <Button asChild>
+        <Button size="sm" asChild>
           <Link href="/payments/new">
             <Plus className="mr-2 h-4 w-4" />
-            Enregistrer un paiement
+            <span className="hidden sm:inline">Enregistrer un paiement</span>
+            <span className="sm:hidden">Nouveau</span>
           </Link>
         </Button>
       </div>

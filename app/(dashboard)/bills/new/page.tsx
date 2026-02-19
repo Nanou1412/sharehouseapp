@@ -97,8 +97,8 @@ export default function NewBillPage() {
           </Link>
         </Button>
         <div>
-          <h1 className="text-3xl font-bold">Ajouter une facture</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-2xl sm:text-3xl font-bold">Ajouter une facture</h1>
+          <p className="text-muted-foreground text-sm">
             Enregistrer une charge ou dépense partagée
           </p>
         </div>

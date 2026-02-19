@@ -84,8 +84,8 @@ export default function NewBedPage({ params }: PageProps) {
           </Link>
         </Button>
         <div>
-          <h1 className="text-3xl font-bold">Ajouter un lit</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-2xl sm:text-3xl font-bold">Ajouter un lit</h1>
+          <p className="text-muted-foreground text-sm">
             Créer un nouveau lit dans cette chambre
           </p>
         </div>

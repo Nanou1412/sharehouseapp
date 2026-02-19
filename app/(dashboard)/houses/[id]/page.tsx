@@ -37,37 +37,37 @@ export default async function HouseDetailPage({ params }: PageProps) {
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" asChild>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+        <Button variant="ghost" size="icon" asChild className="self-start">
           <Link href="/houses">
             <ArrowLeft className="h-4 w-4" />
           </Link>
         </Button>
-        <div className="flex-1">
-          <h1 className="text-3xl font-bold">{house.address}</h1>
+        <div className="flex-1 min-w-0">
+          <h1 className="text-2xl sm:text-3xl font-bold truncate">{house.address}</h1>
           <p className="text-muted-foreground flex items-center gap-1">
-            <MapPin className="h-4 w-4" />
-            {house.suburb}, {house.postcode}
+            <MapPin className="h-4 w-4 shrink-0" />
+            <span className="truncate">{house.suburb}, {house.postcode}</span>
           </p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline" asChild>
+        <div className="flex gap-2 self-start sm:self-center">
+          <Button variant="outline" size="sm" asChild>
             <Link href={`/houses/${params.id}/edit`}>
               <Settings className="mr-2 h-4 w-4" />
               Modifier
             </Link>
           </Button>
-          <Button asChild>
+          <Button size="sm" asChild>
             <Link href={`/houses/${params.id}/rooms/new`}>
               <Plus className="mr-2 h-4 w-4" />
-              Ajouter une chambre
+              <span className="hidden sm:inline">Ajouter une</span> chambre
             </Link>
           </Button>
         </div>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid gap-4 md:grid-cols-4">
+      <div className="grid gap-4 grid-cols-2 md:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Chambres</CardTitle>

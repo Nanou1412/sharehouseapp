@@ -49,31 +49,33 @@ export default async function LeasesPage() {
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Baux</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-2xl sm:text-3xl font-bold">Baux</h1>
+          <p className="text-muted-foreground text-sm">
             Gérer les contrats de location et les réservations
           </p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" asChild>
+          <Button variant="outline" size="sm" asChild>
             <Link href="/leases/reservations">
               <Calendar className="mr-2 h-4 w-4" />
-              Réservations
+              <span className="hidden sm:inline">Réservations</span>
+              <span className="sm:hidden">Résa.</span>
             </Link>
           </Button>
-          <Button asChild>
+          <Button size="sm" asChild>
             <Link href="/leases/new">
               <Plus className="mr-2 h-4 w-4" />
-              Nouveau bail
+              <span className="hidden sm:inline">Nouveau bail</span>
+              <span className="sm:hidden">Nouveau</span>
             </Link>
           </Button>
         </div>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid gap-4 md:grid-cols-4">
+      <div className="grid gap-4 grid-cols-2 md:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Baux actifs</CardTitle>
@@ -119,8 +121,8 @@ export default async function LeasesPage() {
       {/* Filters */}
       <Card>
         <CardContent className="pt-6">
-          <div className="flex flex-wrap gap-4">
-            <div className="flex-1 min-w-[200px]">
+          <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap">
+            <div className="flex-1 min-w-0 sm:min-w-[200px]">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
@@ -129,25 +131,27 @@ export default async function LeasesPage() {
                 />
               </div>
             </div>
-            <Select defaultValue="all">
-              <SelectTrigger className="w-[150px]">
-                <SelectValue placeholder="Status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Tous les statuts</SelectItem>
-                <SelectItem value="active">Actif</SelectItem>
-                <SelectItem value="pending">En attente</SelectItem>
-                <SelectItem value="ended">Terminé</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select defaultValue="all">
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Property" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Toutes les propriétés</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="flex gap-2">
+              <Select defaultValue="all">
+                <SelectTrigger className="w-full sm:w-[150px]">
+                  <SelectValue placeholder="Status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Tous les statuts</SelectItem>
+                  <SelectItem value="active">Actif</SelectItem>
+                  <SelectItem value="pending">En attente</SelectItem>
+                  <SelectItem value="ended">Terminé</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select defaultValue="all">
+                <SelectTrigger className="w-full sm:w-[180px]">
+                  <SelectValue placeholder="Property" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Toutes les propriétés</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         </CardContent>
       </Card>

@@ -62,8 +62,8 @@ export default function NewTenantPage() {
           </Link>
         </Button>
         <div>
-          <h1 className="text-3xl font-bold">Ajouter un locataire</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-2xl sm:text-3xl font-bold">Ajouter un locataire</h1>
+          <p className="text-muted-foreground text-sm">
             Créer un nouveau profil locataire
           </p>
         </div>

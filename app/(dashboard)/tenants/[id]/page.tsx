@@ -40,15 +40,15 @@ export default async function TenantDetailPage({ params }: PageProps) {
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" asChild>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+        <Button variant="ghost" size="icon" asChild className="self-start">
           <Link href="/tenants">
             <ArrowLeft className="h-4 w-4" />
           </Link>
         </Button>
-        <div className="flex-1">
-          <div className="flex items-center gap-2">
-            <h1 className="text-3xl font-bold">
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap">
+            <h1 className="text-2xl sm:text-3xl font-bold">
               {tenant.first_name} {tenant.last_name}
             </h1>
             <Badge variant={tenant.status === 'active' ? 'default' : 'secondary'}>
@@ -59,7 +59,7 @@ export default async function TenantDetailPage({ params }: PageProps) {
             Profil et historique du locataire
           </p>
         </div>
-        <Button asChild>
+        <Button asChild size="sm" className="self-start sm:self-center">
           <Link href={`/tenants/${params.id}/edit`}>
             Modifier le locataire
           </Link>
@@ -117,7 +117,7 @@ export default async function TenantDetailPage({ params }: PageProps) {
       </div>
 
       {/* Main Content */}
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {/* Contact Info */}
         <Card>
           <CardHeader>

@@ -57,8 +57,8 @@ export default function NewHousePage() {
           </Link>
         </Button>
         <div>
-          <h1 className="text-3xl font-bold">Ajouter une maison</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-2xl sm:text-3xl font-bold">Ajouter une maison</h1>
+          <p className="text-muted-foreground text-sm">
             Créer une nouvelle propriété de colocation
           </p>
         </div>

@@ -26,17 +26,15 @@ export default async function CleaningPage() {
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Planning de ménage</h1>
-          <p className="text-muted-foreground">
-            Gérer les plannings de nettoyage et suivre la réalisation
-          </p>
-        </div>
+      <div>
+        <h1 className="text-2xl sm:text-3xl font-bold">Planning de ménage</h1>
+        <p className="text-muted-foreground text-sm">
+          Gérer les plannings de nettoyage et suivre la réalisation
+        </p>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid gap-4 md:grid-cols-4">
+      <div className="grid gap-4 grid-cols-2 md:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total tâches</CardTitle>

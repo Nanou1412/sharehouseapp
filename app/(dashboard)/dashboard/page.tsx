@@ -137,7 +137,7 @@ export default async function DashboardPage() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Tableau de bord</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Tableau de bord</h1>
           <p className="text-muted-foreground mt-1">
             Vue d&apos;ensemble de votre portefeuille de colocations
           </p>

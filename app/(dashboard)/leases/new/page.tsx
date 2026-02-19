@@ -123,8 +123,8 @@ export default function NewLeasePage() {
           </Link>
         </Button>
         <div>
-          <h1 className="text-3xl font-bold">Créer un nouveau bail</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-2xl sm:text-3xl font-bold">Créer un nouveau bail</h1>
+          <p className="text-muted-foreground text-sm">
             Configurer un nouveau contrat de location
           </p>
         </div>

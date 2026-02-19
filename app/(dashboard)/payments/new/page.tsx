@@ -94,8 +94,8 @@ export default function NewPaymentPage() {
           </Link>
         </Button>
         <div>
-          <h1 className="text-3xl font-bold">Enregistrer un paiement</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-2xl sm:text-3xl font-bold">Enregistrer un paiement</h1>
+          <p className="text-muted-foreground text-sm">
             Ajouter un nouveau paiement d'un locataire
           </p>
         </div>

@@ -34,9 +34,12 @@ export function Header({ user }: HeaderProps) {
     .slice(0, 2) || 'U';
 
   return (
-    <header className="h-14 border-b bg-card/80 backdrop-blur-sm px-6 flex items-center justify-between sticky top-0 z-30">
-      {/* Search */}
-      <div className="flex items-center gap-4 flex-1 max-w-md">
+    <header className="h-14 border-b bg-card/80 backdrop-blur-sm px-4 md:px-6 flex items-center justify-between sticky top-0 z-30">
+      {/* Spacer for mobile hamburger */}
+      <div className="w-10 md:hidden" />
+
+      {/* Search - hidden on mobile */}
+      <div className="hidden md:flex items-center gap-4 flex-1 max-w-md">
         <div className="relative w-full group">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground transition-colors group-focus-within:text-foreground" />
           <Input
@@ -45,6 +48,11 @@ export function Header({ user }: HeaderProps) {
             className="pl-10 h-9 bg-muted/50 border-transparent focus:border-border focus:bg-background transition-all duration-200"
           />
         </div>
+      </div>
+
+      {/* Mobile title */}
+      <div className="flex-1 md:hidden">
+        <h1 className="font-bold text-base">ShareHouse</h1>
       </div>
 
       {/* Right side */}

@@ -94,8 +94,8 @@ export default function EditHousePage({ params }: PageProps) {
           </Link>
         </Button>
         <div>
-          <h1 className="text-3xl font-bold">Modifier la propriété</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-2xl sm:text-3xl font-bold">Modifier la propriété</h1>
+          <p className="text-muted-foreground text-sm">
             Mettre à jour les informations de la propriété
           </p>
         </div>

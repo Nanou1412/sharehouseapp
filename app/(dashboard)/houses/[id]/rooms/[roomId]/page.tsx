@@ -26,29 +26,31 @@ export default async function RoomDetailPage({ params }: PageProps) {
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
         <Button variant="ghost" size="icon" asChild>
           <Link href={`/houses/${params.id}`}>
             <ArrowLeft className="h-4 w-4" />
           </Link>
         </Button>
         <div className="flex-1">
-          <h1 className="text-3xl font-bold">{room.name}</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold">{room.name}</h1>
           <p className="text-muted-foreground">
             {room.room_type} room
           </p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline" asChild>
+        <div className="flex flex-wrap gap-2">
+          <Button variant="outline" size="sm" asChild>
             <Link href={`/houses/${params.id}/rooms/${params.roomId}/edit`}>
               <Settings className="mr-2 h-4 w-4" />
-              Modifier la chambre
+              <span className="hidden sm:inline">Modifier la chambre</span>
+              <span className="sm:hidden">Modifier</span>
             </Link>
           </Button>
-          <Button asChild>
+          <Button size="sm" asChild>
             <Link href={`/houses/${params.id}/rooms/${params.roomId}/beds/new`}>
               <Plus className="mr-2 h-4 w-4" />
-              Ajouter un lit
+              <span className="hidden sm:inline">Ajouter un lit</span>
+              <span className="sm:hidden">Ajouter</span>
             </Link>
           </Button>
         </div>

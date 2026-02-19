@@ -107,8 +107,8 @@ export default function NewMaintenancePage() {
           </Link>
         </Button>
         <div>
-          <h1 className="text-3xl font-bold">Nouvelle demande de maintenance</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-2xl sm:text-3xl font-bold">Nouvelle demande de maintenance</h1>
+          <p className="text-muted-foreground text-sm">
             Signaler un problème de maintenance
           </p>
         </div>

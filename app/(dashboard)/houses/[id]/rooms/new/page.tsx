@@ -92,8 +92,8 @@ export default function NewRoomPage({ params }: PageProps) {
           </Link>
         </Button>
         <div>
-          <h1 className="text-3xl font-bold">Ajouter une chambre</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-2xl sm:text-3xl font-bold">Ajouter une chambre</h1>
+          <p className="text-muted-foreground text-sm">
             Créer une nouvelle chambre dans cette propriété
           </p>
         </div>

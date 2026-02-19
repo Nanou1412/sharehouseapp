@@ -16,8 +16,8 @@ export default function SettingsPage() {
     <div className="space-y-6">
       {/* Page Header */}
       <div>
-        <h1 className="text-3xl font-bold">Paramètres</h1>
-        <p className="text-muted-foreground">
+        <h1 className="text-2xl sm:text-3xl font-bold">Paramètres</h1>
+        <p className="text-muted-foreground text-sm">
           Gérer les préférences de l&apos;application
         </p>
       </div>
