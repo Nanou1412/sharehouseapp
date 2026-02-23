@@ -9,9 +9,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Building2, Bell, CreditCard, Users, Shield, Palette } from 'lucide-react';
+import { Building2, Bell, CreditCard, Shield, Palette } from 'lucide-react';
+import { getTeamMembers, getCurrentUser } from '@/app/actions/auth-actions';
+import { TeamManagement } from '@/components/settings/team-management';
 
-export default function SettingsPage() {
+export default async function SettingsPage() {
+  const [members, currentUser] = await Promise.all([
+    getTeamMembers(),
+    getCurrentUser(),
+  ]);
+
   return (
     <div className="space-y-6">
       {/* Page Header */}
@@ -183,33 +190,11 @@ export default function SettingsPage() {
         </Card>
 
         {/* Team Management */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <Users className="h-5 w-5 text-muted-foreground" />
-              <CardTitle>Membres de l&apos;équipe</CardTitle>
-            </div>
-            <CardDescription>
-              Gérer les accès et les rôles du personnel
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="rounded-md border">
-              <div className="p-4 flex items-center justify-between">
-                <div>
-                  <p className="font-medium">Admin User</p>
-                  <p className="text-sm text-muted-foreground">admin@example.com</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-sm bg-primary/10 text-primary px-2 py-1 rounded">
-                    Admin
-                  </span>
-                </div>
-              </div>
-            </div>
-            <Button variant="outline">Inviter un membre</Button>
-          </CardContent>
-        </Card>
+        <TeamManagement 
+          members={members as any} 
+          currentUserId={currentUser?.id || ''} 
+          isAdmin={currentUser?.isAdmin || false} 
+        />
 
         {/* Security */}
         <Card>
