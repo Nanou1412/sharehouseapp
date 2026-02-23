@@ -65,13 +65,50 @@ export async function getHouseWithDetails(id: string) {
 export async function createHouse(data: HouseFormData) {
   const supabase = await createClient();
   
-  const { data: house, error } = await supabase
+  // Get current user
+  const { data: { user } } = await supabase.auth.getUser();
+  
+  // Use service client to bypass RLS for insert+select
+  const { createServiceClient } = await import('@/lib/supabase/server');
+  const serviceClient = await createServiceClient();
+  
+  const { data: house, error } = await serviceClient
     .from('houses')
     .insert(data)
     .select()
     .single();
 
   if (error) throw error;
+  
+  // Auto-grant house access to the creator
+  if (user && house) {
+    await serviceClient
+      .from('user_house_access')
+      .upsert({
+        user_id: user.id,
+        house_id: house.id,
+        can_edit: true,
+      }, { onConflict: 'user_id,house_id' });
+    
+    // Also grant access to all other active users (managers/admins)
+    const { data: allUsers } = await serviceClient
+      .from('users')
+      .select('id')
+      .eq('is_active', true)
+      .neq('id', user.id);
+    
+    if (allUsers && allUsers.length > 0) {
+      const accessEntries = allUsers.map((u: any) => ({
+        user_id: u.id,
+        house_id: house.id,
+        can_edit: true,
+      }));
+      await serviceClient
+        .from('user_house_access')
+        .upsert(accessEntries, { onConflict: 'user_id,house_id' });
+    }
+  }
+  
   return house;
 }
 
@@ -144,9 +181,10 @@ export async function getRoomById(id: string) {
 }
 
 export async function createRoom(data: RoomFormData) {
-  const supabase = await createClient();
+  const { createServiceClient } = await import('@/lib/supabase/server');
+  const serviceClient = await createServiceClient();
   
-  const { data: room, error } = await supabase
+  const { data: room, error } = await serviceClient
     .from('rooms')
     .insert(data)
     .select()
@@ -224,9 +262,10 @@ export async function getBedById(id: string) {
 }
 
 export async function createBed(data: BedFormData) {
-  const supabase = await createClient();
+  const { createServiceClient } = await import('@/lib/supabase/server');
+  const serviceClient = await createServiceClient();
   
-  const { data: bed, error } = await supabase
+  const { data: bed, error } = await serviceClient
     .from('beds')
     .insert(data)
     .select()

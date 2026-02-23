@@ -54,6 +54,30 @@ export async function signUp(
       full_name: fullName,
       role: 'manager', // Default role for new signups
     });
+
+    // Auto-grant access to all existing houses so new user sees the dashboard
+    try {
+      const { createServiceClient } = await import('@/lib/supabase/server');
+      const serviceClient = await createServiceClient();
+      
+      const { data: allHouses } = await serviceClient
+        .from('houses')
+        .select('id')
+        .eq('is_active', true);
+      
+      if (allHouses && allHouses.length > 0) {
+        const accessEntries = allHouses.map((h: any) => ({
+          user_id: data.user!.id,
+          house_id: h.id,
+          can_edit: true,
+        }));
+        await serviceClient
+          .from('user_house_access')
+          .upsert(accessEntries, { onConflict: 'user_id,house_id' });
+      }
+    } catch (accessError) {
+      console.error('Error granting house access to new user:', accessError);
+    }
   }
 
   return { success: true, message: 'Check your email to confirm your account' };
