@@ -143,7 +143,8 @@ export async function deleteHouse(id: string) {
 // =====================================================
 
 export async function getRoomsByHouse(houseId: string, activeOnly: boolean = true) {
-  const supabase = await createClient();
+  const { createServiceClient } = await import('@/lib/supabase/server');
+  const supabase = await createServiceClient();
   
   let query = supabase
     .from('rooms')
@@ -225,7 +226,8 @@ export async function deleteRoom(id: string) {
 // =====================================================
 
 export async function getBedsByRoom(roomId: string, activeOnly: boolean = true) {
-  const supabase = await createClient();
+  const { createServiceClient } = await import('@/lib/supabase/server');
+  const supabase = await createServiceClient();
   
   let query = supabase
     .from('beds')

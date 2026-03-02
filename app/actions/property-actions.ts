@@ -121,6 +121,30 @@ export async function getHouseById(id: string) {
   }
 }
 
+export async function getRoomsByHouse(houseId: string) {
+  await requireAuth();
+  
+  try {
+    const rooms = await propertyService.getRoomsByHouse(houseId);
+    return { success: true, data: rooms };
+  } catch (error: any) {
+    console.error('Error getting rooms:', error?.message || error);
+    return { success: false, data: [] };
+  }
+}
+
+export async function getBedsByRoom(roomId: string) {
+  await requireAuth();
+  
+  try {
+    const beds = await propertyService.getBedsByRoom(roomId);
+    return { success: true, data: beds };
+  } catch (error: any) {
+    console.error('Error getting beds:', error?.message || error);
+    return { success: false, data: [] };
+  }
+}
+
 // =====================================================
 // ROOM ACTIONS
 // =====================================================

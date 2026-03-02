@@ -2,11 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
-import { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -21,92 +18,169 @@ import {
 } from '@/components/ui/select';
 import { createLease } from '@/app/actions/lease-actions';
 import { getTenants } from '@/app/actions/tenant-actions';
-import { getHouses } from '@/app/actions/property-actions';
+import { getHouses, getRoomsByHouse, getBedsByRoom } from '@/app/actions/property-actions';
 import { toast } from 'sonner';
-import type { Tenant, House, Room, Bed } from '@/types/database';
 
-const leaseFormSchema = z.object({
-  tenant_id: z.string().uuid('Please select a tenant'),
-  bed_id: z.string().uuid('Please select a bed'),
-  start_date: z.string().min(1, 'Start date is required'),
-  end_date: z.string().optional().nullable(),
-  weekly_rent: z.number().positive('Weekly rent must be positive'),
-  bond_amount: z.number().min(0).optional(),
-});
+interface SimpleTenant {
+  id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  status: string;
+}
 
-type LeaseFormData = z.infer<typeof leaseFormSchema>;
+interface SimpleHouse {
+  id: string;
+  name: string;
+  address: string;
+}
+
+interface SimpleRoom {
+  id: string;
+  name: string;
+  room_type: string;
+}
+
+interface SimpleBed {
+  id: string;
+  bed_number: number;
+  bed_type: string;
+  weekly_rent: number;
+  bond_amount: number | null;
+  status: string;
+}
 
 export default function NewLeasePage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [tenants, setTenants] = useState<Tenant[]>([]);
-  const [houses, setHouses] = useState<House[]>([]);
-  const [selectedHouse, setSelectedHouse] = useState<string>('');
-  const [selectedRoom, setSelectedRoom] = useState<string>('');
-  const [rooms, setRooms] = useState<Room[]>([]);
-  const [beds, setBeds] = useState<Bed[]>([]);
+  const [isLoadingRooms, setIsLoadingRooms] = useState(false);
+  const [isLoadingBeds, setIsLoadingBeds] = useState(false);
+
+  const [tenants, setTenants] = useState<SimpleTenant[]>([]);
+  const [houses, setHouses] = useState<SimpleHouse[]>([]);
+  const [rooms, setRooms] = useState<SimpleRoom[]>([]);
+  const [beds, setBeds] = useState<SimpleBed[]>([]);
+
+  const [selectedTenant, setSelectedTenant] = useState('');
+  const [selectedHouse, setSelectedHouse] = useState('');
+  const [selectedRoom, setSelectedRoom] = useState('');
+  const [selectedBed, setSelectedBed] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [weeklyRent, setWeeklyRent] = useState('');
+  const [bondAmount, setBondAmount] = useState('');
 
   useEffect(() => {
     loadData();
   }, []);
 
   const loadData = async () => {
-    const [tenantsResult, housesResult] = await Promise.all([
-      getTenants(),
-      getHouses(),
-    ]);
-    if (tenantsResult) setTenants(tenantsResult);
-    if (housesResult.data) setHouses(housesResult.data);
+    try {
+      const [tenantsResult, housesResult] = await Promise.all([
+        getTenants(),
+        getHouses(),
+      ]);
+      if (Array.isArray(tenantsResult)) setTenants(tenantsResult as SimpleTenant[]);
+      if (housesResult?.data) setHouses(housesResult.data as SimpleHouse[]);
+    } catch (error) {
+      console.error('Error loading data:', error);
+    }
   };
 
-  const handleHouseChange = (houseId: string) => {
+  const handleHouseChange = async (houseId: string) => {
     setSelectedHouse(houseId);
     setSelectedRoom('');
+    setSelectedBed('');
+    setRooms([]);
     setBeds([]);
-    const house = houses.find(h => h.id === houseId);
-    if (house && (house as any).rooms) {
-      setRooms((house as any).rooms);
+
+    if (!houseId) return;
+
+    setIsLoadingRooms(true);
+    try {
+      const result = await getRoomsByHouse(houseId);
+      if (result?.data) {
+        setRooms(result.data as SimpleRoom[]);
+      }
+    } catch (error) {
+      console.error('Error loading rooms:', error);
+      toast.error('Erreur lors du chargement des chambres');
+    } finally {
+      setIsLoadingRooms(false);
     }
   };
 
-  const handleRoomChange = (roomId: string) => {
+  const handleRoomChange = async (roomId: string) => {
     setSelectedRoom(roomId);
-    const room = rooms.find(r => r.id === roomId);
-    if (room && (room as any).beds) {
-      setBeds((room as any).beds.filter((b: Bed) => b.status !== 'occupied'));
+    setSelectedBed('');
+    setBeds([]);
+
+    if (!roomId) return;
+
+    setIsLoadingBeds(true);
+    try {
+      const result = await getBedsByRoom(roomId);
+      if (result?.data) {
+        // Filtrer seulement les lits disponibles
+        const availableBeds = (result.data as SimpleBed[]).filter(b => b.status === 'available');
+        setBeds(availableBeds);
+      }
+    } catch (error) {
+      console.error('Error loading beds:', error);
+      toast.error('Erreur lors du chargement des lits');
+    } finally {
+      setIsLoadingBeds(false);
     }
   };
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm<LeaseFormData>({
-    resolver: zodResolver(leaseFormSchema),
-  });
+  const handleBedSelect = (bedId: string) => {
+    setSelectedBed(bedId);
+    // Auto-remplir le loyer et la caution
+    const bed = beds.find(b => b.id === bedId);
+    if (bed) {
+      setWeeklyRent(String(bed.weekly_rent));
+      if (bed.bond_amount) {
+        setBondAmount(String(bed.bond_amount));
+      } else {
+        setBondAmount(String(bed.weekly_rent * 4));
+      }
+    }
+  };
 
-  const onSubmit = async (data: LeaseFormData) => {
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!selectedTenant || !selectedHouse || !selectedBed || !startDate || !weeklyRent) {
+      toast.error('Veuillez remplir tous les champs obligatoires');
+      return;
+    }
+
     setIsLoading(true);
     try {
-      const { tenant_id, ...leaseData } = data;
       const result = await createLease({
-        ...leaseData,
         house_id: selectedHouse,
+        bed_id: selectedBed,
+        start_date: startDate,
+        end_date: endDate || null,
+        weekly_rent: parseFloat(weeklyRent),
+        bond_amount: bondAmount ? parseFloat(bondAmount) : 0,
         status: 'active',
         notice_period_weeks: 2,
         is_couple: false,
-        bond_amount: data.bond_amount || 0,
-        tenant_id,
+        tenant_id: selectedTenant,
       });
       if (result.error) {
-        toast.error('Échec de la création du bail');
+        console.error('Lease creation error:', result.error);
+        const errorMsg = typeof result.error === 'object' && '_form' in result.error
+          ? (result.error as any)._form?.[0]
+          : 'Échec de la création du bail';
+        toast.error(errorMsg || 'Échec de la création du bail');
       } else {
         toast.success('Bail créé avec succès');
         router.push('/leases');
       }
     } catch (error) {
+      console.error('Lease creation exception:', error);
       toast.error('Une erreur est survenue');
     } finally {
       setIsLoading(false);
@@ -130,7 +204,7 @@ export default function NewLeasePage() {
         </div>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={onSubmit} className="space-y-6">
         <Card>
           <CardHeader>
             <CardTitle>Sélection du locataire</CardTitle>
@@ -140,8 +214,8 @@ export default function NewLeasePage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="tenant_id">Locataire *</Label>
-              <Select onValueChange={(value) => setValue('tenant_id', value)}>
+              <Label>Locataire *</Label>
+              <Select value={selectedTenant} onValueChange={setSelectedTenant}>
                 <SelectTrigger>
                   <SelectValue placeholder="Sélectionner un locataire" />
                 </SelectTrigger>
@@ -153,9 +227,6 @@ export default function NewLeasePage() {
                   ))}
                 </SelectContent>
               </Select>
-              {errors.tenant_id && (
-                <p className="text-sm text-destructive">{errors.tenant_id.message}</p>
-              )}
             </div>
           </CardContent>
         </Card>
@@ -171,14 +242,14 @@ export default function NewLeasePage() {
             <div className="grid gap-4 md:grid-cols-3">
               <div className="space-y-2">
                 <Label>Propriété *</Label>
-                <Select onValueChange={handleHouseChange}>
+                <Select value={selectedHouse} onValueChange={handleHouseChange}>
                   <SelectTrigger>
                     <SelectValue placeholder="Sélectionner une propriété" />
                   </SelectTrigger>
                   <SelectContent>
                     {houses.map((house) => (
                       <SelectItem key={house.id} value={house.id}>
-                        {house.address}
+                        {house.name || house.address}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -188,18 +259,22 @@ export default function NewLeasePage() {
               <div className="space-y-2">
                 <Label>Chambre *</Label>
                 <Select 
+                  value={selectedRoom}
                   onValueChange={handleRoomChange}
-                  disabled={!selectedHouse}
+                  disabled={!selectedHouse || isLoadingRooms}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Sélectionner une chambre" />
+                    <SelectValue placeholder={isLoadingRooms ? 'Chargement...' : 'Sélectionner une chambre'} />
                   </SelectTrigger>
                   <SelectContent>
                     {rooms.map((room) => (
                       <SelectItem key={room.id} value={room.id}>
-                        {room.name}
+                        {room.name} ({room.room_type})
                       </SelectItem>
                     ))}
+                    {rooms.length === 0 && !isLoadingRooms && selectedHouse && (
+                      <div className="px-2 py-1.5 text-sm text-muted-foreground">Aucune chambre trouvée</div>
+                    )}
                   </SelectContent>
                 </Select>
               </div>
@@ -207,23 +282,24 @@ export default function NewLeasePage() {
               <div className="space-y-2">
                 <Label>Lit *</Label>
                 <Select 
-                  onValueChange={(value) => setValue('bed_id', value)}
-                  disabled={!selectedRoom}
+                  value={selectedBed}
+                  onValueChange={handleBedSelect}
+                  disabled={!selectedRoom || isLoadingBeds}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Sélectionner un lit" />
+                    <SelectValue placeholder={isLoadingBeds ? 'Chargement...' : 'Sélectionner un lit'} />
                   </SelectTrigger>
                   <SelectContent>
                     {beds.map((bed) => (
                       <SelectItem key={bed.id} value={bed.id}>
-                        Lit {bed.bed_number} - ${bed.weekly_rent}/sem
+                        Lit {bed.bed_number} ({bed.bed_type}) - ${bed.weekly_rent}/sem
                       </SelectItem>
                     ))}
+                    {beds.length === 0 && !isLoadingBeds && selectedRoom && (
+                      <div className="px-2 py-1.5 text-sm text-muted-foreground">Aucun lit disponible</div>
+                    )}
                   </SelectContent>
                 </Select>
-                {errors.bed_id && (
-                  <p className="text-sm text-destructive">{errors.bed_id.message}</p>
-                )}
               </div>
             </div>
           </CardContent>
@@ -243,11 +319,9 @@ export default function NewLeasePage() {
                 <Input
                   id="start_date"
                   type="date"
-                  {...register('start_date')}
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
                 />
-                {errors.start_date && (
-                  <p className="text-sm text-destructive">{errors.start_date.message}</p>
-                )}
               </div>
 
               <div className="space-y-2">
@@ -255,7 +329,8 @@ export default function NewLeasePage() {
                 <Input
                   id="end_date"
                   type="date"
-                  {...register('end_date')}
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
                 />
                 <p className="text-xs text-muted-foreground">
                   Laisser vide pour un bail en cours
@@ -271,11 +346,9 @@ export default function NewLeasePage() {
                   type="number"
                   step="0.01"
                   placeholder="200.00"
-                  {...register('weekly_rent', { valueAsNumber: true })}
+                  value={weeklyRent}
+                  onChange={(e) => setWeeklyRent(e.target.value)}
                 />
-                {errors.weekly_rent && (
-                  <p className="text-sm text-destructive">{errors.weekly_rent.message}</p>
-                )}
               </div>
 
               <div className="space-y-2">
@@ -285,11 +358,10 @@ export default function NewLeasePage() {
                   type="number"
                   step="0.01"
                   placeholder="800.00"
-                  {...register('bond_amount', { valueAsNumber: true })}
+                  value={bondAmount}
+                  onChange={(e) => setBondAmount(e.target.value)}
                 />
               </div>
-
-
             </div>
           </CardContent>
         </Card>
