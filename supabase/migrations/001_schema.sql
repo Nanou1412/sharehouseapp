@@ -922,11 +922,14 @@ BEGIN
 END;
 $$;
 
--- Update house totals function
-CREATE OR REPLACE FUNCTION update_house_totals()
+-- Update house totals function (for rooms table - has house_id)
+CREATE OR REPLACE FUNCTION update_house_totals_from_rooms()
 RETURNS TRIGGER AS $$
+DECLARE
+    target_house_id UUID;
 BEGIN
-    -- Update total bedrooms
+    target_house_id := COALESCE(NEW.house_id, OLD.house_id);
+    
     UPDATE houses h
     SET total_bedrooms = (
         SELECT COUNT(*) FROM rooms r WHERE r.house_id = h.id AND r.is_active
@@ -936,7 +939,34 @@ BEGIN
         JOIN rooms r ON r.id = b.room_id 
         WHERE r.house_id = h.id AND b.is_active
     )
-    WHERE h.id = COALESCE(NEW.house_id, OLD.house_id);
+    WHERE h.id = target_house_id;
+    
+    RETURN COALESCE(NEW, OLD);
+END;
+$$ LANGUAGE plpgsql;
+
+-- Update house totals function (for beds table - no house_id, lookup via rooms)
+CREATE OR REPLACE FUNCTION update_house_totals_from_beds()
+RETURNS TRIGGER AS $$
+DECLARE
+    target_house_id UUID;
+BEGIN
+    SELECT r.house_id INTO target_house_id 
+    FROM rooms r 
+    WHERE r.id = COALESCE(NEW.room_id, OLD.room_id);
+    
+    IF target_house_id IS NOT NULL THEN
+        UPDATE houses h
+        SET total_bedrooms = (
+            SELECT COUNT(*) FROM rooms r WHERE r.house_id = h.id AND r.is_active
+        ),
+        total_beds = (
+            SELECT COUNT(*) FROM beds b 
+            JOIN rooms r ON r.id = b.room_id 
+            WHERE r.house_id = h.id AND b.is_active
+        )
+        WHERE h.id = target_house_id;
+    END IF;
     
     RETURN COALESCE(NEW, OLD);
 END;
@@ -944,8 +974,8 @@ $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER update_house_totals_rooms
 AFTER INSERT OR UPDATE OR DELETE ON rooms
-FOR EACH ROW EXECUTE FUNCTION update_house_totals();
+FOR EACH ROW EXECUTE FUNCTION update_house_totals_from_rooms();
 
 CREATE TRIGGER update_house_totals_beds
 AFTER INSERT OR UPDATE OR DELETE ON beds
-FOR EACH ROW EXECUTE FUNCTION update_house_totals();
+FOR EACH ROW EXECUTE FUNCTION update_house_totals_from_beds();
