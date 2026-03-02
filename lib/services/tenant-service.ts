@@ -116,7 +116,8 @@ export async function getTenantWithDetails(id: string) {
 }
 
 export async function createTenant(data: TenantFormData) {
-  const supabase = await createClient();
+  const { createServiceClient } = await import('@/lib/supabase/server');
+  const serviceClient = await createServiceClient();
   
   // Calculate initial risk score
   const riskScore = calculateTenantRiskScore({
@@ -130,7 +131,7 @@ export async function createTenant(data: TenantFormData) {
     previousIssues: 0,
   });
 
-  const { data: tenant, error } = await supabase
+  const { data: tenant, error } = await serviceClient
     .from('tenants')
     .insert({
       ...data,
