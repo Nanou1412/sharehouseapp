@@ -185,17 +185,17 @@ export async function createBed(formData: BedFormData) {
   
   const validated = bedFormSchema.safeParse(formData);
   if (!validated.success) {
+    console.error('Bed validation error:', JSON.stringify(validated.error.flatten(), null, 2));
     return { error: validated.error.flatten().fieldErrors };
   }
 
   try {
     const bed = await propertyService.createBed(validated.data);
     revalidatePath('/houses');
-    revalidatePath(`/rooms/${formData.room_id}`);
     return { success: true, data: bed };
-  } catch (error) {
-    console.error('Error creating bed:', error);
-    return { error: { _form: ['Failed to create bed'] } };
+  } catch (error: any) {
+    console.error('Error creating bed:', error?.message || error);
+    return { error: { _form: [error?.message || 'Failed to create bed'] } };
   }
 }
 

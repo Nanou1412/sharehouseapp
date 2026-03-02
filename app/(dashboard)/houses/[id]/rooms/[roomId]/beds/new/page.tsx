@@ -2,8 +2,6 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 
@@ -19,7 +17,6 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { createBed } from '@/app/actions/property-actions';
-import { bedFormSchema, BedFormData } from '@/zod-schemas';
 import { toast } from 'sonner';
 
 interface PageProps {
@@ -29,34 +26,60 @@ interface PageProps {
 export default function NewBedPage({ params }: PageProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [bedNumber, setBedNumber] = useState('1');
+  const [bedType, setBedType] = useState('single');
+  const [weeklyRent, setWeeklyRent] = useState('');
+  const [bondAmount, setBondAmount] = useState('');
+  const [notes, setNotes] = useState('');
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm<BedFormData>({
-    resolver: zodResolver(bedFormSchema),
-    defaultValues: {
-      room_id: params.roomId,
-      bed_number: 1,
-      bed_type: 'single',
-      status: 'available',
-      is_active: true,
-    },
-  });
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrors({});
 
-  const onSubmit = async (data: BedFormData) => {
+    // Validation locale simple
+    const newErrors: Record<string, string> = {};
+    if (!bedNumber || parseInt(bedNumber) < 1) {
+      newErrors.bed_number = 'Le numéro du lit doit être au moins 1';
+    }
+    if (!weeklyRent || parseFloat(weeklyRent) <= 0) {
+      newErrors.weekly_rent = 'Le loyer hebdomadaire est requis et doit être positif';
+    }
+    if (bondAmount && parseFloat(bondAmount) <= 0) {
+      newErrors.bond_amount = 'Le montant de la caution doit être positif';
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
     setIsLoading(true);
     try {
-      const result = await createBed(data);
+      const formData = {
+        room_id: params.roomId,
+        bed_number: parseInt(bedNumber),
+        bed_type: bedType,
+        weekly_rent: parseFloat(weeklyRent),
+        bond_amount: bondAmount ? parseFloat(bondAmount) : null,
+        status: 'available' as const,
+        is_active: true,
+        notes: notes || null,
+      };
+
+      const result = await createBed(formData);
       if (result.error) {
-        toast.error('Échec de la création du lit');
+        console.error('Bed creation error:', result.error);
+        const errorMsg = typeof result.error === 'object' && '_form' in result.error
+          ? (result.error as any)._form?.[0]
+          : 'Échec de la création du lit';
+        toast.error(errorMsg || 'Échec de la création du lit');
       } else {
         toast.success('Lit créé avec succès');
         router.push(`/houses/${params.id}`);
       }
     } catch (error) {
+      console.error('Bed creation exception:', error);
       toast.error('Une erreur est survenue');
     } finally {
       setIsLoading(false);
@@ -80,7 +103,7 @@ export default function NewBedPage({ params }: PageProps) {
         </div>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={onSubmit} className="space-y-6">
         <Card>
           <CardHeader>
             <CardTitle>Détails du lit</CardTitle>
@@ -97,18 +120,19 @@ export default function NewBedPage({ params }: PageProps) {
                   type="number"
                   min={1}
                   placeholder="1"
-                  {...register('bed_number', { valueAsNumber: true })}
+                  value={bedNumber}
+                  onChange={(e) => setBedNumber(e.target.value)}
                 />
                 {errors.bed_number && (
-                  <p className="text-sm text-destructive">{errors.bed_number.message}</p>
+                  <p className="text-sm text-destructive">{errors.bed_number}</p>
                 )}
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="bed_type">Type de lit *</Label>
                 <Select 
-                  defaultValue="single"
-                  onValueChange={(value) => setValue('bed_type', value)}
+                  value={bedType}
+                  onValueChange={setBedType}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Sélectionner le type" />
@@ -121,9 +145,6 @@ export default function NewBedPage({ params }: PageProps) {
                     <SelectItem value="bunk">Superposé</SelectItem>
                   </SelectContent>
                 </Select>
-                {errors.bed_type && (
-                  <p className="text-sm text-destructive">{errors.bed_type.message}</p>
-                )}
               </div>
             </div>
 
@@ -135,10 +156,11 @@ export default function NewBedPage({ params }: PageProps) {
                   type="number"
                   step="0.01"
                   placeholder="180.00"
-                  {...register('weekly_rent', { valueAsNumber: true })}
+                  value={weeklyRent}
+                  onChange={(e) => setWeeklyRent(e.target.value)}
                 />
                 {errors.weekly_rent && (
-                  <p className="text-sm text-destructive">{errors.weekly_rent.message}</p>
+                  <p className="text-sm text-destructive">{errors.weekly_rent}</p>
                 )}
               </div>
 
@@ -149,8 +171,12 @@ export default function NewBedPage({ params }: PageProps) {
                   type="number"
                   step="0.01"
                   placeholder="720.00"
-                  {...register('bond_amount', { valueAsNumber: true })}
+                  value={bondAmount}
+                  onChange={(e) => setBondAmount(e.target.value)}
                 />
+                {errors.bond_amount && (
+                  <p className="text-sm text-destructive">{errors.bond_amount}</p>
+                )}
                 <p className="text-xs text-muted-foreground">
                   Laisser vide pour utiliser la valeur par défaut (4 semaines de loyer)
                 </p>
@@ -162,7 +188,8 @@ export default function NewBedPage({ params }: PageProps) {
               <Input
                 id="notes"
                 placeholder="Informations complémentaires..."
-                {...register('notes')}
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
               />
             </div>
           </CardContent>
