@@ -15,10 +15,16 @@ import {
 import { getCandidates, getCandidatePipeline } from '@/lib/services/candidate-service';
 
 export default async function CandidatesPage() {
-  const [candidates, pipeline] = await Promise.all([
-    getCandidates(),
-    getCandidatePipeline(),
-  ]);
+  let candidates: any[] = [];
+  let pipeline = { new: 0, screening: 0, approved: 0, rejected: 0, waitlist: 0, total: 0 };
+  try {
+    [candidates, pipeline] = await Promise.all([
+      getCandidates(),
+      getCandidatePipeline(),
+    ]);
+  } catch (error) {
+    console.error('Error loading candidates:', error);
+  }
 
   const getStatusBadge = (status: string) => {
     switch (status) {

@@ -15,7 +15,12 @@ import {
 import { getKeys } from '@/lib/services/keys-service';
 
 export default async function KeysPage() {
-  const keys = await getKeys();
+  let keys: any[] = [];
+  try {
+    keys = await getKeys() || [];
+  } catch (error) {
+    console.error('Error loading keys:', error);
+  }
 
   // Calculate stats
   const totalKeys = keys?.length || 0;

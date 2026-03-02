@@ -16,7 +16,8 @@ export async function getKeys(filters?: {
   status?: KeyStatus;
   keyType?: KeyType;
 }) {
-  const supabase = await createClient();
+  const { createServiceClient } = await import('@/lib/supabase/server');
+  const supabase = await createServiceClient();
   
   let query = supabase
     .from('keys')

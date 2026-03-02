@@ -11,7 +11,8 @@ export async function getCandidates(filters?: {
   bedId?: string;
   status?: CandidateStatus | CandidateStatus[];
 }) {
-  const supabase = await createClient();
+  const { createServiceClient } = await import('@/lib/supabase/server');
+  const supabase = await createServiceClient();
   
   let query = supabase
     .from('candidates')
@@ -335,7 +336,8 @@ export async function convertCandidateToTenant(
 // =====================================================
 
 export async function getCandidatePipeline(houseId?: string) {
-  const supabase = await createClient();
+  const { createServiceClient } = await import('@/lib/supabase/server');
+  const supabase = await createServiceClient();
   
   let query = supabase
     .from('candidates')
