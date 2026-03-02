@@ -40,12 +40,17 @@ export default function NewTenantPage() {
     try {
       const result = await createTenant(data);
       if (result.error) {
-        toast.error('Échec de la création');
+        console.error('Tenant creation error:', result.error);
+        const errorMsg = typeof result.error === 'object' && '_form' in result.error
+          ? (result.error as any)._form?.[0]
+          : 'Échec de la création';
+        toast.error(errorMsg || 'Échec de la création');
       } else {
         toast.success('Locataire créé avec succès');
         router.push('/tenants');
       }
     } catch (error) {
+      console.error('Tenant creation exception:', error);
       toast.error('Une erreur est survenue');
     } finally {
       setIsLoading(false);

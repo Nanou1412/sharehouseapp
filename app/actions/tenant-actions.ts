@@ -34,8 +34,17 @@ export async function getTenants() {
 export async function createTenant(formData: TenantFormData) {
   await requireAuth();
   
-  const validated = tenantFormSchema.safeParse(formData);
+  // Clean empty strings to null for optional fields
+  const cleanedData = Object.fromEntries(
+    Object.entries(formData).map(([key, value]) => [
+      key,
+      value === '' ? null : value,
+    ])
+  );
+
+  const validated = tenantFormSchema.safeParse(cleanedData);
   if (!validated.success) {
+    console.error('Tenant validation error:', JSON.stringify(validated.error.flatten(), null, 2));
     return { error: validated.error.flatten().fieldErrors };
   }
 
@@ -43,9 +52,9 @@ export async function createTenant(formData: TenantFormData) {
     const tenant = await tenantService.createTenant(validated.data);
     revalidatePath('/tenants');
     return { success: true, data: tenant };
-  } catch (error) {
-    console.error('Error creating tenant:', error);
-    return { error: { _form: ['Failed to create tenant'] } };
+  } catch (error: any) {
+    console.error('Error creating tenant:', error?.message || error);
+    return { error: { _form: [error?.message || 'Failed to create tenant'] } };
   }
 }
 

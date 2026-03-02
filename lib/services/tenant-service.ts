@@ -119,14 +119,22 @@ export async function createTenant(data: TenantFormData) {
   const { createServiceClient } = await import('@/lib/supabase/server');
   const serviceClient = await createServiceClient();
   
+  // Clean empty strings to null to avoid DB type errors (e.g. "" for DATE columns)
+  const cleanData = Object.fromEntries(
+    Object.entries(data).map(([key, value]) => [
+      key,
+      value === '' ? null : value,
+    ])
+  ) as typeof data;
+
   // Calculate initial risk score
   const riskScore = calculateTenantRiskScore({
-    hasIncome: !!data.weekly_income,
-    incomeToRentRatio: data.weekly_income ? data.weekly_income / 200 : undefined, // Assume ~$200/week rent
-    hasReferences: !!data.previous_landlord_contact,
-    hasValidId: !!data.id_number,
-    visaExpiryMonths: data.visa_expiry 
-      ? Math.max(0, Math.floor((new Date(data.visa_expiry).getTime() - Date.now()) / (1000 * 60 * 60 * 24 * 30)))
+    hasIncome: !!cleanData.weekly_income,
+    incomeToRentRatio: cleanData.weekly_income ? cleanData.weekly_income / 200 : undefined,
+    hasReferences: !!cleanData.previous_landlord_contact,
+    hasValidId: !!cleanData.id_number,
+    visaExpiryMonths: cleanData.visa_expiry 
+      ? Math.max(0, Math.floor((new Date(cleanData.visa_expiry).getTime() - Date.now()) / (1000 * 60 * 60 * 24 * 30)))
       : undefined,
     previousIssues: 0,
   });
@@ -134,7 +142,7 @@ export async function createTenant(data: TenantFormData) {
   const { data: tenant, error } = await serviceClient
     .from('tenants')
     .insert({
-      ...data,
+      ...cleanData,
       risk_score: riskScore,
     })
     .select()
