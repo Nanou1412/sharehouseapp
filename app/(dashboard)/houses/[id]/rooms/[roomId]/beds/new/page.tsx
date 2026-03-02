@@ -6,7 +6,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
-import { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -20,16 +19,8 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { createBed } from '@/app/actions/property-actions';
+import { bedFormSchema, BedFormData } from '@/zod-schemas';
 import { toast } from 'sonner';
-
-const bedFormSchema = z.object({
-  label: z.string().min(1, 'Bed label is required'),
-  bed_type: z.enum(['single', 'double', 'queen', 'king', 'bunk']),
-  weekly_rent: z.number().positive('Weekly rent must be positive'),
-  bond_amount: z.number().positive().optional(),
-});
-
-type BedFormData = z.infer<typeof bedFormSchema>;
 
 interface PageProps {
   params: { id: string; roomId: string };
@@ -47,28 +38,26 @@ export default function NewBedPage({ params }: PageProps) {
   } = useForm<BedFormData>({
     resolver: zodResolver(bedFormSchema),
     defaultValues: {
+      room_id: params.roomId,
+      bed_number: 1,
       bed_type: 'single',
+      status: 'available',
+      is_active: true,
     },
   });
 
   const onSubmit = async (data: BedFormData) => {
     setIsLoading(true);
     try {
-      const result = await createBed({
-        ...data,
-        room_id: params.roomId,
-        status: 'available',
-        is_active: true,
-        bed_number: 1, // Default value, can be adjusted
-      });
+      const result = await createBed(data);
       if (result.error) {
         toast.error('Échec de la création du lit');
       } else {
         toast.success('Lit créé avec succès');
-        router.push(`/houses/${params.id}/rooms/${params.roomId}`);
+        router.push(`/houses/${params.id}`);
       }
     } catch (error) {
-      toast.error('An error occurred');
+      toast.error('Une erreur est survenue');
     } finally {
       setIsLoading(false);
     }
@@ -79,7 +68,7 @@ export default function NewBedPage({ params }: PageProps) {
       {/* Page Header */}
       <div className="flex items-center gap-4">
         <Button variant="ghost" size="icon" asChild>
-          <Link href={`/houses/${params.id}/rooms/${params.roomId}`}>
+          <Link href={`/houses/${params.id}`}>
             <ArrowLeft className="h-4 w-4" />
           </Link>
         </Button>
@@ -102,14 +91,16 @@ export default function NewBedPage({ params }: PageProps) {
           <CardContent className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="label">Nom du lit *</Label>
+                <Label htmlFor="bed_number">Numéro du lit *</Label>
                 <Input
-                  id="label"
-                  placeholder="Lit A"
-                  {...register('label')}
+                  id="bed_number"
+                  type="number"
+                  min={1}
+                  placeholder="1"
+                  {...register('bed_number', { valueAsNumber: true })}
                 />
-                {errors.label && (
-                  <p className="text-sm text-destructive">{errors.label.message}</p>
+                {errors.bed_number && (
+                  <p className="text-sm text-destructive">{errors.bed_number.message}</p>
                 )}
               </div>
 
@@ -117,17 +108,17 @@ export default function NewBedPage({ params }: PageProps) {
                 <Label htmlFor="bed_type">Type de lit *</Label>
                 <Select 
                   defaultValue="single"
-                  onValueChange={(value) => setValue('bed_type', value as any)}
+                  onValueChange={(value) => setValue('bed_type', value)}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Sélectionner le type" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="single">Single</SelectItem>
+                    <SelectItem value="single">Simple</SelectItem>
                     <SelectItem value="double">Double</SelectItem>
                     <SelectItem value="queen">Queen</SelectItem>
                     <SelectItem value="king">King</SelectItem>
-                    <SelectItem value="bunk">Bunk</SelectItem>
+                    <SelectItem value="bunk">Superposé</SelectItem>
                   </SelectContent>
                 </Select>
                 {errors.bed_type && (
@@ -165,6 +156,15 @@ export default function NewBedPage({ params }: PageProps) {
                 </p>
               </div>
             </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="notes">Notes</Label>
+              <Input
+                id="notes"
+                placeholder="Informations complémentaires..."
+                {...register('notes')}
+              />
+            </div>
           </CardContent>
         </Card>
 
@@ -174,7 +174,7 @@ export default function NewBedPage({ params }: PageProps) {
             Créer le lit
           </Button>
           <Button type="button" variant="outline" asChild>
-            <Link href={`/houses/${params.id}/rooms/${params.roomId}`}>Annuler</Link>
+            <Link href={`/houses/${params.id}`}>Annuler</Link>
           </Button>
         </div>
       </form>
