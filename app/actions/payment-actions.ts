@@ -27,10 +27,19 @@ async function requireAuth() {
 // =====================================================
 
 export async function createPayment(formData: PaymentFormData) {
-  await requireAuth();
+  const user = await requireAuth();
   
-  const validated = paymentFormSchema.safeParse(formData);
+  // Clean empty strings to null
+  const cleanedData = Object.fromEntries(
+    Object.entries(formData).map(([key, value]) => [
+      key,
+      value === '' ? null : value,
+    ])
+  );
+
+  const validated = paymentFormSchema.safeParse(cleanedData);
   if (!validated.success) {
+    console.error('Payment validation error:', JSON.stringify(validated.error.flatten(), null, 2));
     return { error: validated.error.flatten().fieldErrors };
   }
 
@@ -40,9 +49,9 @@ export async function createPayment(formData: PaymentFormData) {
     revalidatePath('/tenants');
     revalidatePath(`/tenants/${formData.tenant_id}`);
     return { success: true, data: payment };
-  } catch (error) {
-    console.error('Error creating payment:', error);
-    return { error: { _form: ['Failed to create payment'] } };
+  } catch (error: any) {
+    console.error('Error creating payment:', error?.message || error);
+    return { error: { _form: [error?.message || 'Failed to create payment'] } };
   }
 }
 

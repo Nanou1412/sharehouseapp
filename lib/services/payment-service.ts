@@ -76,7 +76,8 @@ export async function getPaymentById(id: string) {
 }
 
 export async function createPayment(data: PaymentFormData) {
-  const supabase = await createClient();
+  const { createServiceClient } = await import('@/lib/supabase/server');
+  const supabase = await createServiceClient();
 
   const { data: { user } } = await supabase.auth.getUser();
 

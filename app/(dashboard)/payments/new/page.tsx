@@ -2,11 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
-import { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -21,63 +18,96 @@ import {
 } from '@/components/ui/select';
 import { recordPayment } from '@/app/actions/payment-actions';
 import { getTenants } from '@/app/actions/tenant-actions';
+import { getHouses } from '@/app/actions/property-actions';
 import { toast } from 'sonner';
-import type { Tenant } from '@/types/database';
 
-const paymentFormSchema = z.object({
-  tenant_id: z.string().uuid('Please select a tenant'),
-  house_id: z.string().uuid('Please select a property'),
-  amount: z.number().positive('Amount must be positive'),
-  payment_date: z.string().min(1, 'Payment date is required'),
-  payment_method: z.enum(['bank_transfer', 'cash', 'card', 'other']),
-  reference: z.string().optional(),
-  notes: z.string().optional(),
-  is_advance_payment: z.boolean().default(false),
-  is_partial: z.boolean().default(false),
-});
+interface SimpleTenant {
+  id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  status: string;
+}
 
-type PaymentFormData = z.infer<typeof paymentFormSchema>;
+interface SimpleHouse {
+  id: string;
+  name: string;
+  address: string;
+}
 
 export default function NewPaymentPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [tenants, setTenants] = useState<Tenant[]>([]);
+  const [tenants, setTenants] = useState<SimpleTenant[]>([]);
+  const [houses, setHouses] = useState<SimpleHouse[]>([]);
+
+  const [selectedTenant, setSelectedTenant] = useState('');
+  const [selectedHouse, setSelectedHouse] = useState('');
+  const [amount, setAmount] = useState('');
+  const [paymentDate, setPaymentDate] = useState(new Date().toISOString().split('T')[0]);
+  const [paymentMethod, setPaymentMethod] = useState('bank_transfer');
+  const [reference, setReference] = useState('');
+  const [notes, setNotes] = useState('');
 
   useEffect(() => {
-    loadTenants();
+    loadData();
   }, []);
 
-  const loadTenants = async () => {
-    const result = await getTenants();
-    if (result) {
-      setTenants(result.filter(t => t.status === 'active'));
+  const loadData = async () => {
+    try {
+      const [tenantsResult, housesResult] = await Promise.all([
+        getTenants(),
+        getHouses(),
+      ]);
+      if (Array.isArray(tenantsResult)) {
+        setTenants((tenantsResult as SimpleTenant[]).filter(t => t.status === 'active'));
+      }
+      if (housesResult?.data) {
+        setHouses(housesResult.data as SimpleHouse[]);
+      }
+    } catch (error) {
+      console.error('Error loading data:', error);
     }
   };
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm<PaymentFormData>({
-    resolver: zodResolver(paymentFormSchema),
-    defaultValues: {
-      payment_method: 'bank_transfer',
-      payment_date: new Date().toISOString().split('T')[0],
-    },
-  });
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-  const onSubmit = async (data: PaymentFormData) => {
+    if (!selectedTenant || !selectedHouse || !amount || !paymentDate) {
+      toast.error('Veuillez remplir tous les champs obligatoires');
+      return;
+    }
+
+    if (parseFloat(amount) <= 0) {
+      toast.error('Le montant doit être positif');
+      return;
+    }
+
     setIsLoading(true);
     try {
-      const result = await recordPayment(data);
+      const result = await recordPayment({
+        house_id: selectedHouse,
+        tenant_id: selectedTenant,
+        amount: parseFloat(amount),
+        payment_date: paymentDate,
+        payment_method: paymentMethod as any,
+        reference: reference || null,
+        notes: notes || null,
+        is_advance_payment: false,
+        is_partial: false,
+      });
       if (result.error) {
-        toast.error('Échec de l\'enregistrement du paiement');
+        console.error('Payment creation error:', result.error);
+        const errorMsg = typeof result.error === 'object' && '_form' in result.error
+          ? (result.error as any)._form?.[0]
+          : 'Échec de l\'enregistrement du paiement';
+        toast.error(errorMsg || 'Échec de l\'enregistrement du paiement');
       } else {
         toast.success('Paiement enregistré avec succès');
         router.push('/payments');
       }
     } catch (error) {
+      console.error('Payment creation exception:', error);
       toast.error('Une erreur est survenue');
     } finally {
       setIsLoading(false);
@@ -96,12 +126,12 @@ export default function NewPaymentPage() {
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold">Enregistrer un paiement</h1>
           <p className="text-muted-foreground text-sm">
-            Ajouter un nouveau paiement d'un locataire
+            Ajouter un nouveau paiement d&apos;un locataire
           </p>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={onSubmit} className="space-y-6">
         <Card>
           <CardHeader>
             <CardTitle>Détails du paiement</CardTitle>
@@ -112,8 +142,8 @@ export default function NewPaymentPage() {
           <CardContent className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="tenant_id">Locataire *</Label>
-                <Select onValueChange={(value) => setValue('tenant_id', value)}>
+                <Label>Locataire *</Label>
+                <Select value={selectedTenant} onValueChange={setSelectedTenant}>
                   <SelectTrigger>
                     <SelectValue placeholder="Sélectionner un locataire" />
                   </SelectTrigger>
@@ -125,11 +155,26 @@ export default function NewPaymentPage() {
                     ))}
                   </SelectContent>
                 </Select>
-                {errors.tenant_id && (
-                  <p className="text-sm text-destructive">{errors.tenant_id.message}</p>
-                )}
               </div>
 
+              <div className="space-y-2">
+                <Label>Propriété *</Label>
+                <Select value={selectedHouse} onValueChange={setSelectedHouse}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Sélectionner une propriété" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {houses.map((house) => (
+                      <SelectItem key={house.id} value={house.id}>
+                        {house.name || house.address}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="amount">Montant ($) *</Label>
                 <Input
@@ -137,33 +182,26 @@ export default function NewPaymentPage() {
                   type="number"
                   step="0.01"
                   placeholder="200.00"
-                  {...register('amount', { valueAsNumber: true })}
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
                 />
-                {errors.amount && (
-                  <p className="text-sm text-destructive">{errors.amount.message}</p>
-                )}
               </div>
-            </div>
 
-            <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="payment_date">Date du paiement *</Label>
                 <Input
                   id="payment_date"
                   type="date"
-                  {...register('payment_date')}
+                  value={paymentDate}
+                  onChange={(e) => setPaymentDate(e.target.value)}
                 />
-                {errors.payment_date && (
-                  <p className="text-sm text-destructive">{errors.payment_date.message}</p>
-                )}
               </div>
+            </div>
 
+            <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <Label>Méthode de paiement *</Label>
-                <Select 
-                  defaultValue="bank_transfer"
-                  onValueChange={(value) => setValue('payment_method', value as any)}
-                >
+                <Select value={paymentMethod} onValueChange={setPaymentMethod}>
                   <SelectTrigger>
                     <SelectValue placeholder="Sélectionner une méthode" />
                   </SelectTrigger>
@@ -175,15 +213,16 @@ export default function NewPaymentPage() {
                   </SelectContent>
                 </Select>
               </div>
-            </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="reference">Numéro de référence</Label>
-              <Input
-                id="reference"
-                placeholder="ID de transaction ou référence"
-                {...register('reference')}
-              />
+              <div className="space-y-2">
+                <Label htmlFor="reference">Numéro de référence</Label>
+                <Input
+                  id="reference"
+                  placeholder="ID de transaction ou référence"
+                  value={reference}
+                  onChange={(e) => setReference(e.target.value)}
+                />
+              </div>
             </div>
 
             <div className="space-y-2">
@@ -191,7 +230,8 @@ export default function NewPaymentPage() {
               <Input
                 id="notes"
                 placeholder="Notes supplémentaires sur ce paiement"
-                {...register('notes')}
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
               />
             </div>
           </CardContent>
